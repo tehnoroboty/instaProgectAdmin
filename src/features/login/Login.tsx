@@ -10,16 +10,14 @@ import { LoginError } from '@/src/shared/model/api/types'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Card } from '@/src/shared/ui/card/Card'
 import { Input } from '@/src/shared/ui/input'
-import { OAuthButtons } from '@/src/shared/ui/oauthbuttons/OAuthButtons'
 import { Typography } from '@/src/shared/ui/typography/Typography'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
 import s from './login.module.scss'
 
 export default function Login() {
-  const [login, {isLoading }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
 
   const router = useRouter()
 
@@ -60,7 +58,6 @@ export default function Login() {
           <br />
           pass: qwQW12!
         </Typography>
-        <OAuthButtons className={s.boxButtons} disabled={isLoading} />
         <form className={s.boxInputs} onSubmit={handleSubmit(onSubmit)}>
           <Input
             className={s.input}
@@ -77,13 +74,6 @@ export default function Login() {
             {...register('password')}
             error={errors.password && errors.password.message}
           />
-          <div className={s.forgotPassword}>
-            <Link className={s.link} href={'/auth/forgot-password'}>
-              <Typography className={s.linkText} option={'regular_text14'}>
-                {'Forgot Password'}
-              </Typography>
-            </Link>
-          </div>
           <Button
             className={s.signIn}
             disabled={disabledButton}
@@ -94,20 +84,6 @@ export default function Login() {
             {'Sign in'}
           </Button>
         </form>
-        <div className={s.boxLinks}>
-          <Typography className={s.text} option={'regular_text16'}>
-            {'Don’t have an account?'}
-          </Typography>
-          <Button
-            as={Link}
-            className={s.signUp}
-            fullWidth
-            href={'/auth/registration'}
-            variant={'transparent'}
-          >
-            {'Sign up'}
-          </Button>
-        </div>
       </Card>
     </>
   )

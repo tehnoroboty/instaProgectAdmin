@@ -3,6 +3,7 @@ import React from 'react'
 import { StoreWrapper } from '@/src/shared/model/store/StoreWrapper'
 import { CommonAlert } from '@/src/shared/ui/alerts/CommonAlert'
 import { ProgressBar } from '@/src/shared/ui/progressBar/ProgressBar'
+import { Typography } from '@/src/shared/ui/typography/Typography'
 import { Header } from '@/src/widgets/header/Header'
 import { Metadata } from 'next'
 

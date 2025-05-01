@@ -18,17 +18,10 @@ type Props = {
 export const Header = (props: Props) => {
   const { notification, title, ...rest } = props
 
-  const { isLoading, isSuccess } = useMeQuery()
-
   return (
     <header {...rest} className={s.header}>
       <HeaderMobile title={title} />
-      <HeaderWeb
-        hasNotification={notification}
-        isLoading={isLoading}
-        isLoggedIn={isSuccess}
-        title={title}
-      />
+      <HeaderWeb title={title} />
     </header>
   )
 }

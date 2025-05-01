@@ -11,7 +11,6 @@ export default function AuthLayout({
 }>) {
   return (
     <>
-      <AuthWrapper login />
       <div className={s.container}>{children}</div>
     </>
   )

@@ -16,35 +16,8 @@ import {
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    createNewPassword: builder.mutation<void, CreateNewPasswordRecoveryType>({
-      query: data => ({
-        body: data,
-        method: 'POST',
-        url: 'auth/new-password',
-      }),
-    }),
-    exchangeGoogleCodeForToken: builder.mutation<OAuthTokenResponse, ArgsPostGoogleOAuth>({
-      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
-        try {
-          const res = await queryFulfilled
-
-          localStorage.setItem('accessToken', res.data.accessToken)
-        } catch (error) {
-          const errorResponse = error as { error: { data: { messages: [{ message: string }] } } }
-
-          dispatch(setAppError({ error: errorResponse.error.data.messages[0].message }))
-        }
-      },
-      query: body => {
-        return {
-          body,
-          method: 'POST',
-          url: 'auth/google/login',
-        }
-      },
-    }),
     login: builder.mutation<{ accessToken: string }, FormType>({
-      async onQueryStarted(_args, {queryFulfilled }) {
+      async onQueryStarted(_args, { queryFulfilled }) {
         const response = await queryFulfilled
 
         localStorage.setItem('accessToken', response.data.accessToken)
@@ -61,7 +34,6 @@ export const authApi = baseApi.injectEndpoints({
           await queryFulfilled
           dispatch(baseApi.util.resetApiState())
           localStorage.removeItem('accessToken')
-
         } catch (error) {
           console.error('Ошибка при разлогине:', error)
         }
@@ -83,53 +55,7 @@ export const authApi = baseApi.injectEndpoints({
       },
       query: () => 'auth/me',
     }),
-    passwordRecovery: builder.mutation<void, PasswordRecoveryType>({
-      query: data => ({
-        body: data,
-        method: 'POST',
-        url: 'auth/password-recovery',
-      }),
-    }),
-    recoveryCode: builder.mutation<RecoveryCodeResponse, RecoveryCodeType>({
-      query: data => ({
-        body: data,
-        method: 'POST',
-        url: 'auth/check-recovery-code',
-      }),
-    }),
-    registration: builder.mutation<void, RegistrationType>({
-      query: body => ({
-        body,
-        method: 'POST',
-        url: 'auth/registration',
-      }),
-    }),
-    registrationConfirmation: builder.mutation<void, { confirmationCode: string }>({
-      query: body => ({
-        body,
-        method: 'POST',
-        url: 'auth/registration-confirmation',
-      }),
-    }),
-    registrationEmailResending: builder.mutation<void, RegistrationEmailResending>({
-      query: body => ({
-        body,
-        method: 'POST',
-        url: 'auth/registration-email-resending',
-      }),
-    }),
   }),
 })
 
-export const {
-  useCreateNewPasswordMutation,
-  useExchangeGoogleCodeForTokenMutation,
-  useLoginMutation,
-  useLogoutMutation,
-  useMeQuery,
-  usePasswordRecoveryMutation,
-  useRecoveryCodeMutation,
-  useRegistrationConfirmationMutation,
-  useRegistrationEmailResendingMutation,
-  useRegistrationMutation,
-} = authApi
+export const { useLoginMutation, useLogoutMutation, useMeQuery } = authApi

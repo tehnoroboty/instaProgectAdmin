@@ -35,5 +35,5 @@ export const AuthWrapper = ({ children }: Props) => {
     return <h1 className={s.h1}>Контент для авторизованных пользователей</h1>
   } //TODO: добавить ленту постов конкретного пользователя тут
 
-  return <>{children}</>
+  return <div className={s.content}>{children}</div>
 }

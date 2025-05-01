@@ -1,48 +1,11 @@
-import type {
-  GetCommentsResponse,
-  PublicPostsResponse,
-  UsersCountResponse,
-} from '@/src/shared/model/api/types'
-
-import { Post } from '@/src/entities/post/types'
-import { SearchParams, getUserComments, getUserPost } from '@/src/widgets/profile/getPublicProfile'
-import { PublicFeed } from '@/src/widgets/publicFeed/PublicFeed'
-import { getUsersCount, getUsersPosts } from '@/src/widgets/publicFeed/getPublicPosts'
+import LoginPage from '@/src/app/auth/login/page'
 
 import { AuthWrapper } from '../features/authWrapper/AuthWrapper'
 
-export default async function Page(props: {
-  params: { postId: string }
-  searchParams: SearchParams
-}) {
-  const publicPosts: PublicPostsResponse = await getUsersPosts()
-  const usersCount: UsersCountResponse = await getUsersCount()
-  const searchParams = await props.searchParams
-  const query = searchParams.postId
-  let post: Post | undefined = undefined
-  let comments: GetCommentsResponse | undefined = undefined
-
-  if (query) {
-    try {
-      ;[post, comments] = await Promise.all([
-        getUserPost(Number(query)),
-        getUserComments(Number(query)),
-      ])
-    } catch (error) {
-      console.error('Failed to fetch post:', error)
-    }
-  }
-
-  const publicFeedInfo = {
-    comments,
-    count: usersCount,
-    post,
-    posts: publicPosts,
-  }
-
+export default async function Page() {
   return (
     <AuthWrapper>
-      <PublicFeed info={publicFeedInfo} />
+      <LoginPage />
     </AuthWrapper>
   )
 }
