@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "codegen:watch": "graphql-codegen --watch",
     "dev": "next dev",
     "build": "next build",
     "build:production": "pnpm run build",
@@ -53,6 +54,12 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/client-preset": "^4.8.1",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@it-incubator/eslint-config": "^1.0.3",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^2.0.0",
@@ -82,6 +89,6 @@
     "stylelint": "^16.12.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-scss": "^6.10.0",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   }
 }
