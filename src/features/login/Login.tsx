@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormType, schema } from '@/src/features/login/validators'
 import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
+import { PATH } from '@/src/shared/lib/constants/routing'
 import { LoginError } from '@/src/shared/model/api/types'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Card } from '@/src/shared/ui/card/Card'
@@ -16,7 +17,6 @@ import { useRouter } from 'next/navigation'
 import s from './login.module.scss'
 
 export default function Login() {
-  //const [login, { isLoading }] = useLoginMutation()
   const [adminLogin, { loading }] = useLoginAdminMutation()
   const router = useRouter()
 
@@ -33,7 +33,6 @@ export default function Login() {
     mode: 'onBlur',
     resolver: zodResolver(schema),
   })
-  //const disabledButton = isLoading || !isValid || Object.keys(errors).length > 0
   const disabledButton = loading || !isValid || Object.keys(errors).length > 0
 
   const onSubmit: SubmitHandler<FormType> = async formData => {
@@ -49,7 +48,7 @@ export default function Login() {
         const credentials = btoa(`${formData.email}:${formData.password}`)
 
         localStorage.setItem('authorization', credentials)
-        // router.push(PATH.USERS_LIST)
+        router.push(PATH.USERS_LIST)
       }
 
       //router.push(AuthRoutes.HOME)
