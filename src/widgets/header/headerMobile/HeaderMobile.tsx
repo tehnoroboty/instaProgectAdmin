@@ -9,7 +9,7 @@ import {
   TrendingUpOutline,
 } from '@/src/shared/assets/componentsIcons'
 import { AuthRoutes } from '@/src/shared/lib/constants/routing'
-import { useLogoutMutation } from '@/src/shared/model/api/authApi'
+// import { useLogoutMutation } from '@/src/shared/model/api/authApi'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Dialog } from '@/src/shared/ui/dialog'
 import { Dropdown } from '@/src/shared/ui/dropdown/Dropdown'
@@ -31,7 +31,7 @@ type Props = {
 export const HeaderMobile = (props: Props) => {
   const { isLoggedIn = true, title } = props
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [logout, { isLoading }] = useLogoutMutation()
+  // const [logout, { isLoading }] = useLogoutMutation()
   const id = useId()
 
   const route = useRouter()
@@ -41,7 +41,7 @@ export const HeaderMobile = (props: Props) => {
   }
 
   const onLogoutConfirm = async () => {
-    await logout().unwrap()
+    // await logout().unwrap()
     setIsModalOpen(false)
     route.push(AuthRoutes.HOME)
   }
@@ -107,7 +107,7 @@ export const HeaderMobile = (props: Props) => {
                 <div className={s.modalActions}>
                   <Button
                     className={s.btnModal}
-                    disabled={isLoading}
+                    // disabled={isLoading}
                     onClick={onLogoutConfirm}
                     variant={'secondary'}
                   >

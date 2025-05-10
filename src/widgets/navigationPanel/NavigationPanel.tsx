@@ -13,19 +13,19 @@ import {
   TrendingUp,
   TrendingUpOutline,
 } from '@/src/shared/assets/componentsIcons'
-import { useMeQuery } from '@/src/shared/model/api/authApi'
+// import { useMeQuery } from '@/src/shared/model/api/authApi'
 import { MenuMobile } from '@/src/widgets/navigationPanel/menuMobile/MenuMobile'
 import Sidebar from '@/src/widgets/navigationPanel/sidebar/Sidebar'
 import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 
 export const NavigationPanel = () => {
-  const { data, isSuccess } = useMeQuery()
+  // const { data, isSuccess } = useMeQuery()
   const dispatch = useDispatch()
 
-  if (!isSuccess || !data) {
-    return null
-  }
-  const userId = data.userId
+  // if (!isSuccess || !data) {
+  //   return null
+  // }
+  // const userId = data.userId
 
   const menuItems: MenuItemType[] = [
     {
