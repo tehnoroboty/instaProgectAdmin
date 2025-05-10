@@ -14,10 +14,10 @@ export const schema = z.object({
   password: z
     .string()
     .nonempty(ERROR_MESSAGES.PASSWORD.REQUIRED)
-    .min(6, ERROR_MESSAGES.PASSWORD.MIN)
+    .min(4, ERROR_MESSAGES.PASSWORD.MIN)
     .max(20, ERROR_MESSAGES.PASSWORD.MAX)
-    .trim()
-    .regex(new RegExp(PASSWORD_REGEX), ERROR_MESSAGES.PASSWORD.FORMAT),
+    .trim(),
+  // .regex(new RegExp(PASSWORD_REGEX), ERROR_MESSAGES.PASSWORD.FORMAT),
 })
 
 export type FormType = z.infer<typeof schema>
