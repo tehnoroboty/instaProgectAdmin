@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormType, schema } from '@/src/features/login/validators'
 import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
-import { PATH } from '@/src/shared/lib/constants/routing'
 import { LoginError } from '@/src/shared/model/api/types'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Card } from '@/src/shared/ui/card/Card'
@@ -48,10 +47,8 @@ export default function Login() {
         const credentials = btoa(`${formData.email}:${formData.password}`)
 
         localStorage.setItem('authorization', credentials)
-        router.push(PATH.USERS_LIST)
+        router.push('/users-list')
       }
-
-      //router.push(AuthRoutes.HOME)
     } catch (err) {
       const { data } = err as LoginError
 
