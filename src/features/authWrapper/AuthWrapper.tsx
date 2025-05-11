@@ -2,8 +2,8 @@
 
 import { type ReactNode, useEffect } from 'react'
 
+import { useAuth } from '@/src/shared/hooks/useAuth'
 import { AuthRoutes } from '@/src/shared/lib/constants/routing'
-// import { useMeQuery } from '@/src/shared/model/api/authApi'
 import { Loader } from '@/src/shared/ui/loader/Loader'
 import { useRouter } from 'next/navigation'
 
@@ -15,25 +15,26 @@ type Props = {
 
 export const AuthWrapper = ({ children }: Props) => {
   const router = useRouter()
-  // const { data, isLoading, isSuccess } = useMeQuery()
+  const isAuth = useAuth()
 
-  // useEffect(() => {
-  //   if (isSuccess && data) {
-  //     router.push(AuthRoutes.HOME)
-  //   }
-  // }, [isSuccess, data])
-  //
-  // if (isLoading) {
-  //   return (
-  //     <div className={s.container}>
-  //       <Loader />
-  //     </div>
-  //   )
-  // }
-  //
-  // if (isSuccess) {
-  //   return <h1 className={s.h1}>Контент для авторизованных пользователей</h1>
-  // } //TODO: добавить ленту постов конкретного пользователя тут
+  useEffect(() => {
+    if (isAuth) {
+      router.push(AuthRoutes.HOME)
+    }
+  }, [isAuth, router])
 
-  return <div className={s.content}>{children}</div>
+  if (isAuth === null) {
+    // Проверка в процессе (первый рендер)
+    return (
+      <div className={s.container}>
+        <Loader />
+      </div>
+    )
+  }
+
+  if (isAuth) {
+    return <h1 className={s.h1}>Контент для авторизованных пользователей</h1>
+  }
+
+  return <>{children}</>
 }

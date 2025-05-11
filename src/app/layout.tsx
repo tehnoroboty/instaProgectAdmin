@@ -1,13 +1,9 @@
 import React from 'react'
 
 import { Providers } from '@/src/app/_providers/Providers'
-import { client } from '@/src/app/_providers/apollo-client'
-import { StoreWrapper } from '@/src/shared/model/store/StoreWrapper'
 import { CommonAlert } from '@/src/shared/ui/alerts/CommonAlert'
 import { ProgressBar } from '@/src/shared/ui/progressBar/ProgressBar'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { Header } from '@/src/widgets/header/Header'
-import { ApolloProvider } from '@apollo/client'
 import { Metadata } from 'next'
 
 import '@/src/shared/styles/index.scss'
