@@ -5,7 +5,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormType, schema } from '@/src/features/login/validators'
 import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
 import { LoginError } from '@/src/shared/model/api/types'
+import { clearAuth, setAuth } from '@/src/shared/model/slices/authSlice'
+import { useAppDispatch } from '@/src/shared/model/store/store'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Card } from '@/src/shared/ui/card/Card'
 import { Input } from '@/src/shared/ui/input'
@@ -18,7 +21,7 @@ import s from './login.module.scss'
 export default function Login() {
   const [adminLogin, { loading }] = useLoginAdminMutation()
   const router = useRouter()
-
+  const dispatch = useAppDispatch()
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -47,9 +50,12 @@ export default function Login() {
         const credentials = btoa(`${formData.email}:${formData.password}`)
 
         localStorage.setItem('authorization', credentials)
-        router.push('/users-list')
+
+        dispatch(setAuth({ isAuth: true }))
+        router.push(AppRoutes.USERS_LIST)
       }
     } catch (err) {
+      dispatch(clearAuth())
       const { data } = err as LoginError
 
       setError('password', { message: data.messages, type: 'manual' })
@@ -61,10 +67,6 @@ export default function Login() {
       <Card className={s.card}>
         <Typography className={s.title} option={'h1'}>
           {'Sign In'}
-          <br />
-          e-mail: admin@gmail.com
-          <br />
-          pass: admin
         </Typography>
         <form className={s.boxInputs} onSubmit={handleSubmit(onSubmit)}>
           <Input

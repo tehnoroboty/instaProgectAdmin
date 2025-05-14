@@ -8,7 +8,7 @@ import {
   SettingsOutline,
   TrendingUpOutline,
 } from '@/src/shared/assets/componentsIcons'
-import { AuthRoutes } from '@/src/shared/lib/constants/routing'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
 // import { useLogoutMutation } from '@/src/shared/model/api/authApi'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Dialog } from '@/src/shared/ui/dialog'
@@ -43,7 +43,7 @@ export const HeaderMobile = (props: Props) => {
   const onLogoutConfirm = async () => {
     // await logout().unwrap()
     setIsModalOpen(false)
-    route.push(AuthRoutes.HOME)
+    route.push(AppRoutes.HOME)
   }
 
   const menuHeaderMobile: MenuItemType[] = [
@@ -84,7 +84,7 @@ export const HeaderMobile = (props: Props) => {
 
   return (
     <div className={s.container}>
-      <Link href={AuthRoutes.HOME}>
+      <Link href={AppRoutes.HOME}>
         <Typography as={'h1'} option={'Large'}>
           {title}
         </Typography>

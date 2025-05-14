@@ -1,13 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+
+import { useAppDispatch, useAppSelector } from '@/src/shared/model/store/store'
+
+import { setAuth } from '../model/slices/authSlice'
 
 export const useAuth = () => {
-  const [isAuth, setIsAuth] = useState<boolean | null>(null)
+  const dispatch = useAppDispatch()
+  const { authChecked, isAuth } = useAppSelector(state => state.auth)
 
   useEffect(() => {
-    const token = localStorage.getItem('authorization')
+    if (!authChecked) {
+      const token = localStorage.getItem('authorization')
 
-    setIsAuth(!!token)
-  }, [])
+      dispatch(setAuth({ isAuth: !!token }))
+    }
+  }, [dispatch, authChecked])
 
-  return isAuth
+  return { authChecked, isAuth }
 }

@@ -3,7 +3,7 @@
 import { type ReactNode, useEffect } from 'react'
 
 import { useAuth } from '@/src/shared/hooks/useAuth'
-import { AuthRoutes } from '@/src/shared/lib/constants/routing'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
 import { Loader } from '@/src/shared/ui/loader/Loader'
 import { useRouter } from 'next/navigation'
 
@@ -19,7 +19,7 @@ export const AuthWrapper = ({ children }: Props) => {
 
   useEffect(() => {
     if (isAuth) {
-      router.push(AuthRoutes.HOME)
+      router.push(AppRoutes.HOME)
     }
   }, [isAuth, router])
 
