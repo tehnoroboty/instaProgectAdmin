@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import { Loader } from '../shared/ui/loader/Loader'
 
-export default function HomePage() {
+export default function Page() {
   const router = useRouter()
   const { authChecked, isAuth } = useAuth()
 
