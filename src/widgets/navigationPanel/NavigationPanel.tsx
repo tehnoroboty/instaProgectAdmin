@@ -18,9 +18,9 @@ import Sidebar from '@/src/widgets/navigationPanel/sidebar/Sidebar'
 import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 
 export const NavigationPanel = () => {
-  const isAuth = useAuth()
+  const { authChecked, isAuth } = useAuth()
 
-  if (!isAuth) {
+  if (!authChecked || !isAuth) {
     return null
   }
 
