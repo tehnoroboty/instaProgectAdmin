@@ -15,25 +15,26 @@ type Props = {
 
 export const AuthWrapper = ({ children }: Props) => {
   const router = useRouter()
-  const isAuth = useAuth()
+  const { authChecked, isAuth } = useAuth()
 
   useEffect(() => {
-    if (isAuth) {
-      router.push(AppRoutes.HOME)
+    if (!authChecked) {
+      return
     }
-  }, [isAuth, router])
 
-  if (isAuth === null) {
-    // Проверка в процессе (первый рендер)
+    if (isAuth) {
+      router.push(AppRoutes.USERS_LIST)
+    } else {
+      router.push(AppRoutes.LOGIN)
+    }
+  }, [authChecked, isAuth, router])
+
+  if (!authChecked) {
     return (
       <div className={s.container}>
         <Loader />
       </div>
     )
-  }
-
-  if (isAuth) {
-    return <h1 className={s.h1}>Контент для авторизованных пользователей</h1>
   }
 
   return <>{children}</>

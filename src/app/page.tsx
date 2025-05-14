@@ -1,28 +1,5 @@
-'use client'
-
-import { useEffect } from 'react'
-
-import { useAuth } from '@/src/shared/hooks/useAuth'
-import { AppRoutes } from '@/src/shared/lib/constants/routing'
-import { useRouter } from 'next/navigation'
-
-import { Loader } from '../shared/ui/loader/Loader'
+import { AuthWrapper } from '@/src/features/authWrapper/AuthWrapper'
 
 export default function Page() {
-  const router = useRouter()
-  const { authChecked, isAuth } = useAuth()
-
-  useEffect(() => {
-    if (!authChecked) {
-      return
-    }
-
-    router.push(isAuth ? AppRoutes.USERS_LIST : AppRoutes.LOGIN)
-  }, [isAuth, authChecked, router])
-
-  if (!authChecked) {
-    return <Loader />
-  }
-
-  return null
+  return <AuthWrapper>{null}</AuthWrapper>
 }
