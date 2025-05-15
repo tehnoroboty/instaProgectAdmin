@@ -1,5 +1,5 @@
-import { UsersList } from '@/src/features/usersList/UsersList'
+import { ShowUsersList } from '@/src/features/showUsersList/showUsersList'
 
 export default function UsersListPage() {
-  return <UsersList />
+  return <ShowUsersList />
 }
