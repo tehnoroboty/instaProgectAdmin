@@ -22,9 +22,13 @@ const SELECT_OPTIONS = [
 ]
 
 export const ShowUsersList = () => {
+  const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
+
   const variables: QueryGetUsersArgs = {
-    pageNumber: 1,
-    pageSize: USERS_PER_PAGE,
+    pageNumber: currentPage,
+    pageSize: pageSize,
     searchTerm: '',
     sortBy: 'createdAt',
     sortDirection: SortDirection.Desc,
@@ -35,13 +39,20 @@ export const ShowUsersList = () => {
   const [transformedData, setTransformedData] = useState<TableUser[]>([])
 
   useEffect(() => {
-    if (data && data.getUsers) {
-      const transformed = usersDataTransform(data.getUsers.users)
+    if (data) {
+      if (data.getUsers) {
+        console.log(data.getUsers.users)
+        const transformed = usersDataTransform(data.getUsers.users)
 
-      setTransformedData(transformed)
-      console.log(transformed)
-    } else {
-      setTransformedData([])
+        setTransformedData(transformed)
+        console.log(transformed)
+      } else {
+        setTransformedData([])
+      }
+
+      if (data.getUsers.pagination) {
+        setTotalPagesCount(data.getUsers.pagination.pagesCount)
+      }
     }
   }, [data])
 
@@ -54,11 +65,11 @@ export const ShowUsersList = () => {
       <UsersTable data={transformedData} refetch={refetch} />
       <Pagination
         className={s.pagination}
-        currentPage={1}
-        onPageChange={() => {}}
-        onPageSizeChange={() => console.log('page change')}
+        currentPage={currentPage}
+        onPageChange={prev => setCurrentPage(prev.valueOf())}
+        onPageSizeChange={prev => setPageSize(prev.valueOf())}
         pageSize={USERS_PER_PAGE}
-        totalCount={10}
+        totalCount={totalPagesCount}
       />
     </div>
   )

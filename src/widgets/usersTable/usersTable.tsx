@@ -4,8 +4,11 @@ import { useState } from 'react'
 
 import { ConfirmationModal } from '@/src/features/modals/сonfirmationModal/ConfirmationModal'
 import { useRemoveUserMutation } from '@/src/queries/user/removeUser.generated'
+import { Block } from '@/src/shared/assets/componentsIcons'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { UsersListDropdown } from '@/src/widgets/UsersListDropdown/UsersListDropdown'
+import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
+
+import s from './usersTable.module.scss'
 
 type Props = {
   data: TableUser[]
@@ -13,15 +16,10 @@ type Props = {
 }
 
 export const UsersTable = ({ data, refetch }: Props) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [showBanModal, setShowBanModal] = useState(false)
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteUser, { loading }] = useRemoveUserMutation()
 
-  const handleBanUser = (user: TableUser) => {
-    setSelectedUser(user)
-    setShowBanModal(true)
-  }
   const handleDeleteUser = (user: TableUser) => {
     setSelectedUser(user)
     setShowDeleteModal(true)
@@ -69,14 +67,21 @@ export const UsersTable = ({ data, refetch }: Props) => {
         {data.map((item, index) => {
           return (
             <TableRow key={index}>
-              <TableCell>{item.id}</TableCell>
+              <TableCell className={s.idCell}>
+                <div className={s.flexContainer}>
+                  {item.isBlocked && <Block className={s.blockIcon} />}
+                  <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
+                </div>
+              </TableCell>
               <TableCell>{item.userName}</TableCell>
               <TableCell>{item.profileLink}</TableCell>
               <TableCell>{item.createdAt}</TableCell>
               <TableCell>
-                <UsersListDropdown
-                  onBanUser={() => handleBanUser(item)}
-                  onDeleteUser={() => handleDeleteUser(item)}
+                <DropdownTable
+                  isBanned={item.isBlocked}
+                  onBanEdit={() => {}}
+                  onDelete={() => handleDeleteUser(item)}
+                  onView={() => {}}
                 />
               </TableCell>
             </TableRow>
