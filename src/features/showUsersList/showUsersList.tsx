@@ -20,9 +20,12 @@ const SELECT_OPTIONS = [
     {value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked'}]
 
 export const ShowUsersList = () => {
+    const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+
     const variables: QueryGetUsersArgs = {
         "pageSize": USERS_PER_PAGE,
-        "pageNumber": 1,
+        "pageNumber": currentPage,
         "sortBy": "createdAt",
         "sortDirection": SortDirection.Desc,
         "searchTerm": "",
@@ -33,13 +36,21 @@ export const ShowUsersList = () => {
     const [transformedData, setTransformedData] = useState<TableUser[]>([])
 
     useEffect(() => {
-        if (data && data.getUsers) {
-            const transformed = usersDataTransform(data.getUsers.users)
-            setTransformedData(transformed)
-            console.log(transformed)
-        } else {
-            setTransformedData([])
+        if (data) {
+            if (data.getUsers) {
+                console.log(data.getUsers.users)
+                const transformed = usersDataTransform(data.getUsers.users)
+                setTransformedData(transformed)
+                console.log(transformed)
+            } else {
+                setTransformedData([])
+            }
+
+            if (data.getUsers.pagination) {
+                setTotalPagesCount(data.getUsers.pagination.pagesCount)
+            }
         }
+
     }, [data])
 
     return (
@@ -49,8 +60,7 @@ export const ShowUsersList = () => {
                 <SelectBox className={s.selector} options={SELECT_OPTIONS}/>
             </div>
             <UsersTable data={transformedData}/>
-            <Pagination className={s.pagination} currentPage={1} totalCount={10} onPageChange={() => {
-            }} onPageSizeChange={() => console.log('page change')} pageSize={USERS_PER_PAGE}/>
+            <Pagination className={s.pagination} currentPage={currentPage} totalCount={totalPagesCount} onPageChange={(prev) => setCurrentPage(prev.valueOf())} onPageSizeChange={() => console.log('page size change')} pageSize={USERS_PER_PAGE}/>
         </div>
     )
 }
