@@ -1,6 +1,8 @@
 import {Table, TableBody, TableCell, TableHeader, TableRow} from "@/src/shared/ui/table";
 import type {TableUser} from "@/src/shared/types/types";
-
+import {DropdownTable} from "@/src/widgets/dropdownTable/dropdownTable";
+import {Block} from '@/src/shared/assets/componentsIcons'
+import s from './usersTable.module.scss'
 
 
 type Props = {
@@ -22,11 +24,18 @@ export const UsersTable = ({data}: Props) => {
             <TableBody>
                 { data.map((item, index) => {
                     return <TableRow key={index}>
-                        <TableCell>{item.id}</TableCell>
+                        <TableCell className={s.idCell}>
+                            <div className={s.flexContainer}>
+                                {item.isBlocked && <Block className={s.blockIcon} />}
+                                <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
+                            </div>
+                        </TableCell>
                         <TableCell>{item.userName}</TableCell>
                         <TableCell>{item.profileLink}</TableCell>
                         <TableCell>{item.createdAt}</TableCell>
-                        <TableCell></TableCell>
+                        <TableCell>
+                            <DropdownTable isBanned={item.isBlocked} onDelete={() => {}} onBanEdit={() => {}} onView={() => {}}/>
+                        </TableCell>
                     </TableRow>
                 })}
             </TableBody>
