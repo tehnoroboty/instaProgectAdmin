@@ -30,7 +30,7 @@ export const ShowUsersList = () => {
     sortDirection: SortDirection.Desc,
     statusFilter: UserBlockStatus.All,
   }
-  const { data, error, loading } = useGetUsersQuery({ variables })
+  const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
   const [transformedData, setTransformedData] = useState<TableUser[]>([])
 
@@ -51,7 +51,7 @@ export const ShowUsersList = () => {
         <Input className={s.searchInput} placeholder={'Search'} />
         <SelectBox className={s.selector} options={SELECT_OPTIONS} />
       </div>
-      <UsersTable data={transformedData} />
+      <UsersTable data={transformedData} refetch={refetch} />
       <Pagination
         className={s.pagination}
         currentPage={1}
