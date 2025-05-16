@@ -22,9 +22,10 @@ const SELECT_OPTIONS = [
 export const ShowUsersList = () => {
     const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
     const [currentPage, setCurrentPage] = useState<number>(1)
+    const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
 
     const variables: QueryGetUsersArgs = {
-        "pageSize": USERS_PER_PAGE,
+        "pageSize": pageSize,
         "pageNumber": currentPage,
         "sortBy": "createdAt",
         "sortDirection": SortDirection.Desc,
@@ -60,7 +61,7 @@ export const ShowUsersList = () => {
                 <SelectBox className={s.selector} options={SELECT_OPTIONS}/>
             </div>
             <UsersTable data={transformedData}/>
-            <Pagination className={s.pagination} currentPage={currentPage} totalCount={totalPagesCount} onPageChange={(prev) => setCurrentPage(prev.valueOf())} onPageSizeChange={() => console.log('page size change')} pageSize={USERS_PER_PAGE}/>
+            <Pagination className={s.pagination} currentPage={currentPage} totalCount={totalPagesCount} onPageChange={(prev) => setCurrentPage(prev.valueOf())} onPageSizeChange={(prev) => setPageSize(prev.valueOf())} pageSize={USERS_PER_PAGE}/>
         </div>
     )
 }
