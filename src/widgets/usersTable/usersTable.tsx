@@ -39,6 +39,7 @@ export const UsersTable = ({ data, refetch }: Props) => {
     } catch (err) {
       const error = err as ApolloError
 
+      console.log(error)
       dispatch(setAppError({ error: error.message }))
     }
   }
