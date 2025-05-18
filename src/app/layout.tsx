@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { StoreWrapper } from '@/src/shared/model/store/StoreWrapper'
+import { Providers } from '@/src/app/_providers/Providers'
 import { CommonAlert } from '@/src/shared/ui/alerts/CommonAlert'
 import { ProgressBar } from '@/src/shared/ui/progressBar/ProgressBar'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { Header } from '@/src/widgets/header/Header'
 import { Metadata } from 'next'
 
@@ -32,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang={'en'}>
       <body>
-        <StoreWrapper>
+        <Providers>
           <div className={'main-layout'}>
             <Header title={'Momenttify'} />
             <ProgressBar />
@@ -42,7 +41,7 @@ export default function RootLayout({
             </div>
           </div>
           <CommonAlert />
-        </StoreWrapper>
+        </Providers>
       </body>
     </html>
   )

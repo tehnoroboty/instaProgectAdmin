@@ -10,8 +10,8 @@ export default function AuthLayout({
   children: React.ReactNode
 }>) {
   return (
-    <>
+    <AuthWrapper>
       <div className={s.container}>{children}</div>
-    </>
+    </AuthWrapper>
   )
 }
