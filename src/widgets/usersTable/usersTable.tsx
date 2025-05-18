@@ -1,12 +1,16 @@
 import type { TableUser } from '@/src/shared/types/types'
 
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { ConfirmationModal } from '@/src/features/modals/сonfirmationModal/ConfirmationModal'
 import { useRemoveUserMutation } from '@/src/queries/user/removeUser.generated'
 import { Block } from '@/src/shared/assets/componentsIcons'
+import { LoginError } from '@/src/shared/model/api/types'
+import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
+import { ApolloError } from '@apollo/client'
 
 import s from './usersTable.module.scss'
 
@@ -19,7 +23,7 @@ export const UsersTable = ({ data, refetch }: Props) => {
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteUser, { loading }] = useRemoveUserMutation()
-
+  const dispatch = useDispatch()
   const handleDeleteUser = (user: TableUser) => {
     setSelectedUser(user)
     setShowDeleteModal(true)
@@ -34,7 +38,11 @@ export const UsersTable = ({ data, refetch }: Props) => {
       setSelectedUser(null)
       refetch()
     } catch (err) {
-      console.error('Error deleting user:', err)
+      const error = err as ApolloError
+      // const { data } = err as LoginError
+
+      dispatch(setAppError({ error: error.message }))
+      //console.log(typeof error.message)
     }
   }
 
