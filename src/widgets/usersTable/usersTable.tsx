@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import { ConfirmationModal } from '@/src/features/modals/сonfirmationModal/ConfirmationModal'
 import { useRemoveUserMutation } from '@/src/queries/user/removeUser.generated'
 import { Block } from '@/src/shared/assets/componentsIcons'
-import { LoginError } from '@/src/shared/model/api/types'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
@@ -39,10 +38,8 @@ export const UsersTable = ({ data, refetch }: Props) => {
       refetch()
     } catch (err) {
       const error = err as ApolloError
-      // const { data } = err as LoginError
 
       dispatch(setAppError({ error: error.message }))
-      //console.log(typeof error.message)
     }
   }
 
