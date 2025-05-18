@@ -1,5 +1,3 @@
-export enum AppRoutes {
+export enum AuthRoutes {
   HOME = '/',
-  LOGIN = '/auth/login',
-  USERS_LIST = '/users-list',
 }

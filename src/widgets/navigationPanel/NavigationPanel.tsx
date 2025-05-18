@@ -1,6 +1,7 @@
 // @flow
 'use client'
 import * as React from 'react'
+import { useDispatch } from 'react-redux'
 
 import {
   CreditCard,
@@ -12,21 +13,23 @@ import {
   TrendingUp,
   TrendingUpOutline,
 } from '@/src/shared/assets/componentsIcons'
-import { useAuth } from '@/src/shared/hooks/useAuth'
+import { useMeQuery } from '@/src/shared/model/api/authApi'
 import { MenuMobile } from '@/src/widgets/navigationPanel/menuMobile/MenuMobile'
 import Sidebar from '@/src/widgets/navigationPanel/sidebar/Sidebar'
 import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 
 export const NavigationPanel = () => {
-  const { authChecked, isAuth } = useAuth()
+  const { data, isSuccess } = useMeQuery()
+  const dispatch = useDispatch()
 
-  if (!authChecked || !isAuth) {
+  if (!isSuccess || !data) {
     return null
   }
+  const userId = data.userId
 
   const menuItems: MenuItemType[] = [
     {
-      href: '/users-list',
+      href: '/user-list',
       icon: PersonOutline,
       iconActive: Person,
       title: 'Users List',

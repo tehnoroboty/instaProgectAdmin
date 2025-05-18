@@ -2,8 +2,8 @@
 
 import { ComponentPropsWithoutRef, useEffect } from 'react'
 
-import { AppRoutes } from '@/src/shared/lib/constants/routing'
-// import { useMeQuery } from '@/src/shared/model/api/authApi'
+import { AuthRoutes } from '@/src/shared/lib/constants/routing'
+import { useMeQuery } from '@/src/shared/model/api/authApi'
 import { HeaderMobile } from '@/src/widgets/header/headerMobile/HeaderMobile'
 import { HeaderWeb } from '@/src/widgets/header/headerWeb/HeaderWeb'
 import { useRouter } from 'next/navigation'
