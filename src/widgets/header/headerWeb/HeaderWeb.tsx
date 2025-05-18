@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react'
 
-import { AppRoutes } from '@/src/shared/lib/constants/routing'
+import { AuthRoutes } from '@/src/shared/lib/constants/routing'
 import { SelectLanguage } from '@/src/shared/ui/select/SelectLanguage/SelectLanguage'
 import { Typography } from '@/src/shared/ui/typography/Typography'
 import Link from 'next/link'
@@ -17,7 +17,7 @@ export const HeaderWeb = (props: Props) => {
 
   return (
     <div className={s.container}>
-      <Link href={AppRoutes.HOME} style={{ alignItems: 'flex-end', display: 'flex' }}>
+      <Link href={AuthRoutes.HOME} style={{ alignItems: 'flex-end', display: 'flex' }}>
         <Typography as={'h1'} option={'Large'}>
           {title}
         </Typography>

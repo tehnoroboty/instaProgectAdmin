@@ -4,11 +4,9 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormType, schema } from '@/src/features/login/validators'
-import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
-import { AppRoutes } from '@/src/shared/lib/constants/routing'
+import { AuthRoutes } from '@/src/shared/lib/constants/routing'
+import { useLoginMutation } from '@/src/shared/model/api/authApi'
 import { LoginError } from '@/src/shared/model/api/types'
-import { clearAuth, setAuth } from '@/src/shared/model/slices/authSlice'
-import { useAppDispatch } from '@/src/shared/model/store/store'
 import { Button } from '@/src/shared/ui/button/Button'
 import { Card } from '@/src/shared/ui/card/Card'
 import { Input } from '@/src/shared/ui/input'
@@ -19,9 +17,10 @@ import { useRouter } from 'next/navigation'
 import s from './login.module.scss'
 
 export default function Login() {
-  const [adminLogin, { loading }] = useLoginAdminMutation()
+  const [login, { isLoading }] = useLoginMutation()
+
   const router = useRouter()
-  const dispatch = useAppDispatch()
+
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -29,33 +28,20 @@ export default function Login() {
     setError,
   } = useForm<FormType>({
     defaultValues: {
-      email: 'admin@gmail.com',
-      password: 'admin',
+      email: 'tehnoroboty@gmail.com',
+      password: 'qwQW12!',
     },
     mode: 'onBlur',
     resolver: zodResolver(schema),
   })
-  const disabledButton = loading || !isValid || Object.keys(errors).length > 0
+  const disabledButton = isLoading || !isValid || Object.keys(errors).length > 0
 
   const onSubmit: SubmitHandler<FormType> = async formData => {
     try {
-      const { data } = await adminLogin({
-        variables: {
-          email: formData.email,
-          password: formData.password,
-        },
-      })
+      await login(formData).unwrap()
 
-      if (data?.loginAdmin.logged) {
-        const credentials = btoa(`${formData.email}:${formData.password}`)
-
-        localStorage.setItem('authorization', credentials)
-
-        dispatch(setAuth({ isAuth: true }))
-        router.push(AppRoutes.USERS_LIST)
-      }
+      router.push(AuthRoutes.HOME)
     } catch (err) {
-      dispatch(clearAuth())
       const { data } = err as LoginError
 
       setError('password', { message: data.messages, type: 'manual' })
@@ -67,6 +53,10 @@ export default function Login() {
       <Card className={s.card}>
         <Typography className={s.title} option={'h1'}>
           {'Sign In'}
+          <br />
+          e-mail: tehnoroboty@gmail.com
+          <br />
+          pass: qwQW12!
         </Typography>
         <form className={s.boxInputs} onSubmit={handleSubmit(onSubmit)}>
           <Input

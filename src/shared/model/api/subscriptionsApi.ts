@@ -7,15 +7,6 @@ import { baseApi } from '@/src/shared/model/api/baseApi'
 
 export const subscriptionsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    canceledAutoRenewal: builder.mutation<void, void>({
-      invalidatesTags: ['PAYMENTS'],
-      query: () => {
-        return {
-          method: 'POST',
-          url: '/subscriptions/canceled-auto-renewal',
-        }
-      },
-    }),
     createSubscription: builder.mutation<{ url: string }, RequestSubscriptionType>({
       query: body => {
         return {
@@ -32,12 +23,17 @@ export const subscriptionsApi = baseApi.injectEndpoints({
     myPayments: builder.query<ResponseMyPaymentsType, void>({
       query: () => 'subscriptions/my-payments',
     }),
+    canceledAutoRenewal: builder.mutation<void, void>({
+      invalidatesTags: ['PAYMENTS'],
+      query: () => {
+        return {
+          method: 'POST',
+          url: '/subscriptions/canceled-auto-renewal',
+        }
+      },
+    }),
   }),
 })
 
-export const {
-  useCanceledAutoRenewalMutation,
-  useCreateSubscriptionMutation,
-  useCurrentPaymentsQuery,
-  useMyPaymentsQuery,
-} = subscriptionsApi
+export const { useCreateSubscriptionMutation, useCurrentPaymentsQuery, useMyPaymentsQuery ,useCanceledAutoRenewalMutation} =
+  subscriptionsApi

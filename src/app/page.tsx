@@ -1,5 +1,11 @@
-import { AuthWrapper } from '@/src/features/authWrapper/AuthWrapper'
+import LoginPage from '@/src/app/auth/login/page'
 
-export default function Page() {
-  return <AuthWrapper>{null}</AuthWrapper>
+import { AuthWrapper } from '../features/authWrapper/AuthWrapper'
+
+export default async function Page() {
+  return (
+    <AuthWrapper>
+      <LoginPage />
+    </AuthWrapper>
+  )
 }

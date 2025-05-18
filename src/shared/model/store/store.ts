@@ -1,17 +1,19 @@
 import { type TypedUseSelectorHook, useDispatch, useSelector, useStore } from 'react-redux'
 
+import { baseApi } from '@/src/shared/model/api/baseApi'
 import { appReducer, appSlice } from '@/src/shared/model/slices/appSlice'
-import { authReducer, authSlice } from '@/src/shared/model/slices/authSlice'
 import { modalReducer, modalSlice } from '@/src/shared/model/slices/modalSlice'
 import { postsReducer, postsSlice } from '@/src/shared/model/slices/postsSlice'
 import { configureStore } from '@reduxjs/toolkit'
+// import {authApi} from "@/src/shared/model/api/authApi";
 
 export const initializeStore = () => {
   return configureStore({
-    middleware: getDefaultMiddleware => getDefaultMiddleware(),
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
     reducer: {
       [appSlice.name]: appReducer,
-      [authSlice.name]: authReducer,
+      [baseApi.reducerPath]: baseApi.reducer,
+      // [authApi.reducerPath]: authApi.reducer,
       [modalSlice.name]: modalReducer,
       [postsSlice.name]: postsReducer,
     },
