@@ -40,7 +40,7 @@ export const DeleteUserModal = ({
       modalTitle={'Delete user'}
       onClickNo={() => setShowDeleteModal(false)}
       onCloseModal={() => setShowDeleteModal(false)}
-      onCloseParentModal={() => {}}
+      onCloseParentModal={onDeleteUser}
       open={showDeleteModal}
     />
   )
