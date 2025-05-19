@@ -11,6 +11,8 @@ import {Input} from "@/src/shared/ui/input";
 import s from './showUsersList.module.scss'
 import {type ChangeEvent, useEffect, useMemo, useState} from "react";
 import debounce from "lodash/debounce";
+import type {SortColumn} from "@/src/shared/ui/sortButton/SortButton";
+
 
 
 const USERS_PER_PAGE = 8;
@@ -25,12 +27,14 @@ export const ShowUsersList = () => {
     const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
     const [searchTerm, setSearchTerm] = useState<string>('')
     const [transformedData, setTransformedData] = useState<TableUser[]>([])
+    const [sortBy, setSortBy] = useState<SortColumn>("createdAt")
+    const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
 
     const variables: QueryGetUsersArgs = {
         pageSize,
         pageNumber: currentPage,
-        sortBy: "createdAt",
-        sortDirection: SortDirection.Desc,
+        sortBy,
+        sortDirection,
         searchTerm,
         statusFilter: UserBlockStatus.All
     }
@@ -62,6 +66,11 @@ export const ShowUsersList = () => {
         handleSearch(value)
     }
 
+    const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
+        setSortBy(column)
+        setSortDirection(currentSort)
+    }
+
     return (
         <div className={s.container}>
             <div className={s.header}>
@@ -69,7 +78,7 @@ export const ShowUsersList = () => {
                 }/>
                 <SelectBox className={s.selector} options={SELECT_OPTIONS}/>
             </div>
-            <UsersTable data={transformedData} refetch={refetch}/>
+            <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange}/>
             <Pagination className={s.pagination} currentPage={currentPage} totalCount={totalPagesCount}
                         onPageChange={(prev) => setCurrentPage(prev.valueOf())}
                         onPageSizeChange={(prev) => setPageSize(prev.valueOf())} pageSize={USERS_PER_PAGE}/>

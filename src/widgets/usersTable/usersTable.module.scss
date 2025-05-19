@@ -7,3 +7,9 @@
 .idWithoutIcon {
   margin-left: 36px;
 }
+
+.tableHeaderCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
