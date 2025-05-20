@@ -47,7 +47,7 @@ export const UsersTable = ({ data, refetch }: Props) => {
     return (
       <ConfirmationModal
         loading={loading}
-        modalMessage={`Are you sure you want to delete ${selectedUser.userName}?`}
+        modalMessage={`Are you sure you want to delete ${selectedUser.profileLink}?`}
         modalTitle={'Delete user'}
         onClickNo={() => setShowDeleteModal(false)}
         onCloseModal={() => setShowDeleteModal(false)}
