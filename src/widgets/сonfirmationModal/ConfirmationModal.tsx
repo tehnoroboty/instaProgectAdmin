@@ -38,11 +38,11 @@ export const ConfirmationModal = ({
       <div>
         <Typography option={'regular_text16'}>{modalMessage}</Typography>
         <div className={s.additionalModalBtns}>
-          <Button className={s.btn} disabled={loading} onClick={onClickYes} variant={'bordered'}>
-            {'Yes'}
-          </Button>
           <Button className={s.btn} disabled={loading} onClick={onClickNo} variant={'primary'}>
             {'No'}
+          </Button>
+          <Button className={s.btn} disabled={loading} onClick={onClickYes} variant={'bordered'}>
+            {'Yes'}
           </Button>
         </div>
       </div>

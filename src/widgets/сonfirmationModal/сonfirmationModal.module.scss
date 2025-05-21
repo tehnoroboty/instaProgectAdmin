@@ -1,6 +1,7 @@
 .additionalModal {
-  width: min(55%, 450px);
-
+  //width: min(55%, 450px);
+  min-width: 21%;
+  width: 21%;
   hr {
     margin-top: 12px;
     margin-bottom: 30px;
@@ -32,6 +33,6 @@
 .additionalModalBtns {
   display: flex;
   gap: 24px;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin-top: 30px;
 }
