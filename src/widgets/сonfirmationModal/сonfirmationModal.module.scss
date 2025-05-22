@@ -1,7 +1,6 @@
 .additionalModal {
-  //width: min(55%, 450px);
-  min-width: 21%;
-  width: 21%;
+  min-width: 378px;
+  width: 25%;
   hr {
     margin-top: 12px;
     margin-bottom: 30px;
@@ -25,7 +24,7 @@
 }
 
 .btn {
-  width: 96px;
+  width: 130px;
   padding: 5px 23px;
   line-height: 150%;
 }
@@ -34,5 +33,5 @@
   display: flex;
   gap: 24px;
   justify-content: space-between;
-  margin-top: 30px;
+  margin-top: 42px;
 }

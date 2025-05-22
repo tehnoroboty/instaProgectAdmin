@@ -7,6 +7,7 @@ import { useRemoveUserMutation } from '@/src/queries/user/removeUser.generated'
 import { Block } from '@/src/shared/assets/componentsIcons'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
+import { Typography } from '@/src/shared/ui/typography/Typography'
 import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
 import { ConfirmationModal } from '@/src/widgets/сonfirmationModal/ConfirmationModal'
 import { ApolloError } from '@apollo/client'
@@ -84,7 +85,15 @@ export const UsersTable = ({ data, refetch }: Props) => {
       {showDeleteModal && selectedUser && (
         <ConfirmationModal
           loading={loading}
-          modalMessage={`Are you sure you want to delete ${selectedUser.profileLink}?`}
+          modalMessage={
+            <>
+              Are you sure you want to delete{' '}
+              <Typography as={'span'} option={'bold_text16'}>
+                {selectedUser.profileLink}
+              </Typography>
+              ?
+            </>
+          }
           modalTitle={'Delete user'}
           onClickNo={() => setShowDeleteModal(false)}
           onCloseModal={() => setShowDeleteModal(false)}
