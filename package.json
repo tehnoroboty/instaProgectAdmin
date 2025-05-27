@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "codegen:watch": "graphql-codegen --watch",
     "dev": "next dev",
     "build": "next build",
     "build:production": "pnpm run build",
@@ -15,6 +16,7 @@
     "lint:styles": "stylelint '**/*.{css,scss}' --fix"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@fontsource-variable/inter": "^5.1.0",
     "@fontsource/roboto": "^5.1.0",
     "@hookform/resolvers": "^3.9.1",
@@ -34,6 +36,7 @@
     "async-mutex": "^0.5.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "graphql": "^16.11.0",
     "next": "14.2.21",
     "nprogress": "^0.2.0",
     "react": "^18",
@@ -51,6 +54,12 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.3",
+    "@graphql-codegen/cli": "^5.0.6",
+    "@graphql-codegen/client-preset": "^4.8.1",
+    "@graphql-codegen/near-operation-file-preset": "^3.0.0",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-operations": "^4.6.1",
+    "@graphql-codegen/typescript-react-apollo": "^4.3.2",
     "@it-incubator/eslint-config": "^1.0.3",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^2.0.0",
@@ -80,6 +89,6 @@
     "stylelint": "^16.12.0",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-scss": "^6.10.0",
-    "typescript": "^5"
+    "typescript": "^5.7.3"
   }
 }

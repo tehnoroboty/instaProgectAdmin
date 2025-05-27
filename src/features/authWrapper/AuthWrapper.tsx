@@ -2,8 +2,8 @@
 
 import { type ReactNode, useEffect } from 'react'
 
-import { AuthRoutes } from '@/src/shared/lib/constants/routing'
-import { useMeQuery } from '@/src/shared/model/api/authApi'
+import { useAuth } from '@/src/shared/hooks/useAuth'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
 import { Loader } from '@/src/shared/ui/loader/Loader'
 import { useRouter } from 'next/navigation'
 
@@ -15,15 +15,21 @@ type Props = {
 
 export const AuthWrapper = ({ children }: Props) => {
   const router = useRouter()
-  const { data, isLoading, isSuccess } = useMeQuery()
+  const { authChecked, isAuth } = useAuth()
 
   useEffect(() => {
-    if (isSuccess && data) {
-      router.push(AuthRoutes.HOME)
+    if (!authChecked) {
+      return
     }
-  }, [isSuccess, data])
 
-  if (isLoading) {
+    if (isAuth) {
+      router.push(AppRoutes.USERS_LIST)
+    } else {
+      router.push(AppRoutes.LOGIN)
+    }
+  }, [authChecked, isAuth, router])
+
+  if (!authChecked) {
     return (
       <div className={s.container}>
         <Loader />
@@ -31,9 +37,5 @@ export const AuthWrapper = ({ children }: Props) => {
     )
   }
 
-  if (isSuccess) {
-    return <h1 className={s.h1}>Контент для авторизованных пользователей</h1>
-  } //TODO: добавить ленту постов конкретного пользователя тут
-
-  return <div className={s.content}>{children}</div>
+  return <>{children}</>
 }
