@@ -2,7 +2,6 @@ import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 
 import * as Types from '../types'
-
 const defaultOptions = {} as const
 
 export type LoginAdminMutationVariables = Types.Exact<{
@@ -55,7 +54,6 @@ export function useLoginAdminMutation(
     options
   )
 }
-
 export type LoginAdminMutationHookResult = ReturnType<typeof useLoginAdminMutation>
 export type LoginAdminMutationResult = Apollo.MutationResult<LoginAdminMutation>
 export type LoginAdminMutationOptions = Apollo.BaseMutationOptions<

@@ -1,0 +1,37 @@
+.additionalModal {
+  min-width: 378px;
+  width: 25%;
+  hr {
+    margin-top: 12px;
+    margin-bottom: 30px;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+
+    path {
+      fill: var(--light-100);
+      transition: fill 0.3s ease;
+    }
+
+    @media (hover: hover) {
+      &:hover path {
+        fill: var(--light-900);
+      }
+    }
+  }
+}
+
+.btn {
+  width: 130px;
+  padding: 5px 23px;
+  line-height: 150%;
+}
+
+.additionalModalBtns {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  margin-top: 42px;
+}

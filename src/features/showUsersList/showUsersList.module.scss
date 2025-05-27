@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchInput {
+  max-width: 644px;
+}
+
+.selector {
+  max-width: 234px;
+}
+
+.pagination {
+  margin-top: 36px;
+}
