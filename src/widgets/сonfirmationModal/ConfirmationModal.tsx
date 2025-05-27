@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { Button } from '@/src/shared/ui/button/Button'
 import { Dialog } from '@/src/shared/ui/dialog'
 import { Typography } from '@/src/shared/ui/typography/Typography'
@@ -6,7 +8,7 @@ import s from './сonfirmationModal.module.scss'
 
 type Props = {
   loading?: boolean
-  modalMessage: string
+  modalMessage: ReactNode | string
   modalTitle: string
   onClickNo: () => void
   onCloseModal: () => void
@@ -38,11 +40,11 @@ export const ConfirmationModal = ({
       <div>
         <Typography option={'regular_text16'}>{modalMessage}</Typography>
         <div className={s.additionalModalBtns}>
-          <Button className={s.btn} disabled={loading} onClick={onClickYes} variant={'bordered'}>
-            {'Yes'}
-          </Button>
           <Button className={s.btn} disabled={loading} onClick={onClickNo} variant={'primary'}>
             {'No'}
+          </Button>
+          <Button className={s.btn} disabled={loading} onClick={onClickYes} variant={'bordered'}>
+            {'Yes'}
           </Button>
         </div>
       </div>
