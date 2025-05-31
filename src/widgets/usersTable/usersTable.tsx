@@ -1,20 +1,21 @@
-import type { TableUser } from '@/src/shared/types/types'
+import type {TableUser} from '@/src/shared/types/types'
 
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import {useState} from 'react'
+import {useDispatch} from 'react-redux'
 
-import { useRemoveUserMutation } from '@/src/queries/user/removeUser.generated'
-import { Block } from '@/src/shared/assets/componentsIcons'
-import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
-import { ConfirmationModal } from '@/src/widgets/сonfirmationModal/ConfirmationModal'
-import { ApolloError } from '@apollo/client'
+import {useRemoveUserMutation} from '@/src/queries/user/removeUser.generated'
+import {Block} from '@/src/shared/assets/componentsIcons'
+import {setAppError} from '@/src/shared/model/slices/appSlice'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '@/src/shared/ui/table'
+import {DropdownTable} from '@/src/widgets/dropdownTable/dropdownTable'
+import {ConfirmationModal} from '@/src/widgets/сonfirmationModal/ConfirmationModal'
+import {ApolloError} from '@apollo/client'
 
 import s from './usersTable.module.scss'
-import { SortButton, type SortColumn } from '@/src/shared/ui/sortButton/SortButton'
-import { SortDirection } from '@/src/queries/types'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import {SortButton, type SortColumn} from '@/src/shared/ui/sortButton/SortButton'
+import {SortDirection} from '@/src/queries/types'
+import {Typography} from '@/src/shared/ui/typography/Typography'
+import {useRouter} from "next/navigation";
 
 type Props = {
   data: TableUser[]
@@ -22,11 +23,13 @@ type Props = {
   onSortChange: (column: SortColumn, currentSort: SortDirection) => void
 }
 
-export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
+export const UsersTable = ({data, refetch, onSortChange}: Props) => {
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
-  const [deleteUser, { loading }] = useRemoveUserMutation()
+  const [deleteUser, {loading}] = useRemoveUserMutation()
   const [sortConfig, setSortConfig] = useState<Partial<Record<SortColumn, SortDirection>>>({})
+
+  const router = useRouter()
 
   const dispatch = useDispatch()
   const handleDeleteUser = (user: TableUser) => {
@@ -39,14 +42,18 @@ export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
       if (!selectedUser) {
         return
       }
-      await deleteUser({ variables: { id: parseInt(selectedUser.id, 10) } })
+      await deleteUser({variables: {id: parseInt(selectedUser.id, 10)}})
       setSelectedUser(null)
       refetch()
     } catch (err) {
       const error = err as ApolloError
 
-      dispatch(setAppError({ error: error.message }))
+      dispatch(setAppError({error: error.message}))
     }
+  }
+
+  const handleViewUser = (userId: string) => {
+    router.push(`/users-list/${userId}`)
   }
 
   const handleSortChange = (column: SortColumn, currentSort: SortDirection | 'none') => {
@@ -57,7 +64,7 @@ export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
           ? SortDirection.Desc
           : SortDirection.Asc
 
-    setSortConfig(prev => ({ ...prev, [column]: currentSort }))
+    setSortConfig(prev => ({...prev, [column]: currentSort}))
 
     onSortChange(column, newSort)
   }
@@ -94,7 +101,7 @@ export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
               <TableRow key={index}>
                 <TableCell className={s.idCell}>
                   <div className={s.flexContainer}>
-                    {item.isBlocked && <Block className={s.blockIcon} />}
+                    {item.isBlocked && <Block className={s.blockIcon}/>}
                     <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
                   </div>
                 </TableCell>
@@ -106,7 +113,7 @@ export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
                     isBanned={item.isBlocked}
                     onBanEdit={() => {}}
                     onDelete={() => handleDeleteUser(item)}
-                    onView={() => {}}
+                    onView={() => handleViewUser(item.id)}
                   />
                 </TableCell>
               </TableRow>
