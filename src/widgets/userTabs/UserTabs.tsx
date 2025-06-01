@@ -5,7 +5,7 @@ import {Following} from "@/src/widgets/userTabs/Following";
 import {Tab} from "@/src/shared/types/types";
 import {usePathname, useRouter} from 'next/navigation';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@radix-ui/react-tabs";
-import s from './userTabs.module.scss'
+// import s from './userTabs.module.scss'
 
 export const dataTabs: Tab[] = [
   {
@@ -55,8 +55,8 @@ export const UserTabs = ({ userId }: { userId: string }) => {
   )
 
   return (
-    <div className={s.page}>
-      <Tabs className={s.tabs} onValueChange={handleTabChange} value={currentTab}>
+    <div>
+      <Tabs onValueChange={handleTabChange} value={currentTab}>
         {renderTabsList()}
         {dataTabs.map(tab => (
           <TabsContent key={tab.value} value={tab.value}>

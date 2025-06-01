@@ -8,9 +8,10 @@ import s from './showUser.module.scss'
 import {type ChangeEvent, useEffect, useMemo, useState} from 'react'
 import debounce from 'lodash/debounce'
 import type {SortColumn} from '@/src/shared/ui/sortButton/SortButton'
-import {GeneralUserInfo} from "@/src/widgets/userTabs/GeneralUserInfo";
+import {UserInfo} from "@/src/widgets/userTabs/userInfo/UserInfo";
 import {useParams} from "next/navigation";
 import {UserTabs} from "@/src/widgets/userTabs/UserTabs";
+import {ArrowBackOutline} from '@/src/shared/assets/componentsIcons'
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
@@ -77,7 +78,11 @@ export const ShowUser = () => {
   return (
     <div className={s.container}>
       <div className={s.header}>
-        <GeneralUserInfo userId={params.userId}/>
+        <ArrowBackOutline/>
+        <div>Back to Users List</div>
+      </div>
+      <div className={s.xxx}>
+        <UserInfo userId={params.userId}/>
       </div>
       <UserTabs userId={params.userId}/>
       {/*<Pagination

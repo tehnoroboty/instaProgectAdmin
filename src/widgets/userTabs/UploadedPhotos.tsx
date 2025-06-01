@@ -1,3 +1,5 @@
+import {Posts} from "@/src/shared/ui/postsGrid/Posts";
+
 type Props = {
 }
 
@@ -8,7 +10,7 @@ export const UploadedPhotos = () => {
 
   return (
     <div>
-      UploadedPhotos
+      {!postsDataForRender ? <div>Пусто</div> : <Posts posts={postsDataForRender} />}
     </div>
   )
 }

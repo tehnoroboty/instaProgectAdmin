@@ -1,7 +1,10 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: left;
+  align-items: center;
   margin-bottom: 24px;
+  color:var(--light-100);
+  gap: 8px;
 }
 
 .container {

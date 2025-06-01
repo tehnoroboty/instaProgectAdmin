@@ -1,0 +1,28 @@
+.top {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.link {
+  color: var(--light-100);
+}
+
+.extraData {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.box {
+  min-width: 170px;
+}
+
+.title {
+  color: var(--light-900);
+}
+
+.nameText {
+  color: var(--light-100);
+}
