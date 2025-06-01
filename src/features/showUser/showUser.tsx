@@ -1,23 +1,26 @@
 'use client'
 
-import {useGetUsersQuery} from '@/src/queries/users/getUsers.generated'
-import {type QueryGetUsersArgs, SortDirection, UserBlockStatus} from '@/src/queries/types'
-import {usersDataTransform} from '@/src/shared/lib/usersDataTransform'
-import type {TableUser} from '@/src/shared/types/types'
-import s from './showUser.module.scss'
-import {type ChangeEvent, useEffect, useMemo, useState} from 'react'
+import type { TableUser } from '@/src/shared/types/types'
+import type { SortColumn } from '@/src/shared/ui/sortButton/SortButton'
+
+import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+
+import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
+import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
+import { ArrowBackOutline } from '@/src/shared/assets/componentsIcons'
+import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
+import { UserTabs } from '@/src/widgets/userTabs/UserTabs'
+import { UserInfo } from '@/src/widgets/userTabs/userInfo/UserInfo'
 import debounce from 'lodash/debounce'
-import type {SortColumn} from '@/src/shared/ui/sortButton/SortButton'
-import {UserInfo} from "@/src/widgets/userTabs/userInfo/UserInfo";
-import {useParams} from "next/navigation";
-import {UserTabs} from "@/src/widgets/userTabs/UserTabs";
-import {ArrowBackOutline} from '@/src/shared/assets/componentsIcons'
+import { useParams } from 'next/navigation'
+
+import s from './showUser.module.scss'
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
-  {value: UserBlockStatus.All, valueTitle: 'Not selected'},
-  {value: UserBlockStatus.Blocked, valueTitle: 'Blocked'},
-  {value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked'},
+  { value: UserBlockStatus.All, valueTitle: 'Not selected' },
+  { value: UserBlockStatus.Blocked, valueTitle: 'Blocked' },
+  { value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked' },
 ]
 
 export const ShowUser = () => {
@@ -31,21 +34,21 @@ export const ShowUser = () => {
 
   const params = useParams<{ userId: string }>()
 
-
   const variables: QueryGetUsersArgs = {
-    pageSize,
     pageNumber: currentPage,
+    pageSize,
+    searchTerm,
     sortBy,
     sortDirection,
-    searchTerm,
     statusFilter: UserBlockStatus.All,
   }
-  const {data, loading, error, refetch} = useGetUsersQuery({variables})
+  const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
   useEffect(() => {
     if (data) {
       if (data.getUsers) {
         const transformed = usersDataTransform(data.getUsers.users)
+
         setTransformedData(transformed)
       } else {
         setTransformedData([])
@@ -66,7 +69,8 @@ export const ShowUser = () => {
   )
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {value} = e.target
+    const { value } = e.target
+
     handleSearch(value)
   }
 
@@ -78,13 +82,13 @@ export const ShowUser = () => {
   return (
     <div className={s.container}>
       <div className={s.header}>
-        <ArrowBackOutline/>
+        <ArrowBackOutline />
         <div>Back to Users List</div>
       </div>
       <div className={s.xxx}>
-        <UserInfo userId={params.userId}/>
+        <UserInfo userId={params.userId} />
       </div>
-      <UserTabs userId={params.userId}/>
+      <UserTabs userId={params.userId} />
       {/*<Pagination
         className={s.pagination}
         currentPage={currentPage}
