@@ -1,12 +1,13 @@
-import {AvatarBox} from "@/src/shared/ui/avatar/AvatarBox";
+import { AvatarBox } from '@/src/shared/ui/avatar/AvatarBox'
+import { Typography } from '@/src/shared/ui/typography/Typography'
+
 import s from './userInfo.module.scss'
-import {Typography} from "@/src/shared/ui/typography/Typography";
 
 type Props = {
   userId: string
 }
 
-export const UserInfo = ({userId}: Props) => {
+export const UserInfo = ({ userId }: Props) => {
   // здесь GraphQL или RTK-запрос на получение инфы
   // пример:
   // const { data, loading } = useGetUserByIdQuery({ id: userId })
@@ -14,12 +15,12 @@ export const UserInfo = ({userId}: Props) => {
   return (
     <div>
       <div className={s.top}>
-        <AvatarBox size={'m'}/>
+        <AvatarBox size={'m'} />
         <div>
           <Typography as={'h1'} option={'h1'}>
             Ivan Yakimenko
           </Typography>
-          <Typography className={s.link} as={'a'} option={'small_link'} href="#">
+          <Typography as={'a'} className={s.link} href={'#'} option={'small_link'}>
             Ivan.sr.yakimenko
           </Typography>
         </div>
@@ -29,7 +30,7 @@ export const UserInfo = ({userId}: Props) => {
           <Typography className={s.title} option={'regular_text14'}>
             UserID
           </Typography>
-          <Typography className={s.nameText} as={'h1'} option={'regular_text14'}>
+          <Typography as={'h1'} option={'regular_text16'}>
             21331QErQe21
           </Typography>
         </div>
@@ -37,7 +38,7 @@ export const UserInfo = ({userId}: Props) => {
           <Typography className={s.title} option={'regular_text14'}>
             Profile Creation Date
           </Typography>
-          <Typography className={s.nameText} as={'h1'} option={'regular_text14'}>
+          <Typography as={'h1'} option={'regular_text16'}>
             12.12.2022
           </Typography>
         </div>

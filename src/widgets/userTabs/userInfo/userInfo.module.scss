@@ -17,12 +17,7 @@
 
 .box {
   min-width: 170px;
-}
-
-.title {
-  color: var(--light-900);
-}
-
-.nameText {
-  color: var(--light-100);
+  & .title {
+    color: var(--light-900);
+  }
 }
