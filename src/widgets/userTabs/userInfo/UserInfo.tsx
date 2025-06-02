@@ -1,6 +1,7 @@
 import { useDispatch } from 'react-redux'
 
 import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
+import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { AvatarBox } from '@/src/shared/ui/avatar/AvatarBox'
 import { Typography } from '@/src/shared/ui/typography/Typography'
@@ -37,7 +38,7 @@ export const UserInfo = ({ userId }: Props) => {
   const { id, userName, email, createdAt, profile } = user
   const avatarUrl = profile?.avatars?.[0]?.url ?? ''
 
-  const createdAtDate = format(new Date(createdAt as string), 'dd.MM.yyyy')
+  const createdAtDate = makeLocaleDate(createdAt)
 
   const firstName = profile?.firstName
   const lastName = profile?.lastName

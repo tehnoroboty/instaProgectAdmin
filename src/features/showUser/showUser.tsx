@@ -1,6 +1,5 @@
 'use client'
 
-import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
 import { ArrowBackOutline } from '@/src/shared/assets/componentsIcons'
 import { Typography } from '@/src/shared/ui/typography/Typography'
 import { UserTabs } from '@/src/widgets/userTabs/UserTabs'
