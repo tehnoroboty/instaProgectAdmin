@@ -48,11 +48,16 @@ export const UserInfo = ({ userId }: Props) => {
     <div>
       <div className={s.top}>
         <AvatarBox src={avatarUrl} size={'m'} />
-        <div>
+        <div className={s.info}>
           <Typography as={'h1'} option={'h1'}>
             {displayName}
           </Typography>
-          <Typography as={'a'} className={s.link} href={'#'} option={'small_link'}>
+          <Typography
+            as={'a'}
+            className={s.link}
+            href={`/users-list/${userId}`}
+            option={'regular_link'}
+          >
             {email}
           </Typography>
         </div>

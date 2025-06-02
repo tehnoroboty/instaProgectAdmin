@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
-import { Tab } from '@/src/shared/types/types'
+import { SortDirection } from '@/src/queries/types'
+import { type SortColumn, Tab } from '@/src/shared/types/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/shared/ui/tabs/Tabs'
-import { Following } from '@/src/widgets/userTabs/Following'
+import { Following } from '@/src/widgets/userTabs/following/Following'
 
-import { Followers } from './Followers'
-import { Payments } from './Payments'
+import { Followers } from './followers/Followers'
+import { Payments } from './payments/Payments'
 import { UploadedPhotos } from './uploadedPhotos/UploadedPhotos'
 
 const DEFAULT_TAB = 'uploaded-photos'
@@ -15,6 +16,8 @@ type Props = {
 }
 
 export const UserTabs = ({ userId }: Props) => {
+  const [currentTab, setCurrentTab] = useState(DEFAULT_TAB)
+
   const dataTabs: Tab[] = [
     {
       page: <UploadedPhotos userId={userId} />,
@@ -38,7 +41,6 @@ export const UserTabs = ({ userId }: Props) => {
     },
   ]
 
-  const [currentTab, setCurrentTab] = useState(DEFAULT_TAB)
   const handleTabChange = (value: string) => setCurrentTab(value)
 
   const renderTabsList = (disabled = false) => (

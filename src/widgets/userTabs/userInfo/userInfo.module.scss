@@ -5,8 +5,10 @@
   margin-bottom: 20px;
 }
 
-.link {
-  color: var(--light-100);
+.info {
+  & .link {
+    color: var(--light-100);
+  }
 }
 
 .extraData {
@@ -17,6 +19,7 @@
 
 .box {
   min-width: 170px;
+
   & .title {
     color: var(--light-900);
   }

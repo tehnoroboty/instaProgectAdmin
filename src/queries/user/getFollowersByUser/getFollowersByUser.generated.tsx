@@ -3,7 +3,7 @@ import * as Types from '../../types';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-export type GetPaymentsByUserQueryVariables = Types.Exact<{
+export type GetFollowersByUserQueryVariables = Types.Exact<{
   userId: Types.Scalars['Int']['input'];
   pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>;
   pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>;
@@ -12,12 +12,12 @@ export type GetPaymentsByUserQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPaymentsByUserQuery = { __typename?: 'Query', getPaymentsByUser: { __typename?: 'PaymentPaginationModel', pagesCount: number, page: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'SubscriptionByPaymentModel', price: number, endDate?: any | null, type: Types.SubscriptionType, payments: Array<{ __typename?: 'Payment', id?: number | null, paymentMethod?: Types.PaymentMethod | null, amount?: number | null, createdAt?: any | null, endDate?: any | null, type?: Types.SubscriptionType | null }> }> } };
+export type GetFollowersByUserQuery = { __typename?: 'Query', getFollowers: { __typename?: 'FollowPaginationModel', pagesCount: number, page: number, pageSize: number, totalCount: number, items: Array<{ __typename?: 'Follow', id: number, userId: number, userName?: string | null, firstName?: string | null, lastName?: string | null, createdAt: any }> } };
 
 
-export const GetPaymentsByUserDocument = gql`
-    query GetPaymentsByUser($userId: Int!, $pageSize: Int = 10, $pageNumber: Int = 1, $sortBy: String = "createdAt", $sortDirection: SortDirection = desc) {
-  getPaymentsByUser(
+export const GetFollowersByUserDocument = gql`
+    query GetFollowersByUser($userId: Int!, $pageSize: Int = 10, $pageNumber: Int = 1, $sortBy: String = "createdAt", $sortDirection: SortDirection = desc) {
+  getFollowers(
     userId: $userId
     pageSize: $pageSize
     pageNumber: $pageNumber
@@ -29,33 +29,28 @@ export const GetPaymentsByUserDocument = gql`
     pageSize
     totalCount
     items {
-      price
-      endDate
-      type
-      payments {
-        id
-        paymentMethod
-        amount
-        createdAt
-        endDate
-        type
-      }
+      id
+      userId
+      userName
+      firstName
+      lastName
+      createdAt
     }
   }
 }
     `;
 
 /**
- * __useGetPaymentsByUserQuery__
+ * __useGetFollowersByUserQuery__
  *
- * To run a query within a React component, call `useGetPaymentsByUserQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPaymentsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetFollowersByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFollowersByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetPaymentsByUserQuery({
+ * const { data, loading, error } = useGetFollowersByUserQuery({
  *   variables: {
  *      userId: // value for 'userId'
  *      pageSize: // value for 'pageSize'
@@ -65,19 +60,19 @@ export const GetPaymentsByUserDocument = gql`
  *   },
  * });
  */
-export function useGetPaymentsByUserQuery(baseOptions: Apollo.QueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables> & ({ variables: GetPaymentsByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetFollowersByUserQuery(baseOptions: Apollo.QueryHookOptions<GetFollowersByUserQuery, GetFollowersByUserQueryVariables> & ({ variables: GetFollowersByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(GetPaymentsByUserDocument, options);
+        return Apollo.useQuery<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>(GetFollowersByUserDocument, options);
       }
-export function useGetPaymentsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>) {
+export function useGetFollowersByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(GetPaymentsByUserDocument, options);
+          return Apollo.useLazyQuery<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>(GetFollowersByUserDocument, options);
         }
-export function useGetPaymentsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>) {
+export function useGetFollowersByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(GetPaymentsByUserDocument, options);
+          return Apollo.useSuspenseQuery<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>(GetFollowersByUserDocument, options);
         }
-export type GetPaymentsByUserQueryHookResult = ReturnType<typeof useGetPaymentsByUserQuery>;
-export type GetPaymentsByUserLazyQueryHookResult = ReturnType<typeof useGetPaymentsByUserLazyQuery>;
-export type GetPaymentsByUserSuspenseQueryHookResult = ReturnType<typeof useGetPaymentsByUserSuspenseQuery>;
-export type GetPaymentsByUserQueryResult = Apollo.QueryResult<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>;
+export type GetFollowersByUserQueryHookResult = ReturnType<typeof useGetFollowersByUserQuery>;
+export type GetFollowersByUserLazyQueryHookResult = ReturnType<typeof useGetFollowersByUserLazyQuery>;
+export type GetFollowersByUserSuspenseQueryHookResult = ReturnType<typeof useGetFollowersByUserSuspenseQuery>;
+export type GetFollowersByUserQueryResult = Apollo.QueryResult<GetFollowersByUserQuery, GetFollowersByUserQueryVariables>;

@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client'
 
-export const GET_FOLLOWERS_BY_USER = gql`
-  query GetFollowersByUser(
+export const GET_FOLLOWING_BY_USER = gql`
+  query GetFollowingByUser(
     $userId: Int!
     $pageSize: Int = 10
     $pageNumber: Int = 1
     $sortBy: String = "createdAt"
     $sortDirection: SortDirection = desc
   ) {
-    getFollowers(
+    getFollowing(
       userId: $userId
       pageSize: $pageSize
       pageNumber: $pageNumber

@@ -1,7 +1,6 @@
 'use client'
 
-import type { TableUser } from '@/src/shared/types/types'
-import type { SortColumn } from '@/src/shared/ui/sortButton/SortButton'
+import type { SortColumn, TableUser } from '@/src/shared/types/types'
 
 import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
 

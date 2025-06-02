@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export type TableUser = {
   createdAt: string
@@ -13,3 +13,5 @@ export type Tab = {
   title: string
   value: string
 }
+
+export type SortColumn = 'userName' | 'createdAt'

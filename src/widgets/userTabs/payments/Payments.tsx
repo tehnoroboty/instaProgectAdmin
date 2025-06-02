@@ -16,13 +16,13 @@ type Props = {
 
 const USERS_PER_PAGE = 10
 
-export const Followers = ({ userId }: Props) => {
+export const Payments = ({ userId }: Props) => {
   const dispatch = useDispatch()
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
 
-  const { data, error, loading } = useGetPaymentsByUserQuery({
+  const { data, error, loading, refetch } = useGetPaymentsByUserQuery({
     variables: {
       pageNumber: currentPage,
       pageSize: pageSize,
@@ -38,14 +38,6 @@ export const Followers = ({ userId }: Props) => {
     }
   }, [data?.getPaymentsByUser.totalCount, pageSize])
 
-  // if (error || !data?.getPaymentsByUser) {
-  //   const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
-  //
-  //   dispatch(setAppError({ error: errorMessage }))
-  //
-  //   return null
-  // }
-
   useEffect(() => {
     if (error) {
       const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
@@ -54,15 +46,14 @@ export const Followers = ({ userId }: Props) => {
     }
   }, [error, dispatch])
 
-  if (!data?.getPaymentsByUser) {
-    return null
-  }
-  const dataItems = data.getPaymentsByUser
-
   if (loading) {
     return <div>Loading...</div>
   }
 
+  if (!data?.getPaymentsByUser) {
+    return null
+  }
+  const dataItems = data.getPaymentsByUser
   const payments = dataItems.items.flatMap(subscription =>
     subscription.payments.map(payment => ({
       amount: subscription.price,
@@ -73,8 +64,6 @@ export const Followers = ({ userId }: Props) => {
       subscriptionType: formatSubscriptionType(subscription.type),
     }))
   )
-
-  console.log(data.getPaymentsByUser)
 
   return (
     <>

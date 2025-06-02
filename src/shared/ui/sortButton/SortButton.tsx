@@ -1,10 +1,9 @@
 import { SortDirection } from '@/src/queries/types'
 import { ArrowSortDown, ArrowSortUp } from '@/src/shared/assets/componentsIcons'
+import { SortColumn } from '@/src/shared/types/types'
 import clsx from 'clsx'
 
 import s from './SortButton.module.scss'
-
-export type SortColumn = 'userName' | 'createdAt'
 
 type Props = {
   column: SortColumn
