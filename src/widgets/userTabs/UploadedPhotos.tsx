@@ -1,16 +1,11 @@
-import {Posts} from "@/src/shared/ui/postsGrid/Posts";
+import { Posts } from '@/src/shared/ui/postsGrid/Posts'
 
-type Props = {
-}
+type Props = { postsData: any }
 
-export const UploadedPhotos = () => {
+export const UploadedPhotos = ({ postsData }: Props) => {
   // здесь GraphQL или RTK-запрос на получение инфы
   // пример:
   // const { data, loading } = useGetUserByIdQuery({ id: userId })
 
-  return (
-    <div>
-      {!postsDataForRender ? <div>Пусто</div> : <Posts posts={postsDataForRender} />}
-    </div>
-  )
+  return <div>{!postsData ? <div>Пусто</div> : <Posts posts={postsData} />}</div>
 }

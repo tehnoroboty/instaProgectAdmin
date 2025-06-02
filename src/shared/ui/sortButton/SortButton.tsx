@@ -1,7 +1,8 @@
-import clsx from 'clsx'
-import s from './SortButton.module.scss'
-import { ArrowSortDown, ArrowSortUp } from '@/src/shared/assets/componentsIcons'
 import { SortDirection } from '@/src/queries/types'
+import { ArrowSortDown, ArrowSortUp } from '@/src/shared/assets/componentsIcons'
+import clsx from 'clsx'
+
+import s from './SortButton.module.scss'
 
 export type SortColumn = 'userName' | 'createdAt'
 

@@ -3,13 +3,24 @@
   justify-content: left;
   align-items: center;
   margin-bottom: 24px;
-  color:var(--light-100);
+  color: var(--light-100);
   gap: 8px;
 }
 
-.container {
+.pgae {
   display: flex;
   flex-direction: column;
+
+  height: fit-content;
+  min-height: 100vh;
+  padding-right: 3%;
+  padding-bottom: 7vh;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .searchInput {

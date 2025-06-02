@@ -1,17 +1,20 @@
 'use client'
 
-import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
-import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
-import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
-import { UsersTable } from '@/src/widgets/usersTable/usersTable'
 import type { TableUser } from '@/src/shared/types/types'
+import type { SortColumn } from '@/src/shared/ui/sortButton/SortButton'
+
+import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+
+import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
+import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
+import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
+import { Input } from '@/src/shared/ui/input'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SelectBox } from '@/src/shared/ui/select/SelectBox'
-import { Input } from '@/src/shared/ui/input'
-import s from './showUsersList.module.scss'
-import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { UsersTable } from '@/src/widgets/usersTable/usersTable'
 import debounce from 'lodash/debounce'
-import type { SortColumn } from '@/src/shared/ui/sortButton/SortButton'
+
+import s from './showUsersList.module.scss'
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
@@ -43,6 +46,7 @@ export const ShowUsersList = () => {
     if (data) {
       if (data.getUsers) {
         const transformed = usersDataTransform(data.getUsers.users)
+
         setTransformedData(transformed)
       } else {
         setTransformedData([])
@@ -64,6 +68,7 @@ export const ShowUsersList = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+
     handleSearch(value)
   }
 

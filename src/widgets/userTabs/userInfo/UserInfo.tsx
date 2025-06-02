@@ -1,27 +1,58 @@
+import { useDispatch } from 'react-redux'
+
+import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
+import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { AvatarBox } from '@/src/shared/ui/avatar/AvatarBox'
 import { Typography } from '@/src/shared/ui/typography/Typography'
+import { ApolloError } from '@apollo/client'
+import { format } from 'date-fns'
 
 import s from './userInfo.module.scss'
 
 type Props = {
-  userId: string
+  userId: number
 }
 
 export const UserInfo = ({ userId }: Props) => {
-  // здесь GraphQL или RTK-запрос на получение инфы
-  // пример:
-  // const { data, loading } = useGetUserByIdQuery({ id: userId })
+  const dispatch = useDispatch()
+
+  const { data, loading, error } = useGetUserQuery({
+    variables: { userId },
+  })
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
+  if (error || !data?.getUser) {
+    const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+
+    dispatch(setAppError({ error: errorMessage }))
+
+    return null
+  }
+
+  const user = data.getUser
+
+  const { id, userName, email, createdAt, profile } = user
+  const avatarUrl = profile?.avatars?.[0]?.url ?? ''
+
+  const createdAtDate = format(new Date(createdAt as string), 'dd.MM.yyyy')
+
+  const firstName = profile?.firstName
+  const lastName = profile?.lastName
+  const displayName = firstName && lastName ? `${firstName} ${lastName}` : userName
 
   return (
     <div>
       <div className={s.top}>
-        <AvatarBox size={'m'} />
+        <AvatarBox src={avatarUrl} size={'m'} />
         <div>
           <Typography as={'h1'} option={'h1'}>
-            Ivan Yakimenko
+            {displayName}
           </Typography>
           <Typography as={'a'} className={s.link} href={'#'} option={'small_link'}>
-            Ivan.sr.yakimenko
+            {email}
           </Typography>
         </div>
       </div>
@@ -31,7 +62,7 @@ export const UserInfo = ({ userId }: Props) => {
             UserID
           </Typography>
           <Typography as={'h1'} option={'regular_text16'}>
-            21331QErQe21
+            {id}
           </Typography>
         </div>
         <div className={s.box}>
@@ -39,7 +70,7 @@ export const UserInfo = ({ userId }: Props) => {
             Profile Creation Date
           </Typography>
           <Typography as={'h1'} option={'regular_text16'}>
-            12.12.2022
+            {createdAtDate}
           </Typography>
         </div>
       </div>

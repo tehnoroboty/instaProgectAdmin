@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { Tab } from '@/src/shared/types/types'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/shared/ui/tabs/Tabs'
 import { Following } from '@/src/widgets/userTabs/Following'
@@ -31,20 +33,18 @@ export const dataTabs: Tab[] = [
   },
 ]
 
-export const UserTabs = ({ userId }: { userId: string }) => {
+const DEFAULT_TAB = 'uploaded-photos'
+
+type Props = {
+  userId: number
+}
+
+export const UserTabs = ({ userId }: Props) => {
+  const [currentTab, setCurrentTab] = useState(DEFAULT_TAB)
   const router = useRouter()
   const pathname = usePathname()
-  const currentTab = pathname.split('/').pop() || 'general-information'
-  // const isAuth = localStorage.getItem('accessToken')
+  const handleTabChange = (value: string) => setCurrentTab(value)
 
-  /*
-    if (!isAuth) {
-      router.push(AuthRoutes.LOGIN)
-    }
-  */
-  const handleTabChange = (newTab: string) => {
-    router.push(`/users-list/${userId}/${newTab}`)
-  }
   const renderTabsList = (disabled = false) => (
     <TabsList loop>
       {dataTabs.map(tab => (
