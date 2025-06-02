@@ -22,13 +22,13 @@ export const Followers = ({ userId }: Props) => {
   const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
 
-  const { data, loading, error } = useGetPaymentsByUserQuery({
+  const { data, error, loading } = useGetPaymentsByUserQuery({
     variables: {
-      userId,
-      pageSize: pageSize,
       pageNumber: currentPage,
+      pageSize: pageSize,
       sortBy: 'createdAt',
       sortDirection: SortDirection.Desc,
+      userId,
     },
   })
 
@@ -38,14 +38,25 @@ export const Followers = ({ userId }: Props) => {
     }
   }, [data?.getPaymentsByUser.totalCount, pageSize])
 
-  if (error || !data?.getPaymentsByUser) {
-    const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+  // if (error || !data?.getPaymentsByUser) {
+  //   const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+  //
+  //   dispatch(setAppError({ error: errorMessage }))
+  //
+  //   return null
+  // }
 
-    dispatch(setAppError({ error: errorMessage }))
+  useEffect(() => {
+    if (error) {
+      const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
 
+      dispatch(setAppError({ error: errorMessage }))
+    }
+  }, [error, dispatch])
+
+  if (!data?.getPaymentsByUser) {
     return null
   }
-
   const dataItems = data.getPaymentsByUser
 
   if (loading) {
@@ -54,12 +65,12 @@ export const Followers = ({ userId }: Props) => {
 
   const payments = dataItems.items.flatMap(subscription =>
     subscription.payments.map(payment => ({
-      id: payment.id,
+      amount: subscription.price,
       dateOfPayment: makeLocaleDate(payment.createdAt),
       endDate: makeLocaleDate(subscription.endDate),
-      amount: subscription.price,
-      subscriptionType: formatSubscriptionType(subscription.type),
+      id: payment.id,
       paymentType: payment.paymentMethod,
+      subscriptionType: formatSubscriptionType(subscription.type),
     }))
   )
 
@@ -94,10 +105,10 @@ export const Followers = ({ userId }: Props) => {
 
       <Pagination
         currentPage={currentPage}
-        totalCount={totalPagesCount}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
         pageSize={USERS_PER_PAGE}
+        totalCount={totalPagesCount}
       />
     </>
   )
