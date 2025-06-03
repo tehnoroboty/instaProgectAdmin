@@ -96,7 +96,7 @@ export const Payments = ({ userId }: Props) => {
         currentPage={currentPage}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
-        pageSize={USERS_PER_PAGE}
+        pageSize={pageSize}
         totalCount={totalPagesCount}
       />
     </>

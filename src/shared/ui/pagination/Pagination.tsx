@@ -147,6 +147,7 @@ export const Pagination = (props: PaginationProps) => {
           isPagination
           onChangeValue={handlePageSizeChange}
           options={PAGE_SIZE_OPTIONS}
+          value={pageSize.toString()}
         />
         <Typography>on page</Typography>
       </div>

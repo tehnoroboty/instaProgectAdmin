@@ -29,13 +29,13 @@ export const Followers = ({ userId }: Props) => {
   const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
 
-  const { data, loading, error } = useGetFollowersByUserQuery({
+  const { data, error, loading } = useGetFollowersByUserQuery({
     variables: {
-      userId,
-      pageSize: pageSize,
       pageNumber: currentPage,
+      pageSize: pageSize,
       sortBy,
       sortDirection: sortDirection,
+      userId,
     },
   })
 
@@ -59,7 +59,7 @@ export const Followers = ({ userId }: Props) => {
     return <div>Loading...</div>
   }
 
-  const handleSortChange = (column: SortColumn, currentSort: SortDirection | 'none') => {
+  const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
     const newSort =
       currentSort === 'none'
         ? SortDirection.Desc
@@ -107,8 +107,8 @@ export const Followers = ({ userId }: Props) => {
                 <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
                 <TableCell>
                   <Typography
-                    className={s.link}
                     as={'a'}
+                    className={s.link}
                     href={`/users-list/${user.userId}`}
                     option={'regular_link'}
                   >
@@ -124,10 +124,10 @@ export const Followers = ({ userId }: Props) => {
 
       <Pagination
         currentPage={currentPage}
-        totalCount={totalPagesCount}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
-        pageSize={USERS_PER_PAGE}
+        pageSize={pageSize}
+        totalCount={totalPagesCount}
       />
     </>
   )
