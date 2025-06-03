@@ -64,7 +64,7 @@ export const Followers = ({ userId }: Props) => {
   }
 
   if (!data?.getFollowers || data.getFollowers.items.length === 0) {
-    return <div className={s.noPayments}>No followers found</div>
+    return <div className={s.noText}>No followers found</div>
   }
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {

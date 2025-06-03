@@ -57,7 +57,7 @@ export const Payments = ({ userId }: Props) => {
   }
 
   if (!data?.getPaymentsByUser || data.getPaymentsByUser.items.length === 0) {
-    return <div className={s.noPayments}>No payments found</div>
+    return <div className={s.noText}>No payments found</div>
   }
 
   const dataItems = data.getPaymentsByUser
