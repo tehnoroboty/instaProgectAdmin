@@ -2,16 +2,15 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { SortDirection } from '@/src/queries/types'
-import { useGetFollowersByUserQuery } from '@/src/queries/user/getFollowersByUser/getFollowersByUser.generated'
 import { useGetFollowingByUserQuery } from '@/src/queries/user/getFollowingByUser/getFollowingByUser.generated'
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { SortColumn } from '@/src/shared/types/types'
+import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { Typography } from '@/src/shared/ui/typography/Typography'
-import { ApolloError } from '@apollo/client'
 
 import s from './following.module.scss'
 
@@ -48,7 +47,7 @@ export const Following = ({ userId }: Props) => {
 
   useEffect(() => {
     if (error) {
-      const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+      const errorMessage = error.message
 
       dispatch(setAppError({ error: errorMessage }))
     }
@@ -57,7 +56,15 @@ export const Following = ({ userId }: Props) => {
   const users = data?.getFollowing.items
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className={s.loading}>
+        <Loader color={'#4C8DFF'} size={20} />
+      </div>
+    )
+  }
+
+  if (!data?.getFollowing || data.getFollowing.items.length === 0) {
+    return <div className={s.noPayments}>No following found</div>
   }
 
   const handleSortChange = (column: SortColumn, currentSort: SortDirection | 'none') => {
@@ -128,7 +135,7 @@ export const Following = ({ userId }: Props) => {
         totalCount={totalPagesCount}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
-        pageSize={USERS_PER_PAGE}
+        pageSize={pageSize}
       />
     </>
   )

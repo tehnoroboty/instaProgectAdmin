@@ -6,9 +6,11 @@ import { useGetPaymentsByUserQuery } from '@/src/queries/user/getPaymentsByUser/
 import { formatSubscriptionType } from '@/src/shared/lib/formatSubscriptionType'
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
+import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { ApolloError } from '@apollo/client'
+
+import s from './payments.module.scss'
 
 type Props = {
   userId: number
@@ -22,7 +24,7 @@ export const Payments = ({ userId }: Props) => {
   const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
   const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
 
-  const { data, error, loading, refetch } = useGetPaymentsByUserQuery({
+  const { data, error, loading } = useGetPaymentsByUserQuery({
     variables: {
       pageNumber: currentPage,
       pageSize: pageSize,
@@ -40,19 +42,24 @@ export const Payments = ({ userId }: Props) => {
 
   useEffect(() => {
     if (error) {
-      const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+      const errorMessage = error.message
 
       dispatch(setAppError({ error: errorMessage }))
     }
   }, [error, dispatch])
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className={s.loading}>
+        <Loader color={'#4C8DFF'} size={20} />
+      </div>
+    )
   }
 
-  if (!data?.getPaymentsByUser) {
-    return null
+  if (!data?.getPaymentsByUser || data.getPaymentsByUser.items.length === 0) {
+    return <div className={s.noPayments}>No payments found</div>
   }
+
   const dataItems = data.getPaymentsByUser
   const payments = dataItems.items.flatMap(subscription =>
     subscription.payments.map(payment => ({

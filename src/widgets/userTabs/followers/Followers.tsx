@@ -6,11 +6,11 @@ import { useGetFollowersByUserQuery } from '@/src/queries/user/getFollowersByUse
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { SortColumn } from '@/src/shared/types/types'
+import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { Typography } from '@/src/shared/ui/typography/Typography'
-import { ApolloError } from '@apollo/client'
 
 import s from './followers.module.scss'
 
@@ -47,7 +47,7 @@ export const Followers = ({ userId }: Props) => {
 
   useEffect(() => {
     if (error) {
-      const errorMessage = error instanceof ApolloError ? error.message : 'Unknown error'
+      const errorMessage = error.message
 
       dispatch(setAppError({ error: errorMessage }))
     }
@@ -56,7 +56,15 @@ export const Followers = ({ userId }: Props) => {
   const users = data?.getFollowers.items
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className={s.loading}>
+        <Loader color={'#4C8DFF'} size={20} />
+      </div>
+    )
+  }
+
+  if (!data?.getFollowers || data.getFollowers.items.length === 0) {
+    return <div className={s.noPayments}>No followers found</div>
   }
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
