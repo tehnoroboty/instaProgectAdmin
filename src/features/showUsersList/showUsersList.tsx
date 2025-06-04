@@ -15,6 +15,15 @@ import debounce from 'lodash/debounce'
 
 import s from './showUsersList.module.scss'
 
+const SHOW_USERS_PAGE_SIZE_OPTIONS = [
+  { value: '8', valueTitle: '8' },
+  { value: '10', valueTitle: '10' },
+  { value: '20', valueTitle: '20' },
+  { value: '30', valueTitle: '30' },
+  { value: '50', valueTitle: '50' },
+  { value: '100', valueTitle: '100' },
+]
+
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
   { value: UserBlockStatus.All, valueTitle: 'Not selected' },
@@ -32,14 +41,14 @@ export const ShowUsersList = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
 
   const variables: QueryGetUsersArgs = {
-    pageSize,
     pageNumber: currentPage,
+    pageSize,
+    searchTerm,
     sortBy,
     sortDirection,
-    searchTerm,
     statusFilter: UserBlockStatus.All,
   }
-  const { data, loading, error, refetch } = useGetUsersQuery({ variables })
+  const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
   useEffect(() => {
     if (data) {
@@ -80,21 +89,22 @@ export const ShowUsersList = () => {
     <div className={s.container}>
       <div className={s.header}>
         <Input
-          placeholder={'Search'}
           className={s.searchInput}
-          type={'search'}
           onInput={handleInputChange}
+          placeholder={'Search'}
+          type={'search'}
         />
         <SelectBox className={s.selector} options={SELECT_OPTIONS} />
       </div>
-      <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
+      <UsersTable data={transformedData} onSortChange={handleSortChange} refetch={refetch} />
       <Pagination
         className={s.pagination}
         currentPage={currentPage}
-        totalCount={totalPagesCount}
         onPageChange={prev => setCurrentPage(prev.valueOf())}
         onPageSizeChange={prev => setPageSize(prev.valueOf())}
-        pageSize={USERS_PER_PAGE}
+        pageSize={pageSize}
+        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
+        totalCount={totalPagesCount}
       />
     </div>
   )

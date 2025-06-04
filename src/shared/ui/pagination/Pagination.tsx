@@ -6,7 +6,7 @@ import ArrowLeftIcon from '@/src/shared/assets/componentsIcons/ArrowIosBackOutli
 import ArrowRightIcon from '@/src/shared/assets/componentsIcons/ArrowIosForwardOutline'
 import { PAGE_SIZE_OPTIONS } from '@/src/shared/lib/constants/pagination'
 import { DOTS, usePagination } from '@/src/shared/ui/pagination/usePagination'
-import { SelectBox } from '@/src/shared/ui/select/SelectBox'
+import { Options, SelectBox } from '@/src/shared/ui/select/SelectBox'
 import clsx from 'clsx'
 
 import s from './pagination.module.scss'
@@ -32,6 +32,9 @@ type PaginationProps = {
    * */
   pageSize: number
   /**
+   * custom options*/
+  pageSizeOptions?: Options[]
+  /**
    * represents the min number of page buttons to be shown on each side of the current page button. Defaults to 1.*/
   siblingCount?: number
   /**
@@ -47,6 +50,7 @@ export const Pagination = (props: PaginationProps) => {
     onPageChange,
     onPageSizeChange,
     pageSize,
+    pageSizeOptions = PAGE_SIZE_OPTIONS,
     siblingCount = 1,
     totalCount,
   } = props
@@ -146,7 +150,7 @@ export const Pagination = (props: PaginationProps) => {
           className={s.select}
           isPagination
           onChangeValue={handlePageSizeChange}
-          options={PAGE_SIZE_OPTIONS}
+          options={pageSizeOptions}
           value={pageSize.toString()}
         />
         <Typography>on page</Typography>
