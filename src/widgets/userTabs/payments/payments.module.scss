@@ -1,3 +1,11 @@
-.link {
-  color:var(--light-100)
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+}
+
+.noText {
+  text-align: center;
+  padding: 20px;
 }

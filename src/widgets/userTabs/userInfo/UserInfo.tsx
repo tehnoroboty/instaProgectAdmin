@@ -4,6 +4,7 @@ import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { AvatarBox } from '@/src/shared/ui/avatar/AvatarBox'
+import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Typography } from '@/src/shared/ui/typography/Typography'
 import { ApolloError } from '@apollo/client'
 import { format } from 'date-fns'
@@ -22,7 +23,11 @@ export const UserInfo = ({ userId }: Props) => {
   })
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className={s.loading}>
+        <Loader color={'#4C8DFF'} size={20} />
+      </div>
+    )
   }
 
   if (error || !data?.getUser) {
