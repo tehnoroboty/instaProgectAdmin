@@ -1,6 +1,7 @@
 import type { User } from '@/src/queries/types'
 import type { TableUser } from '@/src/shared/types/types'
 
+import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { format } from 'date-fns'
 
 export const usersDataTransform = (users: Partial<User>[]): TableUser[] => {
@@ -11,7 +12,7 @@ export const usersDataTransform = (users: Partial<User>[]): TableUser[] => {
         : ''
 
     return {
-      createdAt: format(new Date(user.createdAt), 'dd.MM.yyyy'),
+      createdAt: makeLocaleDate(user.createdAt),
       id: `${user.id}` || '',
       isBlocked: !!user.userBan?.createdAt,
       profileLink: user.userName || '',

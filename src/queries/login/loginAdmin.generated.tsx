@@ -1,9 +1,8 @@
+import * as Types from '../types'
+
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
-
-import * as Types from '../types'
 const defaultOptions = {} as const
-
 export type LoginAdminMutationVariables = Types.Exact<{
   email: Types.Scalars['String']['input']
   password: Types.Scalars['String']['input']
@@ -48,7 +47,6 @@ export function useLoginAdminMutation(
   baseOptions?: Apollo.MutationHookOptions<LoginAdminMutation, LoginAdminMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
-
   return Apollo.useMutation<LoginAdminMutation, LoginAdminMutationVariables>(
     LoginAdminDocument,
     options

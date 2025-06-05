@@ -1,9 +1,9 @@
-import clsx from 'clsx'
-import s from './SortButton.module.scss'
-import { ArrowSortDown, ArrowSortUp } from '@/src/shared/assets/componentsIcons'
 import { SortDirection } from '@/src/queries/types'
+import { ArrowSortDown, ArrowSortUp } from '@/src/shared/assets/componentsIcons'
+import { SortColumn } from '@/src/shared/types/types'
+import clsx from 'clsx'
 
-export type SortColumn = 'userName' | 'createdAt'
+import s from './SortButton.module.scss'
 
 type Props = {
   column: SortColumn

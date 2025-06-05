@@ -1,3 +1,5 @@
+import React from 'react'
+
 export type TableUser = {
   createdAt: string
   id: string
@@ -5,3 +7,11 @@ export type TableUser = {
   profileLink: string
   userName: string
 }
+
+export type Tab = {
+  page: React.ReactNode
+  title: string
+  value: string
+}
+
+export type SortColumn = 'userName' | 'createdAt'

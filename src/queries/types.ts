@@ -35,7 +35,9 @@ export enum CurrencyType {
 export type Follow = {
   __typename?: 'Follow'
   createdAt: Scalars['DateTime']['output']
+  firstName?: Maybe<Scalars['String']['output']>
   id: Scalars['Int']['output']
+  lastName?: Maybe<Scalars['String']['output']>
   userId: Scalars['Int']['output']
   userName?: Maybe<Scalars['String']['output']>
 }

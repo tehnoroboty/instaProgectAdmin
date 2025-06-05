@@ -1,9 +1,8 @@
+import * as Types from '../../types'
+
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
-
-import * as Types from '../types'
 const defaultOptions = {} as const
-
 export type RemoveUserMutationVariables = Types.Exact<{
   id: Types.Scalars['Int']['input']
 }>
@@ -41,7 +40,6 @@ export function useRemoveUserMutation(
   baseOptions?: Apollo.MutationHookOptions<RemoveUserMutation, RemoveUserMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
-
   return Apollo.useMutation<RemoveUserMutation, RemoveUserMutationVariables>(
     RemoveUserDocument,
     options

@@ -1,17 +1,31 @@
 'use client'
 
-import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
+import type { SortColumn, TableUser } from '@/src/shared/types/types'
+
+import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
 import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
+import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
 import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
-import { UsersTable } from '@/src/widgets/usersTable/usersTable'
-import type { TableUser } from '@/src/shared/types/types'
+import { setAppError } from '@/src/shared/model/slices/appSlice'
+import { Input } from '@/src/shared/ui/input'
+import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SelectBox } from '@/src/shared/ui/select/SelectBox'
-import { Input } from '@/src/shared/ui/input'
-import s from './showUsersList.module.scss'
-import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
+import { UsersTable } from '@/src/widgets/usersTable/usersTable'
 import debounce from 'lodash/debounce'
-import type { SortColumn } from '@/src/shared/ui/sortButton/SortButton'
+
+import s from './showUsersList.module.scss'
+
+const SHOW_USERS_PAGE_SIZE_OPTIONS = [
+  { value: '8', valueTitle: '8' },
+  { value: '10', valueTitle: '10' },
+  { value: '20', valueTitle: '20' },
+  { value: '30', valueTitle: '30' },
+  { value: '50', valueTitle: '50' },
+  { value: '100', valueTitle: '100' },
+]
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
@@ -29,6 +43,8 @@ export const ShowUsersList = () => {
   const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
 
+  const dispatch = useDispatch()
+
   const variables: QueryGetUsersArgs = {
     pageSize,
     pageNumber: currentPage,
@@ -40,9 +56,18 @@ export const ShowUsersList = () => {
   const { data, loading, error, refetch } = useGetUsersQuery({ variables })
 
   useEffect(() => {
+    if (error) {
+      const errorMessage = error.message
+
+      dispatch(setAppError({ error: errorMessage }))
+    }
+  }, [error, dispatch])
+
+  useEffect(() => {
     if (data) {
       if (data.getUsers) {
         const transformed = usersDataTransform(data.getUsers.users)
+
         setTransformedData(transformed)
       } else {
         setTransformedData([])
@@ -64,6 +89,7 @@ export const ShowUsersList = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+
     handleSearch(value)
   }
 
@@ -83,14 +109,21 @@ export const ShowUsersList = () => {
         />
         <SelectBox className={s.selector} options={SELECT_OPTIONS} />
       </div>
-      <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
+      {loading ? (
+        <div className={s.loading}>
+          <Loader color={'#4C8DFF'} size={20} />
+        </div>
+      ) : (
+        <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
+      )}
       <Pagination
         className={s.pagination}
         currentPage={currentPage}
-        totalCount={totalPagesCount}
         onPageChange={prev => setCurrentPage(prev.valueOf())}
         onPageSizeChange={prev => setPageSize(prev.valueOf())}
-        pageSize={USERS_PER_PAGE}
+        pageSize={pageSize}
+        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
+        totalCount={totalPagesCount}
       />
     </div>
   )
