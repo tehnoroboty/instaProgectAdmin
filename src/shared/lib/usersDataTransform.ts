@@ -1,8 +1,7 @@
-import type { User } from '@/src/queries/types'
-import type { TableUser } from '@/src/shared/types/types'
+import type {User} from '@/src/queries/types'
+import type {TableUser} from '@/src/shared/types/types'
 
-import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
-import { format } from 'date-fns'
+import {makeLocaleDate} from '@/src/shared/lib/makeLocaleDate'
 
 export const usersDataTransform = (users: Partial<User>[]): TableUser[] => {
   return users.map(user => {
