@@ -1,130 +1,139 @@
 'use client'
 
-import type { SortColumn, TableUser } from '@/src/shared/types/types'
+import type {SortColumn, TableUser} from '@/src/shared/types/types'
 
-import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import {type ChangeEvent, useEffect, useMemo, useState} from 'react'
+import {useDispatch} from 'react-redux'
 
-import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
-import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
-import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
-import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Input } from '@/src/shared/ui/input'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Pagination } from '@/src/shared/ui/pagination/Pagination'
-import { SelectBox } from '@/src/shared/ui/select/SelectBox'
-import { UsersTable } from '@/src/widgets/usersTable/usersTable'
+import {type QueryGetUsersArgs, SortDirection, UserBlockStatus} from '@/src/queries/types'
+import {useGetUsersQuery} from '@/src/queries/users/getUsers.generated'
+import {usersDataTransform} from '@/src/shared/lib/usersDataTransform'
+import {setAppError} from '@/src/shared/model/slices/appSlice'
+import {Input} from '@/src/shared/ui/input'
+import {Loader} from '@/src/shared/ui/loader/Loader'
+import {Pagination} from '@/src/shared/ui/pagination/Pagination'
+import {SelectBox} from '@/src/shared/ui/select/SelectBox'
+import {UsersTable} from '@/src/widgets/usersTable/usersTable'
 import debounce from 'lodash/debounce'
 
 import s from './showUsersList.module.scss'
 
 const SHOW_USERS_PAGE_SIZE_OPTIONS = [
-  { value: '8', valueTitle: '8' },
-  { value: '10', valueTitle: '10' },
-  { value: '20', valueTitle: '20' },
-  { value: '30', valueTitle: '30' },
-  { value: '50', valueTitle: '50' },
-  { value: '100', valueTitle: '100' },
+    {value: '8', valueTitle: '8'},
+    {value: '10', valueTitle: '10'},
+    {value: '20', valueTitle: '20'},
+    {value: '30', valueTitle: '30'},
+    {value: '50', valueTitle: '50'},
+    {value: '100', valueTitle: '100'},
 ]
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
-  { value: UserBlockStatus.All, valueTitle: 'Not selected' },
-  { value: UserBlockStatus.Blocked, valueTitle: 'Blocked' },
-  { value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked' },
+    {value: UserBlockStatus.All, valueTitle: 'Not selected'},
+    {value: UserBlockStatus.Blocked, valueTitle: 'Blocked'},
+    {value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked'},
 ]
 
+
 export const ShowUsersList = () => {
-  const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
-  const [searchTerm, setSearchTerm] = useState<string>('')
-  const [transformedData, setTransformedData] = useState<TableUser[]>([])
-  const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
-  const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
+    const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
+    const [searchTerm, setSearchTerm] = useState<string>('')
+    const [transformedData, setTransformedData] = useState<TableUser[]>([])
+    const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
+    const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
+    const [sortBunUser, setSortBunUser] = useState<UserBlockStatus>(UserBlockStatus.All)
+    const dispatch = useDispatch()
 
-  const dispatch = useDispatch()
-
-  const variables: QueryGetUsersArgs = {
-    pageSize,
-    pageNumber: currentPage,
-    sortBy,
-    sortDirection,
-    searchTerm,
-    statusFilter: UserBlockStatus.All,
-  }
-  const { data, loading, error, refetch } = useGetUsersQuery({ variables })
-
-  useEffect(() => {
-    if (error) {
-      const errorMessage = error.message
-
-      dispatch(setAppError({ error: errorMessage }))
+    const variables: QueryGetUsersArgs = {
+        pageSize,
+        pageNumber: currentPage,
+        sortBy,
+        sortDirection,
+        searchTerm,
+        statusFilter: sortBunUser,
     }
-  }, [error, dispatch])
+    const {data, loading, error, refetch} = useGetUsersQuery({variables})
 
-  useEffect(() => {
-    if (data) {
-      if (data.getUsers) {
-        const transformed = usersDataTransform(data.getUsers.users)
+    useEffect(() => {
+        if (error) {
+            const errorMessage = error.message
 
-        setTransformedData(transformed)
-      } else {
-        setTransformedData([])
-      }
+            dispatch(setAppError({error: errorMessage}))
+        }
+    }, [error, dispatch])
 
-      if (data.getUsers.pagination) {
-        setTotalPagesCount(data.getUsers.pagination.pagesCount)
-      }
+    useEffect(() => {
+        if (data) {
+            if (data.getUsers) {
+                const transformed = usersDataTransform(data.getUsers.users)
+
+                setTransformedData(transformed)
+            } else {
+                setTransformedData([])
+            }
+
+            if (data.getUsers.pagination) {
+                setTotalPagesCount(data.getUsers.pagination.pagesCount)
+            }
+        }
+    }, [data])
+
+    const handleSearch = useMemo(
+        () =>
+            debounce((value: string) => {
+                setSearchTerm(value)
+            }, 500),
+        []
+    )
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const {value} = e.target
+
+        handleSearch(value)
     }
-  }, [data])
 
-  const handleSearch = useMemo(
-    () =>
-      debounce((value: string) => {
-        setSearchTerm(value)
-      }, 500),
-    []
-  )
+    const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
+        setSortBy(column)
+        setSortDirection(currentSort)
+    }
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
+    const handleSortOptionsChange = (value: string) => {
+        const options = SELECT_OPTIONS.find(o => o.valueTitle === value)
+        if (options) {
+            setSortBunUser(options.value);
+        }
+    }
 
-    handleSearch(value)
-  }
-
-  const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
-    setSortBy(column)
-    setSortDirection(currentSort)
-  }
-
-  return (
-    <div className={s.container}>
-      <div className={s.header}>
-        <Input
-          placeholder={'Search'}
-          className={s.searchInput}
-          type={'search'}
-          onInput={handleInputChange}
-        />
-        <SelectBox className={s.selector} options={SELECT_OPTIONS} />
-      </div>
-      {loading ? (
-        <div className={s.loading}>
-          <Loader color={'#4C8DFF'} size={20} />
+    return (
+        <div className = {s.container}>
+            <div className = {s.header}>
+                <Input
+                    placeholder = {'Search'}
+                    className = {s.searchInput}
+                    type = {'search'}
+                    onInput = {handleInputChange}
+                />
+                <SelectBox className = {s.selector} options = {SELECT_OPTIONS}
+                           onChangeValue = {handleSortOptionsChange}/>
+            </div>
+            {loading ? (
+                <div className = {s.loading}>
+                    <Loader color = {'#4C8DFF'} size = {20}/>
+                </div>
+            ) : (
+                <UsersTable data = {transformedData} refetch = {refetch} onSortChange = {handleSortChange}/>
+            )}
+            <Pagination
+                className = {s.pagination}
+                currentPage = {currentPage}
+                onPageChange = {prev => setCurrentPage(prev.valueOf())}
+                onPageSizeChange = {prev => setPageSize(prev.valueOf())}
+                pageSize = {pageSize}
+                pageSizeOptions = {SHOW_USERS_PAGE_SIZE_OPTIONS}
+                totalCount = {totalPagesCount}
+            />
         </div>
-      ) : (
-        <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
-      )}
-      <Pagination
-        className={s.pagination}
-        currentPage={currentPage}
-        onPageChange={prev => setCurrentPage(prev.valueOf())}
-        onPageSizeChange={prev => setPageSize(prev.valueOf())}
-        pageSize={pageSize}
-        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
-        totalCount={totalPagesCount}
-      />
-    </div>
-  )
+    )
 }
