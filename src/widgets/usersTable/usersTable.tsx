@@ -120,33 +120,31 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
         <TableBody>
           {data.map((item, index) => {
             return (
-              <>
-                <TableRow key={index}>
-                  <TableCell className={s.idCell}>
-                    <div className={s.flexContainer}>
-                      {item.isBlocked && <Block className={s.blockIcon} />}
-                      <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell>{item.userName}</TableCell>
-                  <TableCell>{item.profileLink}</TableCell>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell>
-                    <DropdownTable
-                      isBanned={item.isBlocked}
-                      onBanEdit={() => {
-                        if (item.isBlocked) {
-                          openUnbanModal(item)
-                        } else {
-                          console.log('Ban')
-                        }
-                      }}
-                      onDelete={() => handleDeleteUser(item)}
-                      onView={() => handleViewUser(item.id)}
-                    />
-                  </TableCell>
-                </TableRow>
-              </>
+              <TableRow key={index}>
+                <TableCell className={s.idCell}>
+                  <div className={s.flexContainer}>
+                    {item.isBlocked && <Block className={s.blockIcon} />}
+                    <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
+                  </div>
+                </TableCell>
+                <TableCell>{item.userName}</TableCell>
+                <TableCell>{item.profileLink}</TableCell>
+                <TableCell>{item.createdAt}</TableCell>
+                <TableCell>
+                  <DropdownTable
+                    isBanned={item.isBlocked}
+                    onBanEdit={() => {
+                      if (item.isBlocked) {
+                        openUnbanModal(item)
+                      } else {
+                        console.log('Ban')
+                      }
+                    }}
+                    onDelete={() => handleDeleteUser(item)}
+                    onView={() => handleViewUser(item.id)}
+                  />
+                </TableCell>
+              </TableRow>
             )
           })}
         </TableBody>
