@@ -3,8 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import { Button } from '@/src/shared/ui/button/Button'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { Button, Typography } from '@tehnoroboty/ui-kit'
 import clsx from 'clsx'
 
 import s from './alerts.module.scss'

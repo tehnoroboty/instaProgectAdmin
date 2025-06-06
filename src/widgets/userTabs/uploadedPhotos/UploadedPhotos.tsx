@@ -5,9 +5,8 @@ import { useDispatch } from 'react-redux'
 import { ImagePost } from '@/src/queries/types'
 import { useGetPostsByUserQuery } from '@/src/queries/user/getPostsByUse/getPostsByUse.generated'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Posts } from '@/src/shared/ui/postsGrid/Posts'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { Loader, Typography } from '@tehnoroboty/ui-kit'
 
 import s from './uploadedPhotos.module.scss'
 
@@ -17,9 +16,9 @@ export const UploadedPhotos = ({ userId }: Props) => {
   const { inView, ref } = useInView({ threshold: 0.1 })
   const dispatch = useDispatch()
 
-  const { data, loading, error, fetchMore } = useGetPostsByUserQuery({
-    variables: { userId },
+  const { data, error, fetchMore, loading } = useGetPostsByUserQuery({
     notifyOnNetworkStatusChange: true,
+    variables: { userId },
   })
 
   const [allPosts, setAllPosts] = useState<ImagePost[]>([])
@@ -47,7 +46,6 @@ export const UploadedPhotos = ({ userId }: Props) => {
   useEffect(() => {
     if (inView && hasMore && !loading && endCursorId) {
       fetchMore({
-        variables: { userId, endCursorId },
         updateQuery: (prev, { fetchMoreResult }) => {
           const newItems = fetchMoreResult?.getPostsByUser?.items || []
 
@@ -73,6 +71,7 @@ export const UploadedPhotos = ({ userId }: Props) => {
             },
           }
         },
+        variables: { endCursorId, userId },
       }).catch(err => {
         dispatch(setAppError({ error: err }))
       })

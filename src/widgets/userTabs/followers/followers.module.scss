@@ -1,7 +1,7 @@
 .tableHeaderCell {
   display: flex;
-  align-items: center;
   gap: 6px;
+  align-items: center;
 }
 
 .link {
@@ -10,12 +10,12 @@
 
 .loading {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 40px 0;
 }
 
 .noText {
-  text-align: center;
   padding: 20px;
+  text-align: center;
 }

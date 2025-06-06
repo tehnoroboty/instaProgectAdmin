@@ -1,39 +1,40 @@
-import * as Types from '../../types'
-
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
+
+import * as Types from '../../types'
 const defaultOptions = {} as const
+
 export type GetPaymentsByUserQueryVariables = Types.Exact<{
-  userId: Types.Scalars['Int']['input']
-  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
   pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
   sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>
   sortDirection?: Types.InputMaybe<Types.SortDirection>
+  userId: Types.Scalars['Int']['input']
 }>
 
 export type GetPaymentsByUserQuery = {
   __typename?: 'Query'
   getPaymentsByUser: {
     __typename?: 'PaymentPaginationModel'
-    pagesCount: number
-    page: number
-    pageSize: number
-    totalCount: number
     items: Array<{
       __typename?: 'SubscriptionByPaymentModel'
-      price: number
       endDate?: any | null
-      type: Types.SubscriptionType
       payments: Array<{
         __typename?: 'Payment'
-        id?: number | null
-        paymentMethod?: Types.PaymentMethod | null
-        amount?: number | null
+        amount?: null | number
         createdAt?: any | null
         endDate?: any | null
+        id?: null | number
+        paymentMethod?: Types.PaymentMethod | null
         type?: Types.SubscriptionType | null
       }>
+      price: number
+      type: Types.SubscriptionType
     }>
+    page: number
+    pageSize: number
+    pagesCount: number
+    totalCount: number
   }
 }
 
@@ -94,10 +95,14 @@ export const GetPaymentsByUserDocument = gql`
  * });
  */
 export function useGetPaymentsByUserQuery(
-  baseOptions: Apollo.QueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables> &
-    ({ variables: GetPaymentsByUserQueryVariables; skip?: boolean } | { skip: boolean })
+  baseOptions: (
+    | { skip: boolean }
+    | { skip?: boolean; variables: GetPaymentsByUserQueryVariables }
+  ) &
+    Apollo.QueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(
     GetPaymentsByUserDocument,
     options
@@ -107,6 +112,7 @@ export function useGetPaymentsByUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useLazyQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(
     GetPaymentsByUserDocument,
     options
@@ -119,6 +125,7 @@ export function useGetPaymentsByUserSuspenseQuery(
 ) {
   const options =
     baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions }
+
   return Apollo.useSuspenseQuery<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>(
     GetPaymentsByUserDocument,
     options

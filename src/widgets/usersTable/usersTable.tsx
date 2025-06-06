@@ -8,22 +8,21 @@ import { useRemoveUserMutation } from '@/src/queries/user/removeUser/removeUser.
 import { Block } from '@/src/shared/assets/componentsIcons'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
 import { ConfirmationModal } from '@/src/widgets/сonfirmationModal/ConfirmationModal'
 import { ApolloError } from '@apollo/client'
+import { Table, TableBody, TableCell, TableHeader, TableRow, Typography } from '@tehnoroboty/ui-kit'
 import { useRouter } from 'next/navigation'
 
 import s from './usersTable.module.scss'
 
 type Props = {
   data: TableUser[]
-  refetch: () => void
   onSortChange: (column: SortColumn, currentSort: SortDirection) => void
+  refetch: () => void
 }
 
-export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
+export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [deleteUser, { loading }] = useRemoveUserMutation()
@@ -56,7 +55,7 @@ export const UsersTable = ({ data, refetch, onSortChange }: Props) => {
     router.push(`/users-list/${userId}`)
   }
 
-  const handleSortChange = (column: SortColumn, currentSort: SortDirection | 'none') => {
+  const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
     const newSort =
       currentSort === 'none'
         ? SortDirection.Desc

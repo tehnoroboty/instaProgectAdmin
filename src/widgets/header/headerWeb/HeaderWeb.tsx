@@ -2,8 +2,8 @@
 import * as React from 'react'
 
 import { AppRoutes } from '@/src/shared/lib/constants/routing'
-import { SelectLanguage } from '@/src/shared/ui/select/SelectLanguage/SelectLanguage'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { Typography } from '@tehnoroboty/ui-kit'
+// import { SelectLanguage } from '@/src/shared/ui/select/SelectLanguage/SelectLanguage'
 import Link from 'next/link'
 
 import s from './headerWeb.module.scss'
@@ -30,9 +30,7 @@ export const HeaderWeb = (props: Props) => {
           </Typography>
         </div>
       </Link>
-      <div className={s.headerActions}>
-        <SelectLanguage />
-      </div>
+      <div className={s.headerActions}>{/*<SelectLanguage />*/}</div>
     </div>
   )
 }

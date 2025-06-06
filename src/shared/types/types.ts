@@ -14,4 +14,4 @@ export type Tab = {
   value: string
 }
 
-export type SortColumn = 'userName' | 'createdAt'
+export type SortColumn = 'createdAt' | 'userName'

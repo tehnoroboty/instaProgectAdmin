@@ -6,11 +6,17 @@ import { useGetFollowingByUserQuery } from '@/src/queries/user/getFollowingByUse
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { SortColumn } from '@/src/shared/types/types'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import {
+  Loader,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Typography,
+} from '@tehnoroboty/ui-kit'
 
 import s from './following.module.scss'
 
@@ -29,13 +35,13 @@ export const Following = ({ userId }: Props) => {
   const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
 
-  const { data, loading, error } = useGetFollowingByUserQuery({
+  const { data, error, loading } = useGetFollowingByUserQuery({
     variables: {
-      userId,
-      pageSize: pageSize,
       pageNumber: currentPage,
+      pageSize: pageSize,
       sortBy,
       sortDirection: sortDirection,
+      userId,
     },
   })
 
@@ -67,7 +73,7 @@ export const Following = ({ userId }: Props) => {
     return <div className={s.noText}>No following found</div>
   }
 
-  const handleSortChange = (column: SortColumn, currentSort: SortDirection | 'none') => {
+  const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
     const newSort =
       currentSort === 'none'
         ? SortDirection.Desc
@@ -115,8 +121,8 @@ export const Following = ({ userId }: Props) => {
                 <TableCell>{`${user.firstName} ${user.lastName}`}</TableCell>
                 <TableCell>
                   <Typography
-                    className={s.link}
                     as={'a'}
+                    className={s.link}
                     href={`/users-list/${user.userId}`}
                     option={'regular_link'}
                   >
@@ -132,10 +138,10 @@ export const Following = ({ userId }: Props) => {
 
       <Pagination
         currentPage={currentPage}
-        totalCount={totalPagesCount}
         onPageChange={setCurrentPage}
         onPageSizeChange={setPageSize}
         pageSize={pageSize}
+        totalCount={totalPagesCount}
       />
     </>
   )

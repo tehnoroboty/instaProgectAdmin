@@ -1,8 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Button } from '@/src/shared/ui/button/Button'
-import { Dialog } from '@/src/shared/ui/dialog'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { Button, Dialog, Typography } from '@tehnoroboty/ui-kit'
 
 import s from './сonfirmationModal.module.scss'
 

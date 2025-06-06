@@ -1,14 +1,15 @@
-import * as Types from '../types'
-
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
+
+import * as Types from '../types'
 const defaultOptions = {} as const
+
 export type GetUsersQueryVariables = Types.Exact<{
-  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
   pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
+  searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>
   sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>
   sortDirection?: Types.InputMaybe<Types.SortDirection>
-  searchTerm?: Types.InputMaybe<Types.Scalars['String']['input']>
   statusFilter?: Types.InputMaybe<Types.UserBlockStatus>
 }>
 
@@ -16,21 +17,6 @@ export type GetUsersQuery = {
   __typename?: 'Query'
   getUsers: {
     __typename?: 'UsersPaginationModel'
-    users: Array<{
-      __typename?: 'User'
-      id: number
-      userName: string
-      email: string
-      createdAt: any
-      userBan?: { __typename?: 'UserBan'; createdAt: any; reason: string } | null
-      profile: {
-        __typename?: 'Profile'
-        id: number
-        createdAt: any
-        firstName?: string | null
-        lastName?: string | null
-      }
-    }>
     pagination: {
       __typename?: 'PaginationModel'
       page: number
@@ -38,6 +24,21 @@ export type GetUsersQuery = {
       pagesCount: number
       totalCount: number
     }
+    users: Array<{
+      __typename?: 'User'
+      createdAt: any
+      email: string
+      id: number
+      profile: {
+        __typename?: 'Profile'
+        createdAt: any
+        firstName?: null | string
+        id: number
+        lastName?: null | string
+      }
+      userBan?: { __typename?: 'UserBan'; createdAt: any; reason: string } | null
+      userName: string
+    }>
   }
 }
 
@@ -109,12 +110,14 @@ export function useGetUsersQuery(
   baseOptions?: Apollo.QueryHookOptions<GetUsersQuery, GetUsersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options)
 }
 export function useGetUsersLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetUsersQuery, GetUsersQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useLazyQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options)
 }
 export function useGetUsersSuspenseQuery(
@@ -124,6 +127,7 @@ export function useGetUsersSuspenseQuery(
 ) {
   const options =
     baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions }
+
   return Apollo.useSuspenseQuery<GetUsersQuery, GetUsersQueryVariables>(GetUsersDocument, options)
 }
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>

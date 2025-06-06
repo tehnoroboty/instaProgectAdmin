@@ -3,10 +3,8 @@ import { useDispatch } from 'react-redux'
 import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { AvatarBox } from '@/src/shared/ui/avatar/AvatarBox'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { ApolloError } from '@apollo/client'
+import { AvatarBox, Loader, Typography } from '@tehnoroboty/ui-kit'
 import { format } from 'date-fns'
 
 import s from './userInfo.module.scss'
@@ -18,7 +16,7 @@ type Props = {
 export const UserInfo = ({ userId }: Props) => {
   const dispatch = useDispatch()
 
-  const { data, loading, error } = useGetUserQuery({
+  const { data, error, loading } = useGetUserQuery({
     variables: { userId },
   })
 
@@ -40,7 +38,7 @@ export const UserInfo = ({ userId }: Props) => {
 
   const user = data.getUser
 
-  const { id, userName, email, createdAt, profile } = user
+  const { createdAt, email, id, profile, userName } = user
   const avatarUrl = profile?.avatars?.[0]?.url ?? ''
 
   const createdAtDate = makeLocaleDate(createdAt)
@@ -52,7 +50,7 @@ export const UserInfo = ({ userId }: Props) => {
   return (
     <div>
       <div className={s.top}>
-        <AvatarBox src={avatarUrl} size={'m'} />
+        <AvatarBox size={'m'} src={avatarUrl} />
         <div className={s.info}>
           <Typography as={'h1'} option={'h1'}>
             {displayName}

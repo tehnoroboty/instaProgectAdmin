@@ -9,23 +9,20 @@ import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/qu
 import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
 import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Input } from '@/src/shared/ui/input'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Pagination } from '@/src/shared/ui/pagination/Pagination'
-import { SelectBox } from '@/src/shared/ui/select/SelectBox'
 import { UsersTable } from '@/src/widgets/usersTable/usersTable'
+import { Input, Loader, Pagination, SelectBox } from '@tehnoroboty/ui-kit'
 import debounce from 'lodash/debounce'
 
 import s from './showUsersList.module.scss'
 
-const SHOW_USERS_PAGE_SIZE_OPTIONS = [
-  { value: '8', valueTitle: '8' },
-  { value: '10', valueTitle: '10' },
-  { value: '20', valueTitle: '20' },
-  { value: '30', valueTitle: '30' },
-  { value: '50', valueTitle: '50' },
-  { value: '100', valueTitle: '100' },
-]
+// const SHOW_USERS_PAGE_SIZE_OPTIONS = [
+//   { value: '8', valueTitle: '8' },
+//   { value: '10', valueTitle: '10' },
+//   { value: '20', valueTitle: '20' },
+//   { value: '30', valueTitle: '30' },
+//   { value: '50', valueTitle: '50' },
+//   { value: '100', valueTitle: '100' },
+// ]
 
 const USERS_PER_PAGE = 8
 const SELECT_OPTIONS = [
@@ -46,14 +43,14 @@ export const ShowUsersList = () => {
   const dispatch = useDispatch()
 
   const variables: QueryGetUsersArgs = {
-    pageSize,
     pageNumber: currentPage,
+    pageSize,
+    searchTerm,
     sortBy,
     sortDirection,
-    searchTerm,
     statusFilter: UserBlockStatus.All,
   }
-  const { data, loading, error, refetch } = useGetUsersQuery({ variables })
+  const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
   useEffect(() => {
     if (error) {
@@ -102,10 +99,10 @@ export const ShowUsersList = () => {
     <div className={s.container}>
       <div className={s.header}>
         <Input
-          placeholder={'Search'}
           className={s.searchInput}
-          type={'search'}
           onInput={handleInputChange}
+          placeholder={'Search'}
+          type={'search'}
         />
         <SelectBox className={s.selector} options={SELECT_OPTIONS} />
       </div>
@@ -114,7 +111,7 @@ export const ShowUsersList = () => {
           <Loader color={'#4C8DFF'} size={20} />
         </div>
       ) : (
-        <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
+        <UsersTable data={transformedData} onSortChange={handleSortChange} refetch={refetch} />
       )}
       <Pagination
         className={s.pagination}
@@ -122,7 +119,7 @@ export const ShowUsersList = () => {
         onPageChange={prev => setCurrentPage(prev.valueOf())}
         onPageSizeChange={prev => setPageSize(prev.valueOf())}
         pageSize={pageSize}
-        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
+        // pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
         totalCount={totalPagesCount}
       />
     </div>

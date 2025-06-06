@@ -1,33 +1,34 @@
-import * as Types from '../../types'
-
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
+
+import * as Types from '../../types'
 const defaultOptions = {} as const
+
 export type GetFollowingByUserQueryVariables = Types.Exact<{
-  userId: Types.Scalars['Int']['input']
-  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
   pageNumber?: Types.InputMaybe<Types.Scalars['Int']['input']>
+  pageSize?: Types.InputMaybe<Types.Scalars['Int']['input']>
   sortBy?: Types.InputMaybe<Types.Scalars['String']['input']>
   sortDirection?: Types.InputMaybe<Types.SortDirection>
+  userId: Types.Scalars['Int']['input']
 }>
 
 export type GetFollowingByUserQuery = {
   __typename?: 'Query'
   getFollowing: {
     __typename?: 'FollowPaginationModel'
-    pagesCount: number
-    page: number
-    pageSize: number
-    totalCount: number
     items: Array<{
       __typename?: 'Follow'
-      id: number
-      userId: number
-      userName?: string | null
-      firstName?: string | null
-      lastName?: string | null
       createdAt: any
+      firstName?: null | string
+      id: number
+      lastName?: null | string
+      userId: number
+      userName?: null | string
     }>
+    page: number
+    pageSize: number
+    pagesCount: number
+    totalCount: number
   }
 }
 
@@ -83,10 +84,14 @@ export const GetFollowingByUserDocument = gql`
  * });
  */
 export function useGetFollowingByUserQuery(
-  baseOptions: Apollo.QueryHookOptions<GetFollowingByUserQuery, GetFollowingByUserQueryVariables> &
-    ({ variables: GetFollowingByUserQueryVariables; skip?: boolean } | { skip: boolean })
+  baseOptions: (
+    | { skip: boolean }
+    | { skip?: boolean; variables: GetFollowingByUserQueryVariables }
+  ) &
+    Apollo.QueryHookOptions<GetFollowingByUserQuery, GetFollowingByUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useQuery<GetFollowingByUserQuery, GetFollowingByUserQueryVariables>(
     GetFollowingByUserDocument,
     options
@@ -99,6 +104,7 @@ export function useGetFollowingByUserLazyQuery(
   >
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useLazyQuery<GetFollowingByUserQuery, GetFollowingByUserQueryVariables>(
     GetFollowingByUserDocument,
     options
@@ -111,6 +117,7 @@ export function useGetFollowingByUserSuspenseQuery(
 ) {
   const options =
     baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions }
+
   return Apollo.useSuspenseQuery<GetFollowingByUserQuery, GetFollowingByUserQueryVariables>(
     GetFollowingByUserDocument,
     options

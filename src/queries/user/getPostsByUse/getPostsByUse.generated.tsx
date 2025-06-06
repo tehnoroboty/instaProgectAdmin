@@ -6,26 +6,26 @@ import * as Types from '../../types'
 const defaultOptions = {} as const
 
 export type GetPostsByUserQueryVariables = Types.Exact<{
-  userId: Types.Scalars['Int']['input']
   endCursorId?: Types.InputMaybe<Types.Scalars['Int']['input']>
+  userId: Types.Scalars['Int']['input']
 }>
 
 export type GetPostsByUserQuery = {
   __typename?: 'Query'
   getPostsByUser: {
     __typename?: 'PostsByUserModel'
-    pagesCount: number
-    pageSize: number
-    totalCount: number
     items?: Array<{
       __typename?: 'ImagePost'
-      id?: number | null
       createdAt?: any | null
-      url?: string | null
-      width?: number | null
-      height?: number | null
-      fileSize?: number | null
+      fileSize?: null | number
+      height?: null | number
+      id?: null | number
+      url?: null | string
+      width?: null | number
     }> | null
+    pageSize: number
+    pagesCount: number
+    totalCount: number
   }
 }
 
@@ -65,14 +65,14 @@ export const GetPostsByUserDocument = gql`
  * });
  */
 export function useGetPostsByUserQuery(
-  baseOptions: Apollo.QueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables> &
-    (
-      | {
-          variables: GetPostsByUserQueryVariables
-          skip?: boolean
-        }
-      | { skip: boolean }
-    )
+  baseOptions: (
+    | {
+        skip?: boolean
+        variables: GetPostsByUserQueryVariables
+      }
+    | { skip: boolean }
+  ) &
+    Apollo.QueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
 

@@ -1,8 +1,9 @@
-import * as Types from '../../types'
-
 import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
+
+import * as Types from '../../types'
 const defaultOptions = {} as const
+
 export type GetUserQueryVariables = Types.Exact<{
   userId: Types.Scalars['Int']['input']
 }>
@@ -11,17 +12,17 @@ export type GetUserQuery = {
   __typename?: 'Query'
   getUser: {
     __typename?: 'User'
-    id: number
-    userName: string
-    email: string
     createdAt: any
+    email: string
+    id: number
     profile: {
       __typename?: 'Profile'
-      firstName?: string | null
-      lastName?: string | null
-      avatars?: Array<{ __typename?: 'Avatar'; url?: string | null }> | null
+      avatars?: Array<{ __typename?: 'Avatar'; url?: null | string }> | null
+      firstName?: null | string
+      lastName?: null | string
     }
     userBan?: { __typename?: 'UserBan'; reason: string } | null
+    userName: string
   }
 }
 
@@ -63,16 +64,18 @@ export const GetUserDocument = gql`
  * });
  */
 export function useGetUserQuery(
-  baseOptions: Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables> &
-    ({ variables: GetUserQueryVariables; skip?: boolean } | { skip: boolean })
+  baseOptions: ({ skip: boolean } | { skip?: boolean; variables: GetUserQueryVariables }) &
+    Apollo.QueryHookOptions<GetUserQuery, GetUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options)
 }
 export function useGetUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetUserQuery, GetUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
+
   return Apollo.useLazyQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options)
 }
 export function useGetUserSuspenseQuery(
@@ -82,6 +85,7 @@ export function useGetUserSuspenseQuery(
 ) {
   const options =
     baseOptions === Apollo.skipToken ? baseOptions : { ...defaultOptions, ...baseOptions }
+
   return Apollo.useSuspenseQuery<GetUserQuery, GetUserQueryVariables>(GetUserDocument, options)
 }
 export type GetUserQueryHookResult = ReturnType<typeof useGetUserQuery>

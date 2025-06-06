@@ -1,6 +1,6 @@
 import PersonBan from '@/src/shared/assets/componentsIcons/Block'
 import PersonRemove from '@/src/shared/assets/componentsIcons/PersonRemove'
-import { Dropdown, DropdownMenuItems } from '@/src/shared/ui/dropdown/Dropdown'
+import { Dropdown, type DropdownMenuItems } from '@tehnoroboty/ui-kit'
 
 type Props = {
   onBanUser?: () => void
