@@ -42,18 +42,18 @@ export const ShowUsersList = () => {
   const [transformedData, setTransformedData] = useState<TableUser[]>([])
   const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
-
+  const [sortBunUser, setSortBunUser] = useState<UserBlockStatus>(UserBlockStatus.All)
   const dispatch = useDispatch()
 
   const variables: QueryGetUsersArgs = {
-    pageSize,
     pageNumber: currentPage,
+    pageSize,
+    searchTerm,
     sortBy,
     sortDirection,
-    searchTerm,
-    statusFilter: UserBlockStatus.All,
+    statusFilter: sortBunUser,
   }
-  const { data, loading, error, refetch } = useGetUsersQuery({ variables })
+  const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
   useEffect(() => {
     if (error) {
@@ -98,23 +98,35 @@ export const ShowUsersList = () => {
     setSortDirection(currentSort)
   }
 
+  const handleSortOptionsChange = (value: string) => {
+    const options = SELECT_OPTIONS.find(o => o.valueTitle === value)
+
+    if (options) {
+      setSortBunUser(options.value)
+    }
+  }
+
   return (
     <div className={s.container}>
       <div className={s.header}>
         <Input
-          placeholder={'Search'}
           className={s.searchInput}
-          type={'search'}
           onInput={handleInputChange}
+          placeholder={'Search'}
+          type={'search'}
         />
-        <SelectBox className={s.selector} options={SELECT_OPTIONS} />
+        <SelectBox
+          className={s.selector}
+          onChangeValue={handleSortOptionsChange}
+          options={SELECT_OPTIONS}
+        />
       </div>
       {loading ? (
         <div className={s.loading}>
           <Loader color={'#4C8DFF'} size={20} />
         </div>
       ) : (
-        <UsersTable data={transformedData} refetch={refetch} onSortChange={handleSortChange} />
+        <UsersTable data={transformedData} onSortChange={handleSortChange} refetch={refetch} />
       )}
       <Pagination
         className={s.pagination}
