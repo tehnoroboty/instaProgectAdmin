@@ -218,7 +218,7 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           loading={banLoading}
           modalTitle={'Ban user'}
           modalMessage={
-            <div>
+            <>
               Are you sure want to ban this user,{' '}
               <Typography as={'span'} option={'bold_text16'}>
                 {selectedUser.userName || selectedUser.profileLink}
@@ -230,7 +230,7 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
                 onChangeValue={handleChoseReasonChange}
                 options={SELECT_REASON}
               />
-            </div>
+            </>
           }
           onClickNo={() => {
             setShowBanModal(false)

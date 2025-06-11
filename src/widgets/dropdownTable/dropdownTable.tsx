@@ -23,7 +23,7 @@ export const DropdownTable = ({ className, isBanned, onBanEdit, onDelete, onView
       title: 'Delete User',
     },
     {
-      icon: isBanned ? Block : Unblock,
+      icon: isBanned ? Unblock : Block,
       id: '2',
       onClick: () => onBanEdit(!isBanned),
       title: isBanned ? 'Un-ban User' : 'Ban in the system',
