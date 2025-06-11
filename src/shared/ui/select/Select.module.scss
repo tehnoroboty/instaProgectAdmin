@@ -92,7 +92,7 @@
 
 .content {
   cursor: pointer;
-
+  z-index: 99;
   overflow: hidden;
 
   width: var(--radix-select-trigger-width);

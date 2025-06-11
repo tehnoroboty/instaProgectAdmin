@@ -6,11 +6,7 @@ import { useBanUserMutation } from '@/src/queries/user/banUser/banUser.generated
 import { useRemoveUserMutation } from '@/src/queries/user/removeUser/removeUser.generated'
 import { useUnbanUserMutation } from '@/src/queries/user/unbanUser/unbanUser.generated'
 import { Block } from '@/src/shared/assets/componentsIcons'
-import {
-  DEFAULT_BAN_REASON,
-  SELECT_OPTIONS,
-  SELECT_REASON,
-} from '@/src/shared/lib/constants/select'
+import { DEFAULT_BAN_REASON, SELECT_REASON } from '@/src/shared/lib/constants/select'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { BanReason, SortColumn, TableUser } from '@/src/shared/types/types'
 import { SelectBox } from '@/src/shared/ui/select/SelectBox'
@@ -126,20 +122,22 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
     }
   }
 
-  /*
-    const handleChoseReasonChange = (value: string) => {
-      console.log(value)
-      console.log(SELECT_REASON)
-      const options = SELECT_REASON.find(r => r.valueTitle === value)
+  const handleChoseReasonChange = (value: string) => {
+    const options = SELECT_REASON.find(r => r.valueTitle === value)
 
-      if (options) {
-        setBanReason(options.value)
-      }
+    if (options) {
+      setBanReason(options.value as BanReason)
     }
-  */
+  }
 
   return (
     <>
+      <SelectBox
+        // placeholder={'Reason for ban'}
+        onChangeValue={handleChoseReasonChange}
+        options={SELECT_REASON}
+      />
+
       <Table>
         <TableHeader>
           <TableRow>
@@ -222,17 +220,16 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           modalMessage={
             <div>
               Are you sure want to ban this user,{' '}
-              <Typography as={'a'} option={'bold_text16'}>
+              <Typography as={'span'} option={'bold_text16'}>
                 {selectedUser.userName || selectedUser.profileLink}
               </Typography>
               ?
-              {/*
               <SelectBox
-                // placeholder={'Reason for ban'}
+                className={s.selectBox}
+                placeholder={'Reason for ban'}
                 onChangeValue={handleChoseReasonChange}
                 options={SELECT_REASON}
               />
-*/}
             </div>
           }
           onClickNo={() => {
