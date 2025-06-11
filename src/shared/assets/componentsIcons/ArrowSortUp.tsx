@@ -1,8 +1,8 @@
 import { Ref, type SVGProps, forwardRef, memo } from 'react'
 
 const SvgArrowSortUp = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={8} height={6} fill="none" {...props} ref={ref}>
-    <path fill="currentColor" d="m4 0 3.464 4.5H.536z" />
+  <svg fill={'none'} height={6} width={8} xmlns={'http://www.w3.org/2000/svg'} {...props} ref={ref}>
+    <path d={'m4 0 3.464 4.5H.536z'} fill={'currentColor'} />
   </svg>
 )
 const ForwardRef = forwardRef(SvgArrowSortUp)

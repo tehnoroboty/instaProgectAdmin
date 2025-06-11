@@ -17,9 +17,9 @@ export const UploadedPhotos = ({ userId }: Props) => {
   const { inView, ref } = useInView({ threshold: 0.1 })
   const dispatch = useDispatch()
 
-  const { data, loading, error, fetchMore } = useGetPostsByUserQuery({
-    variables: { userId },
+  const { data, error, fetchMore, loading } = useGetPostsByUserQuery({
     notifyOnNetworkStatusChange: true,
+    variables: { userId },
   })
 
   const [allPosts, setAllPosts] = useState<ImagePost[]>([])
@@ -47,7 +47,6 @@ export const UploadedPhotos = ({ userId }: Props) => {
   useEffect(() => {
     if (inView && hasMore && !loading && endCursorId) {
       fetchMore({
-        variables: { userId, endCursorId },
         updateQuery: (prev, { fetchMoreResult }) => {
           const newItems = fetchMoreResult?.getPostsByUser?.items || []
 
@@ -73,6 +72,7 @@ export const UploadedPhotos = ({ userId }: Props) => {
             },
           }
         },
+        variables: { endCursorId, userId },
       }).catch(err => {
         dispatch(setAppError({ error: err }))
       })

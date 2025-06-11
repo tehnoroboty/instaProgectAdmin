@@ -18,7 +18,7 @@ export const Posts = ({ posts }: Props) => {
         return (
           <div className={s.image} key={post.id}>
             {post.url ? (
-              <Image alt={'Post image'} height={228} width={234} src={post.url} />
+              <Image alt={'Post image'} height={228} src={post.url} width={234} />
             ) : (
               <div className={s.notFound}>
                 <ImageNotFound height={194} width={199} />

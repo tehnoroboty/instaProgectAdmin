@@ -15,7 +15,7 @@ export const ShowUser = () => {
   return (
     <div className={s.page}>
       <div className={s.header}>
-        <Typography className={s.button} option={'medium_text14'} as={'a'} href={'/users-list'}>
+        <Typography as={'a'} className={s.button} href={'/users-list'} option={'medium_text14'}>
           <ArrowBackOutline />
           Back to Users List
         </Typography>
