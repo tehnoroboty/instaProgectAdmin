@@ -5,12 +5,12 @@ import clsx from 'clsx'
 
 import s from './SortButton.module.scss'
 
-type Props = {
-  column: SortColumn
-  currentSort: SortDirection | 'none'
-  onSortChange: (column: SortColumn, currentSort: SortDirection | 'none') => void
+type Props<T extends string> = {
+  column: T
+  currentSort: 'none' | SortDirection
+  onSortChange: (column: T, currentSort: 'none' | SortDirection) => void
 }
-export const SortButton = ({ column, onSortChange, currentSort }: Props) => {
+export const SortButton = <T extends string>({ column, currentSort, onSortChange }: Props<T>) => {
   const toggleSort = () => {
     const newSort =
       currentSort === 'none'

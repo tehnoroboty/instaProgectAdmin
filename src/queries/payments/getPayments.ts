@@ -1,9 +1,9 @@
 import { gql } from '@apollo/client'
 
-export const GET_ALL_PAYMENTS = gql`
+export const GET_PAYMENTS = gql`
   query GetPayments(
-    $pageSize: Int
-    $pageNumber: Int
+    $pageSize: Int = 10
+    $pageNumber: Int = 1
     $sortBy: String = "createdAt"
     $sortDirection: SortDirection = desc
     $searchTerm: String

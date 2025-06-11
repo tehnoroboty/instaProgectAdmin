@@ -14,4 +14,13 @@ export type Tab = {
   value: string
 }
 
-export type SortColumn = 'userName' | 'createdAt'
+export type SortColumn = 'createdAt' | 'userName'
+
+export type TablePayment = {
+  amount: number
+  avatarUrl: string
+  dateAdded: string
+  paymentMethod: string
+  subscriptionType: string
+  userName: string
+}
