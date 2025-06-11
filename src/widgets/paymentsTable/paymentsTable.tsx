@@ -6,7 +6,7 @@ import { TablePayment } from '@/src/shared/types/types'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 
-import s from '@/src/widgets/usersTable/usersTable.module.scss'
+import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'
 
 type Props = {
   data: TablePayment[]
@@ -14,7 +14,7 @@ type Props = {
   refetch: () => void
 }
 
-export const PaymentsTable = ({ onSortChange }: Props) => {
+export const PaymentsTable = ({ data, onSortChange, refetch }: Props) => {
   const [sortConfig, setSortConfig] = useState<Partial<Record<SortColumn, SortDirection>>>({})
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
@@ -36,66 +36,69 @@ export const PaymentsTable = ({ onSortChange }: Props) => {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableCell className={s.tableHeaderCell}>
-            Username{' '}
-            <SortButton
-              column={'userName'}
-              currentSort={sortConfig['userName'] || 'none'}
-              onSortChange={handleSortChange}
-            />
+        <TableRow className={s.tableRow}>
+          <TableCell>
+            <div className={s.tableHeaderCell}>
+              Username
+              <SortButton
+                column={'userName'}
+                currentSort={sortConfig['userName'] || 'none'}
+                onSortChange={handleSortChange}
+              />
+            </div>
           </TableCell>
-          <TableCell className={s.tableHeaderCell}>
-            Date added{' '}
-            <SortButton
-              column={'createdAt'}
-              currentSort={sortConfig['createdAt'] || 'none'}
-              onSortChange={handleSortChange}
-            />
+          <TableCell>
+            <div className={s.tableHeaderCell}>
+              Date added
+              <SortButton
+                column={'createdAt'}
+                currentSort={sortConfig['createdAt'] || 'none'}
+                onSortChange={handleSortChange}
+              />
+            </div>
           </TableCell>
-          <TableCell className={s.tableHeaderCell}>
-            Amount, ${' '}
-            <SortButton
-              column={'amount'}
-              currentSort={sortConfig['amount'] || 'none'}
-              onSortChange={handleSortChange}
-            />
+          <TableCell>
+            <div className={s.tableHeaderCell}>
+              Amount, $
+              <SortButton
+                column={'amount'}
+                currentSort={sortConfig['amount'] || 'none'}
+                onSortChange={handleSortChange}
+              />
+            </div>
           </TableCell>
-          <TableCell>Subscription</TableCell>
-          <TableCell className={s.tableHeaderCell}>
-            Payment Method{' '}
-            <SortButton
-              column={'paymentMethod'}
-              currentSort={sortConfig['paymentMethod'] || 'none'}
-              onSortChange={handleSortChange}
-            />
+          <TableCell>
+            <div className={s.tableHeaderCell}>Subscription</div>
+          </TableCell>
+          <TableCell>
+            <div className={s.tableHeaderCell}>
+              Payment Method
+              <SortButton
+                column={'paymentMethod'}
+                currentSort={sortConfig['paymentMethod'] || 'none'}
+                onSortChange={handleSortChange}
+              />
+            </div>
           </TableCell>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {/*{data.map((item, index) => {*/}
-        {/*  return (*/}
-        {/*    <TableRow key={index}>*/}
-        {/*      <TableCell className={s.idCell}>*/}
-        {/*        <div className={s.flexContainer}>*/}
-        {/*          {item.isBlocked && <Block className={s.blockIcon} />}*/}
-        {/*          <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>*/}
-        {/*        </div>*/}
-        {/*      </TableCell>*/}
-        {/*      <TableCell>{item.userName}</TableCell>*/}
-        {/*      <TableCell>{item.profileLink}</TableCell>*/}
-        {/*      <TableCell>{item.createdAt}</TableCell>*/}
-        {/*      <TableCell>*/}
-        {/*        <DropdownTable*/}
-        {/*          isBanned={item.isBlocked}*/}
-        {/*          onBanEdit={() => {}}*/}
-        {/*          onDelete={() => handleDeleteUser(item)}*/}
-        {/*          onView={() => handleViewUser(item.id)}*/}
-        {/*        />*/}
-        {/*      </TableCell>*/}
-        {/*    </TableRow>*/}
-        {/*  )*/}
-        {/*})}*/}
+        {data.map((item, index) => {
+          return (
+            <TableRow key={index}>
+              <TableCell className={s.tableCell}>
+                <div className={s.avaNameCell}>
+                  <img alt={'ava'} className={s.avatarImg} src={item.avatarUrl} />
+                  <span>{item.userName}</span>
+                </div>
+              </TableCell>
+              <TableCell className={s.tableCell}>{item.dateAdded}</TableCell>
+              <TableCell className={s.tableCell}>{item.amount}$</TableCell>
+              <TableCell className={s.tableCell}>{item.subscriptionType}</TableCell>
+              <TableCell className={s.tableCell}>{item.paymentMethod}</TableCell>
+            </TableRow>
+          )
+        })}
       </TableBody>
     </Table>
   )

@@ -65,8 +65,6 @@ export const ShowPaymentsList = () => {
     }
   }, [error, dispatch])
 
-  console.log(transformedData)
-
   const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
     setSortBy(column)
     setSortDirection(currentSort)
