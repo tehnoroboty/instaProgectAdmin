@@ -69,11 +69,9 @@ export const SelectBox = ({
             aria-label={placeholder}
           >
             <Select.Value placeholder={placeholder} />
-            <span className={clsx(styles.iconWrapper)}>
-              <Select.Icon>
-                <Arrow className={clsx(styles.icon, isPagination && styles.iconSmall)} />
-              </Select.Icon>
-            </span>
+            <Select.Icon asChild>
+              <Arrow className={clsx(styles.icon, isPagination && styles.iconSmall)} />
+            </Select.Icon>
           </Select.Trigger>
         </Select.Group>
 
