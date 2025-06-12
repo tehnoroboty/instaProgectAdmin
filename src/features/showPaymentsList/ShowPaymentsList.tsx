@@ -1,6 +1,6 @@
 'use client'
 
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
+import { ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { useGetPaymentsQuery } from '@/src/queries/payments/getPayments.generated'
@@ -20,6 +20,15 @@ import s from '@/src/features/showPaymentsList/showPaymentsList.module.scss'
 export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
 
 const USERS_PER_PAGE = 6
+
+const SHOW_USERS_PAGE_SIZE_OPTIONS = [
+  { value: '6', valueTitle: '6' },
+  { value: '10', valueTitle: '10' },
+  { value: '20', valueTitle: '20' },
+  { value: '30', valueTitle: '30' },
+  { value: '50', valueTitle: '50' },
+  { value: '100', valueTitle: '100' },
+]
 
 export const ShowPaymentsList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
@@ -118,7 +127,7 @@ export const ShowPaymentsList = () => {
         onPageChange={prev => setCurrentPage(prev.valueOf())}
         onPageSizeChange={prev => setPageSize(prev.valueOf())}
         pageSize={pageSize}
-        // pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
+        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
         totalCount={totalPagesCount}
       />
     </div>
