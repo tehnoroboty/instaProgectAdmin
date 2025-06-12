@@ -86,7 +86,7 @@
   height: 16px;
 }
 
-[data-state='open'] .icon {
+.trigger[data-state='open'] .icon {
   transform: rotate(180deg);
 }
 
