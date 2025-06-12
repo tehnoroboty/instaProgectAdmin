@@ -132,12 +132,6 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
 
   return (
     <>
-      <SelectBox
-        // placeholder={'Reason for ban'}
-        onChangeValue={handleChoseReasonChange}
-        options={SELECT_REASON}
-      />
-
       <Table>
         <TableHeader>
           <TableRow>
