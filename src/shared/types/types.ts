@@ -14,7 +14,7 @@ export type Tab = {
   value: string
 }
 
-export type SortColumn = 'createdAt' | 'userName'
+export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
 
 export type TablePayment = {
   amount: number

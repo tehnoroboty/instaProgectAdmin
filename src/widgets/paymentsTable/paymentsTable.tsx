@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-import { SortColumn } from '@/src/features/showPaymentsList/ShowPaymentsList'
 import { SortDirection } from '@/src/queries/types'
-import { TablePayment } from '@/src/shared/types/types'
+import { SortColumn, TablePayment } from '@/src/shared/types/types'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 
@@ -10,7 +9,7 @@ import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'
 
 type Props = {
   data: TablePayment[]
-  onSortChange: (column: SortColumn, currentSort: SortDirection) => void
+  onSortChange: (column: SortColumn, direction: SortDirection) => void
   refetch: () => void
 }
 
@@ -23,12 +22,12 @@ export const PaymentsTable = ({ data, onSortChange, refetch }: Props) => {
     if (currentSort === 'none') {
       newSort = SortDirection.Desc
     } else if (currentSort === SortDirection.Desc) {
-      newSort = SortDirection.Asc
-    } else {
       newSort = SortDirection.Desc
+    } else {
+      newSort = SortDirection.Asc
     }
 
-    setSortConfig(prev => ({ ...prev, [column]: newSort }))
+    setSortConfig(prev => ({ ...prev, [column]: currentSort }))
 
     onSortChange(column, newSort)
   }

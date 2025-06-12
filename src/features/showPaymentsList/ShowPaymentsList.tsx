@@ -7,7 +7,7 @@ import { useGetPaymentsQuery } from '@/src/queries/payments/getPayments.generate
 import { QueryGetPaymentsArgs, SortDirection } from '@/src/queries/types'
 import { paymentsDataTransform } from '@/src/shared/lib/paymentsDataTransform'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { TablePayment } from '@/src/shared/types/types'
+import { SortColumn, TablePayment } from '@/src/shared/types/types'
 import { CheckBox } from '@/src/shared/ui/checkbox/CheckBox'
 import { Input } from '@/src/shared/ui/input'
 import { Loader } from '@/src/shared/ui/loader/Loader'
@@ -16,8 +16,6 @@ import { PaymentsTable } from '@/src/widgets/paymentsTable/paymentsTable'
 import debounce from 'lodash/debounce'
 
 import s from '@/src/features/showPaymentsList/showPaymentsList.module.scss'
-
-export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
 
 const USERS_PER_PAGE = 6
 
