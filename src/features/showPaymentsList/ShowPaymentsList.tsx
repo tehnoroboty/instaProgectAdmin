@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { useGetPaymentsQuery } from '@/src/queries/payments/getPayments.generated'
@@ -13,6 +13,7 @@ import { Input } from '@/src/shared/ui/input'
 import { Loader } from '@/src/shared/ui/loader/Loader'
 import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { PaymentsTable } from '@/src/widgets/paymentsTable/paymentsTable'
+import debounce from 'lodash/debounce'
 
 import s from '@/src/features/showPaymentsList/showPaymentsList.module.scss'
 
@@ -65,6 +66,29 @@ export const ShowPaymentsList = () => {
     }
   }, [error, dispatch])
 
+  // Добавляем debounce для поиска
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((searchValue: string) => {
+        setSearchTerm(searchValue)
+        setCurrentPage(1)
+      }, 500),
+    []
+  )
+
+  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    debouncedSearch(value)
+  }
+
+  // Очищаем таймер при размонтировании
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel()
+    }
+  }, [debouncedSearch])
+
   const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
     setSortBy(column)
     setSortDirection(currentSort)
@@ -76,7 +100,7 @@ export const ShowPaymentsList = () => {
         <CheckBox className={s.autoUpdate} label={'Autoubdate'} />
         <Input
           className={s.searchInput}
-          onInput={() => {}}
+          onInput={handleSearchChange}
           placeholder={'Search'}
           type={'search'}
         />
