@@ -7,7 +7,7 @@ import { useGetPaymentsQuery } from '@/src/queries/payments/getPayments.generate
 import { QueryGetPaymentsArgs, SortDirection } from '@/src/queries/types'
 import { paymentsDataTransform } from '@/src/shared/lib/paymentsDataTransform'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { SortColumn, TablePayment } from '@/src/shared/types/types'
+import { SortColumn } from '@/src/shared/types/types'
 import { CheckBox } from '@/src/shared/ui/checkbox/CheckBox'
 import { Input } from '@/src/shared/ui/input'
 import { Loader } from '@/src/shared/ui/loader/Loader'
@@ -19,23 +19,23 @@ import s from '@/src/features/showPaymentsList/showPaymentsList.module.scss'
 
 const USERS_PER_PAGE = 6
 
-const SHOW_USERS_PAGE_SIZE_OPTIONS = [
-  { value: '6', valueTitle: '6' },
-  { value: '10', valueTitle: '10' },
-  { value: '20', valueTitle: '20' },
-  { value: '30', valueTitle: '30' },
-  { value: '50', valueTitle: '50' },
-  { value: '100', valueTitle: '100' },
-]
+const SHOW_USERS_PAGE_SIZE_OPTIONS = [6, 10, 20, 30, 50, 100].map(value => ({
+  value: String(value),
+  valueTitle: String(value),
+}))
 
 export const ShowPaymentsList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1)
   const [pageSize, setPageSize] = useState<number>(USERS_PER_PAGE)
   const [searchTerm, setSearchTerm] = useState<string>('')
-  const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
-  const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
-  const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
-  const [transformedData, setTransformedData] = useState<TablePayment[]>([])
+
+  const [sortConfig, setSortConfig] = useState<{
+    sortBy: SortColumn
+    sortDirection: SortDirection
+  }>({
+    sortBy: 'createdAt',
+    sortDirection: SortDirection.Desc,
+  })
 
   const dispatch = useDispatch()
 
@@ -43,27 +43,17 @@ export const ShowPaymentsList = () => {
     pageNumber: currentPage,
     pageSize,
     searchTerm,
-    sortBy,
-    sortDirection,
+    ...sortConfig,
   }
 
   const { data, error, loading, refetch } = useGetPaymentsQuery({ variables })
 
-  useEffect(() => {
-    if (data) {
-      if (data.getPayments) {
-        const newData = paymentsDataTransform(data.getPayments.items)
+  const transformedData = useMemo(
+    () => (data?.getPayments?.items ? paymentsDataTransform(data.getPayments.items) : []),
+    [data]
+  )
 
-        setTransformedData(newData)
-      } else {
-        setTransformedData([])
-      }
-
-      if (data.getPayments.totalCount) {
-        setTotalPagesCount(data.getPayments.totalCount)
-      }
-    }
-  }, [data])
+  const totalPagesCount = data?.getPayments?.totalCount || 0
 
   useEffect(() => {
     if (error) {
@@ -74,31 +64,24 @@ export const ShowPaymentsList = () => {
   }, [error, dispatch])
 
   // Добавляем debounce для поиска
-  const debouncedSearch = useMemo(
+  const handleSearchChange = useMemo(
     () =>
-      debounce((searchValue: string) => {
-        setSearchTerm(searchValue)
+      debounce((e: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value)
         setCurrentPage(1)
       }, 500),
     []
   )
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-
-    debouncedSearch(value)
-  }
-
   // Очищаем таймер при размонтировании
   useEffect(() => {
     return () => {
-      debouncedSearch.cancel()
+      handleSearchChange.cancel()
     }
-  }, [debouncedSearch])
+  }, [handleSearchChange])
 
-  const handleSortChange = (column: SortColumn, currentSort: SortDirection) => {
-    setSortBy(column)
-    setSortDirection(currentSort)
+  const handleSortChange = (column: SortColumn, direction: SortDirection) => {
+    setSortConfig({ sortBy: column, sortDirection: direction })
   }
 
   return (

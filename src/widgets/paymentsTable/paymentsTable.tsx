@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import { SortDirection } from '@/src/queries/types'
 import { SortColumn, TablePayment } from '@/src/shared/types/types'
-import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
+import { TableHeaderCell } from '@/src/widgets/paymentsTable/tableHeaderCell/tableHeaderCell'
 
 import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'
 
@@ -37,47 +37,39 @@ export const PaymentsTable = ({ data, onSortChange, refetch }: Props) => {
       <TableHeader>
         <TableRow className={s.tableRow}>
           <TableCell>
-            <div className={s.tableHeaderCell}>
-              Username
-              <SortButton
-                column={'userName'}
-                currentSort={sortConfig['userName'] || 'none'}
-                onSortChange={handleSortChange}
-              />
-            </div>
+            <TableHeaderCell
+              column={'userName'}
+              label={'Username'}
+              onSortChange={handleSortChange}
+              sortConfig={sortConfig}
+            />
           </TableCell>
           <TableCell>
-            <div className={s.tableHeaderCell}>
-              Date added
-              <SortButton
-                column={'createdAt'}
-                currentSort={sortConfig['createdAt'] || 'none'}
-                onSortChange={handleSortChange}
-              />
-            </div>
+            <TableHeaderCell
+              column={'createdAt'}
+              label={'Date added'}
+              onSortChange={handleSortChange}
+              sortConfig={sortConfig}
+            />
           </TableCell>
           <TableCell>
-            <div className={s.tableHeaderCell}>
-              Amount, $
-              <SortButton
-                column={'amount'}
-                currentSort={sortConfig['amount'] || 'none'}
-                onSortChange={handleSortChange}
-              />
-            </div>
+            <TableHeaderCell
+              column={'amount'}
+              label={'Amount, $'}
+              onSortChange={handleSortChange}
+              sortConfig={sortConfig}
+            />
           </TableCell>
           <TableCell>
             <div className={s.tableHeaderCell}>Subscription</div>
           </TableCell>
           <TableCell>
-            <div className={s.tableHeaderCell}>
-              Payment Method
-              <SortButton
-                column={'paymentMethod'}
-                currentSort={sortConfig['paymentMethod'] || 'none'}
-                onSortChange={handleSortChange}
-              />
-            </div>
+            <TableHeaderCell
+              column={'paymentMethod'}
+              label={'Payment Method'}
+              onSortChange={handleSortChange}
+              sortConfig={sortConfig}
+            />
           </TableCell>
         </TableRow>
       </TableHeader>
