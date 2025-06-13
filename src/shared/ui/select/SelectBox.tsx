@@ -15,11 +15,11 @@ export type Options = {
 
 type Props = {
   /**
-   * If true, displays the select in compact pagination style
+   * If true, displays the select.ts in compact pagination style
    */
   isPagination?: boolean
   /**
-   * The text of the label for the select. If omitted, the label is not
+   * The text of the label for the select.ts. If omitted, the label is not
    * displayed.
    */
   label?: string

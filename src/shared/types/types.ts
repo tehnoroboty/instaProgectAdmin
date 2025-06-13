@@ -1,5 +1,8 @@
 import React from 'react'
 
+import { UserBlockStatus } from '@/src/queries/types'
+import { SELECT_REASON } from '@/src/shared/lib/constants/select'
+
 export type TableUser = {
   createdAt: string
   id: string
@@ -15,3 +18,5 @@ export type Tab = {
 }
 
 export type SortColumn = 'userName' | 'createdAt'
+
+export type BanReason = 'Bad behavior' | 'Advertising placement' | 'Another reason'

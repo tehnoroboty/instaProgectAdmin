@@ -1,4 +1,5 @@
 import {
+  Unblock,
   Block,
   MoreHorizontalOutline,
   PersonRemoveOutline,
@@ -22,7 +23,7 @@ export const DropdownTable = ({ className, isBanned, onBanEdit, onDelete, onView
       title: 'Delete User',
     },
     {
-      icon: Block,
+      icon: isBanned ? Unblock : Block,
       id: '2',
       onClick: () => onBanEdit(!isBanned),
       title: isBanned ? 'Un-ban User' : 'Ban in the system',

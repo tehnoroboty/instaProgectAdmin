@@ -1,13 +1,15 @@
-import type { SortColumn, TableUser } from '@/src/shared/types/types'
-
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 import { SortDirection } from '@/src/queries/types'
+import { useBanUserMutation } from '@/src/queries/user/banUser/banUser.generated'
 import { useRemoveUserMutation } from '@/src/queries/user/removeUser/removeUser.generated'
 import { useUnbanUserMutation } from '@/src/queries/user/unbanUser/unbanUser.generated'
 import { Block } from '@/src/shared/assets/componentsIcons'
+import { DEFAULT_BAN_REASON, SELECT_REASON } from '@/src/shared/lib/constants/select'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
+import { BanReason, SortColumn, TableUser } from '@/src/shared/types/types'
+import { SelectBox } from '@/src/shared/ui/select/SelectBox'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { Typography } from '@/src/shared/ui/typography/Typography'
@@ -26,11 +28,14 @@ type Props = {
 
 export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
-  const [showDeleteModal, setShowDeleteModal] = useState(false)
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
   const [deleteUser, { loading }] = useRemoveUserMutation()
   const [unbanUser, { loading: unbanLoading }] = useUnbanUserMutation()
   const [sortConfig, setSortConfig] = useState<Partial<Record<SortColumn, SortDirection>>>({})
-  const [showUnbanModal, setShowUnbanModal] = useState(false)
+  const [showUnbanModal, setShowUnbanModal] = useState<boolean>(false)
+  const [showBanModal, setShowBanModal] = useState<boolean>(false)
+  const [banReason, setBanReason] = useState<BanReason>(DEFAULT_BAN_REASON)
+  const [banUser, { loading: banLoading }] = useBanUserMutation()
 
   const router = useRouter()
 
@@ -76,6 +81,11 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
     setShowUnbanModal(true)
   }
 
+  const openBanModal = (user: TableUser) => {
+    setSelectedUser(user)
+    setShowBanModal(true)
+  }
+
   const onUnbanUser = async () => {
     try {
       if (!selectedUser) {
@@ -88,6 +98,35 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
       const error = err as ApolloError
 
       dispatch(setAppError({ error: error.message }))
+    }
+  }
+  const onBanUser = async () => {
+    try {
+      if (!selectedUser || !banReason.trim()) {
+        return
+      }
+      await banUser({
+        variables: {
+          banReason: banReason.trim(),
+          userId: parseInt(selectedUser.id, 10),
+        },
+      })
+      setSelectedUser(null)
+      setBanReason(DEFAULT_BAN_REASON)
+      setShowBanModal(false)
+      refetch()
+    } catch (err) {
+      const error = err as ApolloError
+
+      dispatch(setAppError({ error: error.message }))
+    }
+  }
+
+  const handleChoseReasonChange = (value: string) => {
+    const options = SELECT_REASON.find(r => r.valueTitle === value)
+
+    if (options) {
+      setBanReason(options.value as BanReason)
     }
   }
 
@@ -137,7 +176,7 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
                       if (item.isBlocked) {
                         openUnbanModal(item)
                       } else {
-                        console.log('Ban')
+                        openBanModal(item)
                       }
                     }}
                     onDelete={() => handleDeleteUser(item)}
@@ -166,6 +205,37 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           onCloseModal={() => setShowUnbanModal(false)}
           onCloseParentModal={onUnbanUser}
           open={showUnbanModal}
+        />
+      )}
+      {showBanModal && selectedUser && (
+        <ConfirmationModal
+          loading={banLoading}
+          modalTitle={'Ban user'}
+          modalMessage={
+            <>
+              Are you sure want to ban this user,{' '}
+              <Typography as={'span'} option={'bold_text16'}>
+                {selectedUser.userName || selectedUser.profileLink}
+              </Typography>
+              ?
+              <SelectBox
+                className={s.selectBox}
+                placeholder={'Reason for ban'}
+                onChangeValue={handleChoseReasonChange}
+                options={SELECT_REASON}
+              />
+            </>
+          }
+          onClickNo={() => {
+            setShowBanModal(false)
+            setBanReason(DEFAULT_BAN_REASON)
+          }}
+          onCloseModal={() => {
+            setShowBanModal(false)
+            setBanReason(DEFAULT_BAN_REASON)
+          }}
+          onCloseParentModal={onBanUser}
+          open={showBanModal}
         />
       )}
       {showDeleteModal && selectedUser && (

@@ -86,13 +86,13 @@
   height: 16px;
 }
 
-[data-state='open'] .icon {
+.trigger[data-state='open'] .icon {
   transform: rotate(180deg);
 }
 
 .content {
   cursor: pointer;
-
+  z-index: 99;
   overflow: hidden;
 
   width: var(--radix-select-trigger-width);

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
 import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
+import { SELECT_OPTIONS, SHOW_USERS_PAGE_SIZE_OPTIONS } from '@/src/shared/lib/constants/select'
 import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { Input } from '@/src/shared/ui/input'
@@ -18,21 +19,7 @@ import debounce from 'lodash/debounce'
 
 import s from './showUsersList.module.scss'
 
-const SHOW_USERS_PAGE_SIZE_OPTIONS = [
-  { value: '8', valueTitle: '8' },
-  { value: '10', valueTitle: '10' },
-  { value: '20', valueTitle: '20' },
-  { value: '30', valueTitle: '30' },
-  { value: '50', valueTitle: '50' },
-  { value: '100', valueTitle: '100' },
-]
-
 const USERS_PER_PAGE = 8
-const SELECT_OPTIONS = [
-  { value: UserBlockStatus.All, valueTitle: 'Not selected' },
-  { value: UserBlockStatus.Blocked, valueTitle: 'Blocked' },
-  { value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked' },
-]
 
 export const ShowUsersList = () => {
   const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
