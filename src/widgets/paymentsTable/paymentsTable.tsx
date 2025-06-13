@@ -4,6 +4,7 @@ import { SortDirection } from '@/src/queries/types'
 import { SortColumn, TablePayment } from '@/src/shared/types/types'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { TableHeaderCell } from '@/src/widgets/paymentsTable/tableHeaderCell/tableHeaderCell'
+import Image from 'next/image'
 
 import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'
 
@@ -78,7 +79,13 @@ export const PaymentsTable = ({ data, onSortChange }: Props) => {
             <TableRow key={index}>
               <TableCell className={s.tableCell}>
                 <div className={s.avaNameCell}>
-                  <img alt={'ava'} className={s.avatarImg} src={item.avatarUrl} />
+                  <Image
+                    alt={'User avatar'}
+                    className={s.avatarImg}
+                    height={36}
+                    src={item.avatarUrl}
+                    width={36}
+                  />
                   <span>{item.userName}</span>
                 </div>
               </TableCell>
