@@ -38,6 +38,7 @@ export const ShowPaymentsList = () => {
   })
 
   const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(false)
+  const [initialAutoUpdateEnabled, setInitialAutoUpdateEnabled] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -98,8 +99,15 @@ export const ShowPaymentsList = () => {
     setSortConfig({ sortBy: column, sortDirection: direction })
   }
 
-  const handleFocus = () => setAutoUpdateEnabled(false)
-  const handleBlur = () => setAutoUpdateEnabled(true)
+  const handleFocus = () => {
+    setInitialAutoUpdateEnabled(autoUpdateEnabled)
+    setAutoUpdateEnabled(false)
+  }
+  const handleBlur = () => {
+    if (initialAutoUpdateEnabled) {
+      setAutoUpdateEnabled(true)
+    }
+  }
 
   return (
     <div className={s.container}>
