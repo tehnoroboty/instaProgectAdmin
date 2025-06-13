@@ -37,6 +37,8 @@ export const ShowPaymentsList = () => {
     sortDirection: SortDirection.Desc,
   })
 
+  const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(false)
+
   const dispatch = useDispatch()
 
   const variables: QueryGetPaymentsArgs = {
@@ -80,16 +82,38 @@ export const ShowPaymentsList = () => {
     }
   }, [handleSearchChange])
 
+  useEffect(() => {
+    if (!autoUpdateEnabled) {
+      return
+    }
+
+    const intervalId = setInterval(() => {
+      void refetch()
+    }, 10000)
+
+    return () => clearInterval(intervalId)
+  }, [autoUpdateEnabled, refetch])
+
   const handleSortChange = (column: SortColumn, direction: SortDirection) => {
     setSortConfig({ sortBy: column, sortDirection: direction })
   }
 
+  const handleFocus = () => setAutoUpdateEnabled(false)
+  const handleBlur = () => setAutoUpdateEnabled(true)
+
   return (
     <div className={s.container}>
       <div className={s.header}>
-        <CheckBox className={s.autoUpdate} label={'Autoubdate'} />
+        <CheckBox
+          checked={autoUpdateEnabled}
+          className={s.autoUpdate}
+          label={'Autoupdate'}
+          onChange={e => setAutoUpdateEnabled(e.target.checked)}
+        />
         <Input
           className={s.searchInput}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
           onInput={handleSearchChange}
           placeholder={'Search'}
           type={'search'}
@@ -100,7 +124,7 @@ export const ShowPaymentsList = () => {
           <Loader color={'#4C8DFF'} size={20} />
         </div>
       ) : (
-        <PaymentsTable data={transformedData} onSortChange={handleSortChange} refetch={refetch} />
+        <PaymentsTable data={transformedData} onSortChange={handleSortChange} />
       )}
       <Pagination
         className={s.pagination}

@@ -10,10 +10,9 @@ import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'
 type Props = {
   data: TablePayment[]
   onSortChange: (column: SortColumn, direction: SortDirection) => void
-  refetch: () => void
 }
 
-export const PaymentsTable = ({ data, onSortChange, refetch }: Props) => {
+export const PaymentsTable = ({ data, onSortChange }: Props) => {
   const [sortConfig, setSortConfig] = useState<Partial<Record<SortColumn, SortDirection>>>({})
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
