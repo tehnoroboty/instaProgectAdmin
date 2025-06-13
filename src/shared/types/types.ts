@@ -17,6 +17,15 @@ export type Tab = {
   value: string
 }
 
-export type SortColumn = 'userName' | 'createdAt'
+export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
+
+export type TablePayment = {
+  amount: number
+  avatarUrl: string
+  dateAdded: string
+  paymentMethod: string
+  subscriptionType: string
+  userName: string
+}
 
 export type BanReason = 'Bad behavior' | 'Advertising placement' | 'Another reason'

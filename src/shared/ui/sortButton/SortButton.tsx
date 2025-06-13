@@ -7,10 +7,10 @@ import s from './SortButton.module.scss'
 
 type Props = {
   column: SortColumn
-  currentSort: SortDirection | 'none'
-  onSortChange: (column: SortColumn, currentSort: SortDirection | 'none') => void
+  currentSort: 'none' | SortDirection
+  onSortChange: (column: SortColumn, currentSort: 'none' | SortDirection) => void
 }
-export const SortButton = ({ column, onSortChange, currentSort }: Props) => {
+export const SortButton = ({ column, currentSort, onSortChange }: Props) => {
   const toggleSort = () => {
     const newSort =
       currentSort === 'none'

@@ -1,10 +1,12 @@
 .header {
   display: flex;
-  justify-content: left;
-  align-items: center;
-  margin-bottom: 24px;
-  color: var(--light-100);
   gap: 8px;
+  align-items: center;
+  justify-content: left;
+
+  margin-bottom: 24px;
+
+  color: var(--light-100);
 }
 
 .pgae {
@@ -19,8 +21,8 @@
 
 .button {
   display: flex;
-  align-items: center;
   gap: 8px;
+  align-items: center;
 }
 
 .searchInput {

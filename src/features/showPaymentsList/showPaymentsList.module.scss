@@ -1,22 +1,18 @@
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 24px;
-}
-
 .container {
   display: flex;
   flex-direction: column;
+  padding-right: 36px;
 }
 
-.searchInput {
-  width: 100%;
-  max-width: 644px;
-  color: var(--light-900);
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
-.selector {
-  max-width: 234px;
+.autoUpdate {
+  align-self: end;
 }
 
 .loading {
