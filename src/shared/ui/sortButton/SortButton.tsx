@@ -12,20 +12,23 @@ type Props = {
 }
 export const SortButton = ({ column, currentSort, onSortChange }: Props) => {
   const toggleSort = () => {
-    const newSort =
-      currentSort === 'none'
-        ? SortDirection.Asc
-        : currentSort === SortDirection.Asc
-          ? SortDirection.Desc
-          : 'none'
+    let newSort: 'none' | SortDirection
 
-    // console.log(newSort)
-
+    switch (currentSort) {
+      case 'none':
+        newSort = SortDirection.Asc
+        break
+      case SortDirection.Asc:
+        newSort = SortDirection.Desc
+        break
+      default:
+        newSort = 'none'
+    }
     onSortChange(column, newSort)
   }
 
   return (
-    <button className={clsx(s.sortBtn)} onClick={toggleSort}>
+    <button type={'button'} className={clsx(s.sortBtn)} onClick={toggleSort}>
       <span
         className={clsx(s.arrow, s.up, {
           [s.active]: currentSort === SortDirection.Asc,
