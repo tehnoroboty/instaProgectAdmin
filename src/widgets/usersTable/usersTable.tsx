@@ -8,7 +8,7 @@ import { useUnbanUserMutation } from '@/src/queries/user/unbanUser/unbanUser.gen
 import { Block } from '@/src/shared/assets/componentsIcons'
 import { DEFAULT_BAN_REASON, SELECT_REASON } from '@/src/shared/lib/constants/select'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { BanReason, SortColumn, TableUser } from '@/src/shared/types/types'
+import { BanReason, SortColumn, TableUser, UserModalType } from '@/src/shared/types/types'
 import { SelectBox } from '@/src/shared/ui/select/SelectBox'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
@@ -28,28 +28,23 @@ type Props = {
 
 export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
   const [selectedUser, setSelectedUser] = useState<TableUser | null>(null)
-  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
-  const [deleteUser, { loading }] = useRemoveUserMutation()
-  const [unbanUser, { loading: unbanLoading }] = useUnbanUserMutation()
+  const [activeModal, setActiveModal] = useState<UserModalType>(null)
   const [sortConfig, setSortConfig] = useState<Partial<Record<SortColumn, SortDirection>>>({})
-  const [showUnbanModal, setShowUnbanModal] = useState<boolean>(false)
-  const [showBanModal, setShowBanModal] = useState<boolean>(false)
   const [banReason, setBanReason] = useState<BanReason>(DEFAULT_BAN_REASON)
+
+  const [unbanUser, { loading: unbanLoading }] = useUnbanUserMutation()
+  const [deleteUser, { loading }] = useRemoveUserMutation()
   const [banUser, { loading: banLoading }] = useBanUserMutation()
 
   const router = useRouter()
 
   const dispatch = useDispatch()
-  const handleDeleteUser = (user: TableUser) => {
-    setSelectedUser(user)
-    setShowDeleteModal(true)
-  }
 
   const onDeleteUser = async () => {
+    if (!selectedUser) {
+      return
+    }
     try {
-      if (!selectedUser) {
-        return
-      }
       await deleteUser({ variables: { id: parseInt(selectedUser.id, 10) } })
       setSelectedUser(null)
       refetch()
@@ -65,32 +60,22 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
   }
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
-    const newSort =
-      currentSort === 'none'
-        ? SortDirection.Desc
-        : currentSort === SortDirection.Desc
-          ? SortDirection.Desc
-          : SortDirection.Asc
+    const newSort = currentSort === 'none' ? SortDirection.Desc : currentSort
 
     setSortConfig(prev => ({ ...prev, [column]: currentSort }))
     onSortChange(column, newSort)
   }
 
-  const openUnbanModal = (user: TableUser) => {
+  const openModal = (type: UserModalType, user: TableUser) => {
     setSelectedUser(user)
-    setShowUnbanModal(true)
-  }
-
-  const openBanModal = (user: TableUser) => {
-    setSelectedUser(user)
-    setShowBanModal(true)
+    setActiveModal(type)
   }
 
   const onUnbanUser = async () => {
+    if (!selectedUser) {
+      return
+    }
     try {
-      if (!selectedUser) {
-        return
-      }
       await unbanUser({ variables: { id: parseInt(selectedUser.id, 10) } })
       setSelectedUser(null)
       refetch()
@@ -113,7 +98,7 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
       })
       setSelectedUser(null)
       setBanReason(DEFAULT_BAN_REASON)
-      setShowBanModal(false)
+      setActiveModal(null)
       refetch()
     } catch (err) {
       const error = err as ApolloError
@@ -128,6 +113,13 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
     if (options) {
       setBanReason(options.value as BanReason)
     }
+  }
+
+  const handleCloseModal = () => {
+    if (activeModal === 'ban') {
+      setBanReason(DEFAULT_BAN_REASON)
+    }
+    setActiveModal(null)
   }
 
   return (
@@ -157,30 +149,26 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.map((item, index) => {
+          {data.map((user, index) => {
             return (
               <TableRow key={index}>
                 <TableCell className={s.idCell}>
                   <div className={s.flexContainer}>
-                    {item.isBlocked && <Block className={s.blockIcon} />}
-                    <span className={item.isBlocked ? '' : s.idWithoutIcon}>{item.id}</span>
+                    {user.isBlocked && <Block className={s.blockIcon} />}
+                    <span className={user.isBlocked ? '' : s.idWithoutIcon}>{user.id}</span>
                   </div>
                 </TableCell>
-                <TableCell>{item.userName}</TableCell>
-                <TableCell>{item.profileLink}</TableCell>
-                <TableCell>{item.createdAt}</TableCell>
+                <TableCell>{user.userName}</TableCell>
+                <TableCell>{user.profileLink}</TableCell>
+                <TableCell>{user.createdAt}</TableCell>
                 <TableCell>
                   <DropdownTable
-                    isBanned={item.isBlocked}
+                    isBanned={user.isBlocked}
                     onBanEdit={() => {
-                      if (item.isBlocked) {
-                        openUnbanModal(item)
-                      } else {
-                        openBanModal(item)
-                      }
+                      user.isBlocked ? openModal('unban', user) : openModal('ban', user)
                     }}
-                    onDelete={() => handleDeleteUser(item)}
-                    onView={() => handleViewUser(item.id)}
+                    onDelete={() => openModal('delete', user)}
+                    onView={() => handleViewUser(user.id)}
                   />
                 </TableCell>
               </TableRow>
@@ -188,7 +176,7 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           })}
         </TableBody>
       </Table>
-      {showUnbanModal && selectedUser && (
+      {activeModal === 'unban' && selectedUser && (
         <ConfirmationModal
           loading={unbanLoading}
           modalMessage={
@@ -201,13 +189,13 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
             </>
           }
           modalTitle={'Un-ban user'}
-          onClickNo={() => setShowUnbanModal(false)}
-          onCloseModal={() => setShowUnbanModal(false)}
+          onClickNo={handleCloseModal}
+          onCloseModal={handleCloseModal}
           onCloseParentModal={onUnbanUser}
-          open={showUnbanModal}
+          open={activeModal === 'unban'}
         />
       )}
-      {showBanModal && selectedUser && (
+      {activeModal === 'ban' && selectedUser && (
         <ConfirmationModal
           loading={banLoading}
           modalTitle={'Ban user'}
@@ -226,19 +214,13 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
               />
             </>
           }
-          onClickNo={() => {
-            setShowBanModal(false)
-            setBanReason(DEFAULT_BAN_REASON)
-          }}
-          onCloseModal={() => {
-            setShowBanModal(false)
-            setBanReason(DEFAULT_BAN_REASON)
-          }}
+          onClickNo={handleCloseModal}
+          onCloseModal={handleCloseModal}
           onCloseParentModal={onBanUser}
-          open={showBanModal}
+          open={activeModal === 'ban'}
         />
       )}
-      {showDeleteModal && selectedUser && (
+      {activeModal === 'delete' && selectedUser && (
         <ConfirmationModal
           loading={loading}
           modalMessage={
@@ -251,10 +233,10 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
             </>
           }
           modalTitle={'Delete user'}
-          onClickNo={() => setShowDeleteModal(false)}
-          onCloseModal={() => setShowDeleteModal(false)}
+          onClickNo={handleCloseModal}
+          onCloseModal={handleCloseModal}
           onCloseParentModal={onDeleteUser}
-          open={showDeleteModal}
+          open={activeModal === 'delete'}
         />
       )}
     </>
