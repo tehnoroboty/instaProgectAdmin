@@ -1,5 +1,4 @@
-import { MyPaymentType } from '@/src/entities/subscription/types'
-import { parseISOAndFormat } from '@/src/shared/hooks/parseIsoAndFormat'
+import { MyPaymentType } from '@/src/shared/types/types'
 
 export const mockTableData: MyPaymentType[] = [
   {
