@@ -68,12 +68,7 @@ export const Followers = ({ userId }: Props) => {
   }
 
   const handleSortChange = (column: SortColumn, currentSort: 'none' | SortDirection) => {
-    const newSort =
-      currentSort === 'none'
-        ? SortDirection.Desc
-        : currentSort === SortDirection.Desc
-          ? SortDirection.Asc
-          : SortDirection.Desc
+    const newSort = currentSort === 'none' ? SortDirection.Desc : currentSort
 
     setSortBy(column)
     setSortDirection(newSort)

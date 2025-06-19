@@ -28,7 +28,7 @@ export const SortButton = ({ column, currentSort, onSortChange }: Props) => {
   }
 
   return (
-    <button type={'button'} className={clsx(s.sortBtn)} onClick={toggleSort}>
+    <button className={clsx(s.sortBtn)} onClick={toggleSort} type={'button'}>
       <span
         className={clsx(s.arrow, s.up, {
           [s.active]: currentSort === SortDirection.Asc,

@@ -1,8 +1,8 @@
 import {
-  Unblock,
   Block,
   MoreHorizontalOutline,
   PersonRemoveOutline,
+  Unblock,
 } from '@/src/shared/assets/componentsIcons'
 import { Dropdown, DropdownMenuItems } from '@/src/shared/ui/dropdown/Dropdown'
 
