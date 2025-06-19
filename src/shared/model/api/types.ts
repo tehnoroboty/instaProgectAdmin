@@ -45,14 +45,6 @@
 //   redirectUrl: string
 // }
 //
-// export type LoginError = {
-//   data: {
-//     error?: string
-//     messages: string
-//     statusCode?: number
-//   }
-//   status: number
-// }
 //
 // export type RegistrationEmailResending = {
 //   baseUrl: string

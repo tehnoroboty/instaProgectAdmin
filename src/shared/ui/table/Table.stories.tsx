@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { transformData } from '@/src/widgets/myPayments/MyPayments'
+import { transformData } from '@/src/shared/lib/transformData'
 
 import s from './table.module.scss'
 

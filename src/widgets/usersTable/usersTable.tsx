@@ -198,7 +198,6 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
       {activeModal === 'ban' && selectedUser && (
         <ConfirmationModal
           loading={banLoading}
-          modalTitle={'Ban user'}
           modalMessage={
             <>
               Are you sure want to ban this user,{' '}
@@ -208,12 +207,13 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
               ?
               <SelectBox
                 className={s.selectBox}
-                placeholder={'Reason for ban'}
                 onChangeValue={handleChoseReasonChange}
                 options={SELECT_REASON}
+                placeholder={'Reason for ban'}
               />
             </>
           }
+          modalTitle={'Ban user'}
           onClickNo={handleCloseModal}
           onCloseModal={handleCloseModal}
           onCloseParentModal={onBanUser}

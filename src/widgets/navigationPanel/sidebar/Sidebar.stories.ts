@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { MenuItemsType, menuItems } from '@/src/widgets/navigationPanel/NavigationPanel'
 import Sidebar from '@/src/widgets/navigationPanel/sidebar/Sidebar'
+import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 
 const meta = {
   component: Sidebar,
@@ -12,14 +12,35 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const menuItemsMock: MenuItemsType = menuItems
+const menuItemsMock: MenuItemType[] = [
+  {
+    href: '/users-list',
+    icon: () => null,
+    iconActive: () => null,
+    title: 'Users List',
+  },
+  {
+    href: '/statistics',
+    icon: () => null,
+    iconActive: () => null,
+    title: 'Statistics',
+  },
+  {
+    href: 'payments-list',
+    icon: () => null,
+    iconActive: () => null,
+    title: 'Payments list',
+  },
+  {
+    href: '/posts-list',
+    icon: () => null,
+    iconActive: () => null,
+    title: 'Posts list',
+  },
+]
 
 export const Primary: Story = {
   args: {
-    items: {
-      additional: menuItemsMock.additional,
-      mainActions: menuItemsMock.mainActions,
-      usersActions: menuItems.usersActions,
-    },
+    items: menuItemsMock,
   },
 }
