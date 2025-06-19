@@ -28,4 +28,4 @@ export const SELECT_REASON = [
   },
 ]
 
-export const DEFAULT_BAN_REASON: BanReason = SELECT_REASON[2].value
+export const DEFAULT_BAN_REASON: BanReason = SELECT_REASON[2].value as BanReason

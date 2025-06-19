@@ -25,6 +25,6 @@ export type TablePayment = {
   userName: string
 }
 
-export type BanReason = 'Bad behavior' | 'Advertising placement' | 'Another reason'
+export type BanReason = 'Advertising placement' | 'Another reason' | 'Bad behavior'
 
-export type UserModalType = 'delete' | 'ban' | 'unban' | null
+export type UserModalType = 'ban' | 'delete' | 'unban' | null
