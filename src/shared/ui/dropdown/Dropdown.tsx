@@ -32,6 +32,7 @@ export const Dropdown = <T extends DropdownMenuItems>(props: Props<T>) => {
 
   const triggerClassName = clsx(s.trigger, { [s.iconActive]: open })
   const contentClassName = clsx(s.content)
+  const id = useId()
 
   const dropDownMenuItems = list.map((item: T) => {
     const onKeyDownHandler = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -46,7 +47,7 @@ export const Dropdown = <T extends DropdownMenuItems>(props: Props<T>) => {
     }
 
     return (
-      <DropdownMenu.Item className={s.dropdownItem} key={useId()} onKeyDown={onKeyDownHandler}>
+      <DropdownMenu.Item className={s.dropdownItem} key={id} onKeyDown={onKeyDownHandler}>
         {renderItem ? (
           renderItem(item)
         ) : (
