@@ -15,3 +15,47 @@ export type Tab = {
 }
 
 export type SortColumn = 'createdAt' | 'userName'
+export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
+
+export type TablePayment = {
+  amount: number
+  avatarUrl: string
+  dateAdded: string
+  paymentMethod: string
+  subscriptionType: string
+  userName: string
+}
+
+export type BanReason = 'Advertising placement' | 'Another reason' | 'Bad behavior'
+
+export type UserModalType = 'ban' | 'delete' | 'unban' | null
+
+export type LoginError = {
+  data: {
+    error?: string
+    messages: string
+    statusCode?: number
+  }
+  status: number
+}
+
+export type SystemPaymentType = 'CREDIT_CARD' | 'PAYPAL' | 'STRIPE'
+export type SelectedSubscriptionType = 'DAY' | 'MONTHLY' | 'WEEKLY'
+
+export type MyPaymentType = {
+  dateOfPayment: string
+  endDateOfSubscription: string
+  paymentType: SystemPaymentType
+  price: number
+  subscriptionId: string
+  subscriptionType: SelectedSubscriptionType
+  userId: number
+}
+
+export type TableData = {
+  dateOfPayment: string
+  endDate: string
+  paymentType: string
+  price: string
+  subscription: string
+}

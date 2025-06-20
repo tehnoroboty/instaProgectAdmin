@@ -1,0 +1,22 @@
+.tableHeaderCell {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.tableCell {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.avaNameCell {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatarImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}

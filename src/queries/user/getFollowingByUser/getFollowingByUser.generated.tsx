@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 
 import * as Types from '../../types'
+
 const defaultOptions = {} as const
 
 export type GetFollowingByUserQueryVariables = Types.Exact<{
@@ -85,8 +86,11 @@ export const GetFollowingByUserDocument = gql`
  */
 export function useGetFollowingByUserQuery(
   baseOptions: (
+    | {
+        skip?: boolean
+        variables: GetFollowingByUserQueryVariables
+      }
     | { skip: boolean }
-    | { skip?: boolean; variables: GetFollowingByUserQueryVariables }
   ) &
     Apollo.QueryHookOptions<GetFollowingByUserQuery, GetFollowingByUserQueryVariables>
 ) {
@@ -97,6 +101,7 @@ export function useGetFollowingByUserQuery(
     options
   )
 }
+
 export function useGetFollowingByUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<
     GetFollowingByUserQuery,
@@ -110,6 +115,7 @@ export function useGetFollowingByUserLazyQuery(
     options
   )
 }
+
 export function useGetFollowingByUserSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -123,6 +129,7 @@ export function useGetFollowingByUserSuspenseQuery(
     options
   )
 }
+
 export type GetFollowingByUserQueryHookResult = ReturnType<typeof useGetFollowingByUserQuery>
 export type GetFollowingByUserLazyQueryHookResult = ReturnType<
   typeof useGetFollowingByUserLazyQuery

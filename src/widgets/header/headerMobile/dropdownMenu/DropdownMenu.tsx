@@ -3,8 +3,9 @@ import type {MenuItemType} from '@/src/widgets/navigationPanel/types'
 
 import React, {useState} from 'react'
 
-import {MoreHorizontalOutline,} from '@/src/shared/assets/componentsIcons'
-import {ItemWrapper} from '@/src/widgets/itemWrapper/ItemWrapper'
+import { MoreHorizontalOutline } from '@/src/shared/assets/componentsIcons'
+import { ItemWrapper } from '@/src/widgets/itemWrapper/ItemWrapper'
+import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 import * as DropdownMenuMob from '@radix-ui/react-dropdown-menu'
 import clsx from 'clsx'
 

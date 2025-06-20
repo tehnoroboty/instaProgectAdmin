@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 
 import * as Types from '../../types'
+
 const defaultOptions = {} as const
 
 export type GetPaymentsByUserQueryVariables = Types.Exact<{
@@ -96,8 +97,11 @@ export const GetPaymentsByUserDocument = gql`
  */
 export function useGetPaymentsByUserQuery(
   baseOptions: (
+    | {
+        skip?: boolean
+        variables: GetPaymentsByUserQueryVariables
+      }
     | { skip: boolean }
-    | { skip?: boolean; variables: GetPaymentsByUserQueryVariables }
   ) &
     Apollo.QueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>
 ) {
@@ -108,6 +112,7 @@ export function useGetPaymentsByUserQuery(
     options
   )
 }
+
 export function useGetPaymentsByUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetPaymentsByUserQuery, GetPaymentsByUserQueryVariables>
 ) {
@@ -118,6 +123,7 @@ export function useGetPaymentsByUserLazyQuery(
     options
   )
 }
+
 export function useGetPaymentsByUserSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -131,6 +137,7 @@ export function useGetPaymentsByUserSuspenseQuery(
     options
   )
 }
+
 export type GetPaymentsByUserQueryHookResult = ReturnType<typeof useGetPaymentsByUserQuery>
 export type GetPaymentsByUserLazyQueryHookResult = ReturnType<typeof useGetPaymentsByUserLazyQuery>
 export type GetPaymentsByUserSuspenseQueryHookResult = ReturnType<

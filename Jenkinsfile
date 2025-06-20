@@ -4,12 +4,12 @@ pipeline {
     agent any
     environment {
         ENV_TYPE = "production"
-        PORT = 3705
+        PORT = 3867
         NAMESPACE = "momenttify-store"
         REGISTRY_HOSTNAME = "momenttify"
         REGISTRY = "registry.hub.docker.com"
-        PROJECT = "momenttify"
-        DEPLOYMENT_NAME = "momenttify-deployment"
+        PROJECT = "admin-momenttify"
+        DEPLOYMENT_NAME = "admin-momenttify-deployment"
         IMAGE_NAME = "${env.BUILD_ID}_${env.ENV_TYPE}_${env.GIT_COMMIT}"
         DOCKER_BUILD_NAME = "${env.REGISTRY_HOSTNAME}/${env.PROJECT}:${env.IMAGE_NAME}"
     }

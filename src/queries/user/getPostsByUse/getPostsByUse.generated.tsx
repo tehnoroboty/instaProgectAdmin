@@ -2,7 +2,6 @@ import { gql } from '@apollo/client'
 import * as Apollo from '@apollo/client'
 
 import * as Types from '../../types'
-
 const defaultOptions = {} as const
 
 export type GetPostsByUserQueryVariables = Types.Exact<{
@@ -65,13 +64,7 @@ export const GetPostsByUserDocument = gql`
  * });
  */
 export function useGetPostsByUserQuery(
-  baseOptions: (
-    | {
-        skip?: boolean
-        variables: GetPostsByUserQueryVariables
-      }
-    | { skip: boolean }
-  ) &
+  baseOptions: ({ skip: boolean } | { skip?: boolean; variables: GetPostsByUserQueryVariables }) &
     Apollo.QueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions }
@@ -81,7 +74,6 @@ export function useGetPostsByUserQuery(
     options
   )
 }
-
 export function useGetPostsByUserLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetPostsByUserQuery, GetPostsByUserQueryVariables>
 ) {
@@ -92,7 +84,6 @@ export function useGetPostsByUserLazyQuery(
     options
   )
 }
-
 export function useGetPostsByUserSuspenseQuery(
   baseOptions?:
     | Apollo.SkipToken
@@ -106,7 +97,6 @@ export function useGetPostsByUserSuspenseQuery(
     options
   )
 }
-
 export type GetPostsByUserQueryHookResult = ReturnType<typeof useGetPostsByUserQuery>
 export type GetPostsByUserLazyQueryHookResult = ReturnType<typeof useGetPostsByUserLazyQuery>
 export type GetPostsByUserSuspenseQueryHookResult = ReturnType<

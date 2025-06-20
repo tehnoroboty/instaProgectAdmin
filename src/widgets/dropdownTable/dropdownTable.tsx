@@ -2,6 +2,7 @@ import {
   Block,
   MoreHorizontalOutline,
   PersonRemoveOutline,
+  Unblock,
 } from '@/src/shared/assets/componentsIcons'
 import { Dropdown, type DropdownMenuItems } from '@tehnoroboty/ui-kit'
 
@@ -22,7 +23,7 @@ export const DropdownTable = ({ className, isBanned, onBanEdit, onDelete, onView
       title: 'Delete User',
     },
     {
-      icon: Block,
+      icon: isBanned ? Unblock : Block,
       id: '2',
       onClick: () => onBanEdit(!isBanned),
       title: isBanned ? 'Un-ban User' : 'Ban in the system',

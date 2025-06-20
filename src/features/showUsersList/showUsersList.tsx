@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 
 import { type QueryGetUsersArgs, SortDirection, UserBlockStatus } from '@/src/queries/types'
 import { useGetUsersQuery } from '@/src/queries/users/getUsers.generated'
+import { SELECT_OPTIONS, SHOW_USERS_PAGE_SIZE_OPTIONS } from '@/src/shared/lib/constants/select'
 import { usersDataTransform } from '@/src/shared/lib/usersDataTransform'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { UsersTable } from '@/src/widgets/usersTable/usersTable'
@@ -25,11 +26,6 @@ import s from './showUsersList.module.scss'
 // ]
 
 const USERS_PER_PAGE = 8
-const SELECT_OPTIONS = [
-  { value: UserBlockStatus.All, valueTitle: 'Not selected' },
-  { value: UserBlockStatus.Blocked, valueTitle: 'Blocked' },
-  { value: UserBlockStatus.Unblocked, valueTitle: 'Not blocked' },
-]
 
 export const ShowUsersList = () => {
   const [totalPagesCount, setTotalPagesCount] = useState<number>(0)
@@ -39,7 +35,7 @@ export const ShowUsersList = () => {
   const [transformedData, setTransformedData] = useState<TableUser[]>([])
   const [sortBy, setSortBy] = useState<SortColumn>('createdAt')
   const [sortDirection, setSortDirection] = useState<SortDirection>(SortDirection.Desc)
-
+  const [sortBunUser, setSortBunUser] = useState<UserBlockStatus>(UserBlockStatus.All)
   const dispatch = useDispatch()
 
   const variables: QueryGetUsersArgs = {
@@ -48,7 +44,7 @@ export const ShowUsersList = () => {
     searchTerm,
     sortBy,
     sortDirection,
-    statusFilter: UserBlockStatus.All,
+    statusFilter: sortBunUser,
   }
   const { data, error, loading, refetch } = useGetUsersQuery({ variables })
 
@@ -95,6 +91,14 @@ export const ShowUsersList = () => {
     setSortDirection(currentSort)
   }
 
+  const handleSortOptionsChange = (value: string) => {
+    const options = SELECT_OPTIONS.find(o => o.valueTitle === value)
+
+    if (options) {
+      setSortBunUser(options.value)
+    }
+  }
+
   return (
     <div className={s.container}>
       <div className={s.header}>
@@ -104,7 +108,11 @@ export const ShowUsersList = () => {
           placeholder={'Search'}
           type={'search'}
         />
-        <SelectBox className={s.selector} options={SELECT_OPTIONS} />
+        <SelectBox
+          className={s.selector}
+          onChangeValue={handleSortOptionsChange}
+          options={SELECT_OPTIONS}
+        />
       </div>
       {loading ? (
         <div className={s.loading}>
