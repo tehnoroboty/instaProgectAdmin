@@ -1,3 +1,5 @@
+import type { PostType } from '@/src/shared/types/types'
+
 import { useEffect, useMemo, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 import { useDispatch } from 'react-redux'
@@ -5,8 +7,7 @@ import { useDispatch } from 'react-redux'
 import { ImagePost } from '@/src/queries/types'
 import { useGetPostsByUserQuery } from '@/src/queries/user/getPostsByUse/getPostsByUse.generated'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Posts } from '@/src/shared/ui/postsGrid/Posts'
-import { Loader, Typography } from '@tehnoroboty/ui-kit'
+import { Loader, Posts, Typography } from '@tehnoroboty/ui-kit'
 
 import s from './uploadedPhotos.module.scss'
 
@@ -89,10 +90,22 @@ export const UploadedPhotos = ({ userId }: Props) => {
   if (!allPosts.length) {
     return <div className={s.noText}>No posts found</div>
   }
+  const adaptedPosts: PostType[] = allPosts.map(post => ({
+    id: post.id ?? Math.random(),
+    images: post.url
+      ? [
+          {
+            height: post.height ?? undefined,
+            url: post.url,
+            width: post.width ?? undefined,
+          },
+        ]
+      : [],
+  }))
 
   return (
     <>
-      <Posts posts={allPosts} />
+      <Posts posts={adaptedPosts} />
       {hasMore && (
         <div className={s.loadMore} ref={ref}>
           <Typography option={'bold_text16'}>Loading...</Typography>

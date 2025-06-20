@@ -14,7 +14,6 @@ export type Tab = {
   value: string
 }
 
-export type SortColumn = 'createdAt' | 'userName'
 export type SortColumn = 'amount' | 'createdAt' | 'paymentMethod' | 'userName'
 
 export type TablePayment = {
@@ -58,4 +57,15 @@ export type TableData = {
   paymentType: string
   price: string
   subscription: string
+}
+
+type ImageType = {
+  height?: number
+  url: string
+  width?: number
+}
+
+export type PostType = {
+  id: number
+  images: ImageType[]
 }

@@ -12,9 +12,6 @@ import '@fontsource/roboto/500.css'
 import '@fontsource-variable/inter'
 import '@tehnoroboty/ui-kit/dist/index.css'
 
-// import {Alerts} from '@tehnoroboty/ui-kit'
-// import {ProgressBar} from '@tehnoroboty/ui-kit'
-
 import { NavigationPanel } from '../widgets/navigationPanel/NavigationPanel'
 
 export const metadata: Metadata = {

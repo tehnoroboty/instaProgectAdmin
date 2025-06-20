@@ -1,5 +1,7 @@
 'use client'
 
+import type { LoginError } from '@/src/shared/types/types'
+
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 

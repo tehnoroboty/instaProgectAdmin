@@ -16,15 +16,6 @@ import debounce from 'lodash/debounce'
 
 import s from './showUsersList.module.scss'
 
-// const SHOW_USERS_PAGE_SIZE_OPTIONS = [
-//   { value: '8', valueTitle: '8' },
-//   { value: '10', valueTitle: '10' },
-//   { value: '20', valueTitle: '20' },
-//   { value: '30', valueTitle: '30' },
-//   { value: '50', valueTitle: '50' },
-//   { value: '100', valueTitle: '100' },
-// ]
-
 const USERS_PER_PAGE = 8
 
 export const ShowUsersList = () => {
@@ -127,7 +118,7 @@ export const ShowUsersList = () => {
         onPageChange={prev => setCurrentPage(prev.valueOf())}
         onPageSizeChange={prev => setPageSize(prev.valueOf())}
         pageSize={pageSize}
-        // pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
+        pageSizeOptions={SHOW_USERS_PAGE_SIZE_OPTIONS}
         totalCount={totalPagesCount}
       />
     </div>

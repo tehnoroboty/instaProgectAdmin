@@ -1,11 +1,12 @@
-import {useState} from 'react'
-import {Tab} from '@/src/shared/types/types'
-import {Following} from '@/src/widgets/userTabs/following/Following'
-import {Tabs, TabsContent, TabsList, TabsTrigger} from '@tehnoroboty/ui-kit'
+import { useState } from 'react'
 
-import {Followers} from './followers/Followers'
-import {Payments} from './payments/Payments'
-import {UploadedPhotos} from './uploadedPhotos/UploadedPhotos'
+import { Tab } from '@/src/shared/types/types'
+import { Following } from '@/src/widgets/userTabs/following/Following'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tehnoroboty/ui-kit'
+
+import { Followers } from './followers/Followers'
+import { Payments } from './payments/Payments'
+import { UploadedPhotos } from './uploadedPhotos/UploadedPhotos'
 
 const DEFAULT_TAB = 'uploaded-photos'
 

@@ -1,9 +1,9 @@
 'use client'
 
-import {ComponentPropsWithoutRef} from 'react'
+import { ComponentPropsWithoutRef } from 'react'
 // import { useMeQuery } from '@/src/shared/model/api/authApi'
 // import { HeaderMobile } from '@/src/widgets/header/headerMobile/HeaderMobile'
-import {HeaderWeb} from '@/src/widgets/header/headerWeb/HeaderWeb'
+import { HeaderWeb } from '@/src/widgets/header/headerWeb/HeaderWeb'
 
 import s from './header.module.scss'
 

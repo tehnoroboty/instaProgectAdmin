@@ -1,10 +1,10 @@
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-import {useGetUserQuery} from '@/src/queries/user/getUser/getUser.generated'
-import {makeLocaleDate} from '@/src/shared/lib/makeLocaleDate'
-import {setAppError} from '@/src/shared/model/slices/appSlice'
-import {ApolloError} from '@apollo/client'
-import {AvatarBox, Loader, Typography} from '@tehnoroboty/ui-kit'
+import { useGetUserQuery } from '@/src/queries/user/getUser/getUser.generated'
+import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
+import { setAppError } from '@/src/shared/model/slices/appSlice'
+import { ApolloError } from '@apollo/client'
+import { AvatarBox, Loader, Typography } from '@tehnoroboty/ui-kit'
 
 import s from './userInfo.module.scss'
 
