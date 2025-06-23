@@ -1,12 +1,7 @@
 'use client'
 
-import { ComponentPropsWithoutRef, useEffect } from 'react'
-
-import { AppRoutes } from '@/src/shared/lib/constants/routing'
-// import { useMeQuery } from '@/src/shared/model/api/authApi'
-import { HeaderMobile } from '@/src/widgets/header/headerMobile/HeaderMobile'
+import { ComponentPropsWithoutRef } from 'react'
 import { HeaderWeb } from '@/src/widgets/header/headerWeb/HeaderWeb'
-import { useRouter } from 'next/navigation'
 
 import s from './header.module.scss'
 
@@ -20,7 +15,6 @@ export const Header = (props: Props) => {
 
   return (
     <header {...rest} className={s.header}>
-      <HeaderMobile title={title} />
       <HeaderWeb title={title} />
     </header>
   )

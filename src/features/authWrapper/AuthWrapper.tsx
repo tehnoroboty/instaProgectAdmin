@@ -4,7 +4,7 @@ import { type ReactNode, useEffect } from 'react'
 
 import { useAuth } from '@/src/shared/hooks/useAuth'
 import { AppRoutes } from '@/src/shared/lib/constants/routing'
-import { Loader } from '@/src/shared/ui/loader/Loader'
+import { Loader } from '@tehnoroboty/ui-kit'
 import { useRouter } from 'next/navigation'
 
 import s from './authWrapper.module.scss'

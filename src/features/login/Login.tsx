@@ -1,5 +1,7 @@
 'use client'
 
+import type { LoginError } from '@/src/shared/types/types'
+
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
@@ -8,12 +10,8 @@ import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
 import { AppRoutes } from '@/src/shared/lib/constants/routing'
 import { clearAuth, setAuth } from '@/src/shared/model/slices/authSlice'
 import { useAppDispatch } from '@/src/shared/model/store/store'
-import { LoginError } from '@/src/shared/types/types'
-import { Button } from '@/src/shared/ui/button/Button'
-import { Card } from '@/src/shared/ui/card/Card'
-import { Input } from '@/src/shared/ui/input'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Card, Input, Typography } from '@tehnoroboty/ui-kit'
 import { useRouter } from 'next/navigation'
 
 import s from './login.module.scss'

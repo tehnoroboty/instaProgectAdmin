@@ -6,12 +6,18 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmit": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     },
     "plugins": [
       {
@@ -20,9 +26,12 @@
     ],
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true
+    "strict": true,
+    "target": "ES2017"
   },
-  "exclude": ["node_modules"],
+  "exclude": [
+    "node_modules"
+  ],
   "include": [
     "svgr.d.ts",
     "next-env.d.ts",
@@ -31,5 +40,7 @@
     ".next/types/**/*.ts",
     ".storybook/**/*"
   ],
-  "types": ["node"]
+  "types": [
+    "node"
+  ]
 }

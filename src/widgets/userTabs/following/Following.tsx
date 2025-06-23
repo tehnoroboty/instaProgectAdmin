@@ -6,11 +6,17 @@ import { useGetFollowingByUserQuery } from '@/src/queries/user/getFollowingByUse
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { SortColumn } from '@/src/shared/types/types'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Pagination } from '@/src/shared/ui/pagination/Pagination'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import {
+  Loader,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Typography,
+} from '@tehnoroboty/ui-kit'
 
 import s from './following.module.scss'
 

@@ -9,13 +9,19 @@ import { Block } from '@/src/shared/assets/componentsIcons'
 import { DEFAULT_BAN_REASON, SELECT_REASON } from '@/src/shared/lib/constants/select'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
 import { BanReason, SortColumn, TableUser, UserModalType } from '@/src/shared/types/types'
-import { SelectBox } from '@/src/shared/ui/select/SelectBox'
 import { SortButton } from '@/src/shared/ui/sortButton/SortButton'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { DropdownTable } from '@/src/widgets/dropdownTable/dropdownTable'
 import { ConfirmationModal } from '@/src/widgets/сonfirmationModal/ConfirmationModal'
 import { ApolloError } from '@apollo/client'
+import {
+  SelectBox,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+  Typography,
+} from '@tehnoroboty/ui-kit'
 import { useRouter } from 'next/navigation'
 
 import s from './usersTable.module.scss'

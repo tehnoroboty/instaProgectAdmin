@@ -4,7 +4,7 @@ import {
   PersonRemoveOutline,
   Unblock,
 } from '@/src/shared/assets/componentsIcons'
-import { Dropdown, DropdownMenuItems } from '@/src/shared/ui/dropdown/Dropdown'
+import { Dropdown, type DropdownMenuItems } from '@tehnoroboty/ui-kit'
 
 type Props = {
   className?: string

@@ -6,9 +6,15 @@ import { useGetPaymentsByUserQuery } from '@/src/queries/user/getPaymentsByUser/
 import { formatSubscriptionType } from '@/src/shared/lib/formatSubscriptionType'
 import { makeLocaleDate } from '@/src/shared/lib/makeLocaleDate'
 import { setAppError } from '@/src/shared/model/slices/appSlice'
-import { Loader } from '@/src/shared/ui/loader/Loader'
-import { Pagination } from '@/src/shared/ui/pagination/Pagination'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
+import {
+  Loader,
+  Pagination,
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from '@tehnoroboty/ui-kit'
 
 import s from './payments.module.scss'
 

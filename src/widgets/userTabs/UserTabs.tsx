@@ -1,9 +1,8 @@
 import { useState } from 'react'
 
-import { SortDirection } from '@/src/queries/types'
-import { type SortColumn, Tab } from '@/src/shared/types/types'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/shared/ui/tabs/Tabs'
+import { Tab } from '@/src/shared/types/types'
 import { Following } from '@/src/widgets/userTabs/following/Following'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@tehnoroboty/ui-kit'
 
 import { Followers } from './followers/Followers'
 import { Payments } from './payments/Payments'

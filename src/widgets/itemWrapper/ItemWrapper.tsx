@@ -3,16 +3,12 @@
 import React, { useState } from 'react'
 
 import { AppRoutes } from '@/src/shared/lib/constants/routing'
-// import { useLogoutMutation, useMeQuery } from '@/src/shared/model/api/authApi'
-import { Dialog } from '@/src/shared/ui/dialog/Dialog'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { Button, Dialog, Typography } from '@tehnoroboty/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
 import s from './itemWrapper.module.scss'
-
-import { Button } from '../../shared/ui/button/Button'
 
 type DropdownMenuItemWithLinkProps = {
   Icon: React.ElementType
@@ -35,8 +31,6 @@ export const ItemWrapper = ({
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
-  // const [logout, { isLoading }] = useLogoutMutation()
-  // const { data: meData } = useMeQuery()
   const route = useRouter()
 
   const onClickHandler = () => {
@@ -49,8 +43,6 @@ export const ItemWrapper = ({
 
   const onLogoutConfirm = async () => {
     try {
-      // await logout().unwrap()
-
       setIsModalOpen(false)
       route.push(AppRoutes.HOME)
 
@@ -90,13 +82,9 @@ export const ItemWrapper = ({
         open={isModalOpen}
       >
         <div className={s.contentModal}>
-          {/*<Typography as={'span'} option={'regular_text16'}>*/}
-          {/*  Are you really want to log out of your account "<b>{meData?.email}</b>"?*/}
-          {/*</Typography>*/}
           <div className={s.modalActions}>
             <Button
               className={s.btnModal}
-              // disabled={isLoading}
               onClick={onLogoutConfirm}
               variant={'secondary'}
             >

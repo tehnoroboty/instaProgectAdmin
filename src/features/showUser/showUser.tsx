@@ -1,9 +1,9 @@
 'use client'
 
 import { ArrowBackOutline } from '@/src/shared/assets/componentsIcons'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { UserTabs } from '@/src/widgets/userTabs/UserTabs'
 import { UserInfo } from '@/src/widgets/userTabs/userInfo/UserInfo'
+import { Typography } from '@tehnoroboty/ui-kit'
 import { useParams } from 'next/navigation'
 
 import s from './showUser.module.scss'

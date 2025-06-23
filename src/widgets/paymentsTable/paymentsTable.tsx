@@ -2,8 +2,8 @@ import { useState } from 'react'
 
 import { SortDirection } from '@/src/queries/types'
 import { SortColumn, TablePayment } from '@/src/shared/types/types'
-import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/src/shared/ui/table'
 import { TableHeaderCell } from '@/src/widgets/paymentsTable/tableHeaderCell/tableHeaderCell'
+import { Table, TableBody, TableCell, TableHeader, TableRow } from '@tehnoroboty/ui-kit'
 import Image from 'next/image'
 
 import s from '@/src/widgets/paymentsTable/paymentsTable.module.scss'

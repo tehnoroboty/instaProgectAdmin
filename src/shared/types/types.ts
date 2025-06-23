@@ -58,3 +58,20 @@ export type TableData = {
   price: string
   subscription: string
 }
+
+type ImageType = {
+  height?: number
+  url: string
+  width?: number
+}
+
+export type PostType = {
+  id: number
+  images: ImageType[]
+}
+
+export type ErrorDataType = {
+  error: string
+  messages: [{ field: string; message: string }]
+  statusCode: number
+}
