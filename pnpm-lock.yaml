@@ -60,8 +60,8 @@ importers:
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.7.3)
       '@tehnoroboty/ui-kit':
-        specifier: ^0.0.10
-        version: 0.0.10(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.1(prettier@3.4.2))
+        specifier: ^0.0.11
+        version: 0.0.11(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.1(prettier@3.4.2))
       '@types/lodash':
         specifier: ^4.17.16
         version: 4.17.16
@@ -3228,8 +3228,8 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tehnoroboty/ui-kit@0.0.10':
-    resolution: {integrity: sha512-KtJ7xVPcxT2V0qt+yNKbi3sG3v0LltdIKg6XAsTCk1Se9309dvLokXfOw0taAzTzuKTgcHPPkDpS+tL/ZRlIGA==}
+  '@tehnoroboty/ui-kit@0.0.11':
+    resolution: {integrity: sha512-W3uPXUZAnNDxmS+TjYAyE9rhIIntvfENeqr5rSm9ZhSn/Tcn2T7cKl8qZiQBH51WOGj9y9X5TUqVDmy/+iPfuw==}
 
   '@testing-library/dom@10.4.0':
     resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
@@ -11337,7 +11337,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tehnoroboty/ui-kit@0.0.10(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.1(prettier@3.4.2))':
+  '@tehnoroboty/ui-kit@0.0.11(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.1(prettier@3.4.2))':
     dependencies:
       '@radix-ui/react-avatar': 1.1.10(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-dialog': 1.1.14(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

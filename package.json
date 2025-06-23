@@ -33,7 +33,7 @@
     "@radix-ui/react-visually-hidden": "^1.1.2",
     "@reduxjs/toolkit": "^2.5.0",
     "@svgr/webpack": "^8.1.0",
-    "@tehnoroboty/ui-kit": "^0.0.10",
+    "@tehnoroboty/ui-kit": "^0.0.11",
     "@types/lodash": "^4.17.16",
     "async-mutex": "^0.5.0",
     "clsx": "^2.1.1",
