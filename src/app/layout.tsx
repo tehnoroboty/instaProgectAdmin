@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Providers } from '@/src/app/_providers/Providers'
-
+import { CommonAlert } from '@/src/shared/ui/commonAlert/CommonAlert'
 import { ProgressBar } from '@/src/shared/ui/progressBar/ProgressBar'
 import { Header } from '@/src/widgets/header/Header'
 import { Metadata } from 'next'
@@ -13,7 +13,6 @@ import '@fontsource-variable/inter'
 import '@tehnoroboty/ui-kit/dist/index.css'
 
 import { NavigationPanel } from '../widgets/navigationPanel/NavigationPanel'
-import {CommonAlert} from "@/src/shared/ui/commonAlert/CommonAlert";
 
 export const metadata: Metadata = {
   icons: {

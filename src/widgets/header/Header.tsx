@@ -1,6 +1,7 @@
 'use client'
 
 import { ComponentPropsWithoutRef } from 'react'
+
 import { HeaderWeb } from '@/src/widgets/header/headerWeb/HeaderWeb'
 
 import s from './header.module.scss'

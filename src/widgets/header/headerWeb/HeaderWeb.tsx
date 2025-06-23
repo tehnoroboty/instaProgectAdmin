@@ -2,7 +2,7 @@
 import * as React from 'react'
 
 import { AppRoutes } from '@/src/shared/lib/constants/routing'
-import { Typography, SelectLanguage } from '@tehnoroboty/ui-kit'
+import { SelectLanguage, Typography } from '@tehnoroboty/ui-kit'
 import Link from 'next/link'
 
 import s from './headerWeb.module.scss'

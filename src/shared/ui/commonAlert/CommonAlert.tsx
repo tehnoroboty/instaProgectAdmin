@@ -4,7 +4,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectAppError, setAppError } from '@/src/shared/model/slices/appSlice'
-import {Alerts} from "@tehnoroboty/ui-kit";
+import { Alerts } from '@tehnoroboty/ui-kit'
 
 export const CommonAlert = () => {
   const errorApi = useSelector(selectAppError)

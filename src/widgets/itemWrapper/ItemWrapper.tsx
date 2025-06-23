@@ -83,11 +83,7 @@ export const ItemWrapper = ({
       >
         <div className={s.contentModal}>
           <div className={s.modalActions}>
-            <Button
-              className={s.btnModal}
-              onClick={onLogoutConfirm}
-              variant={'secondary'}
-            >
+            <Button className={s.btnModal} onClick={onLogoutConfirm} variant={'secondary'}>
               {'Yes'}
             </Button>
             <Button
