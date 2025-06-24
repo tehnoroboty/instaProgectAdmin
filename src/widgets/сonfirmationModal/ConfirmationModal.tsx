@@ -36,7 +36,11 @@ export const ConfirmationModal = ({
       open={open}
     >
       <div>
-        <Typography option={'regular_text16'}>{modalMessage}</Typography>
+        {typeof modalMessage === 'string' ? (
+          <Typography option={'regular_text16'}>{modalMessage}</Typography>
+        ) : (
+          modalMessage
+        )}
         <div className={s.additionalModalBtns}>
           <Button className={s.btn} disabled={loading} onClick={onClickNo} variant={'primary'}>
             {'No'}
