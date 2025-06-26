@@ -13,6 +13,8 @@ export const getPosts = gql`
             pageSize: $pageSize
             sortBy: $sortBy
             sortDirection: $sortDirection){
+            totalCount
+            pagesCount
             items {
                 id
                 images{

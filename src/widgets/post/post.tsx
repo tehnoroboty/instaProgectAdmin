@@ -9,6 +9,8 @@ import s from './post.module.scss'
 import {Button, Carousel, CreationTime, UserAvatarName} from "@tehnoroboty/ui-kit";
 import {PostImage} from "@tehnoroboty/ui-kit/dist/lib/types/types";
 import {Block, Unblock} from "@/src/shared/assets/componentsIcons";
+import ImageNotFound from "@/src/shared/assets/componentsIcons/ImageNotFound";
+import imageNotFound from "@/src/shared/assets/icons/image-not-found.svg";
 
 
 type Props = {
@@ -39,7 +41,6 @@ export type PostType = {
 
 export const Post = ({post}: Props) => {
     const {id, images, createdAt, description, postOwner, ownerId, userBan} = post
-    console.log(post.userBan)
     const [open, setOpen] = useState<boolean>(false)
 
     const isDescriptionLong = description.length > 60
@@ -49,7 +50,11 @@ export const Post = ({post}: Props) => {
     const containerClasses = clsx(s.carouselContainer, {[s.open]: open})
 
     const renderImgCarousel = (img: PostImage) => {
-        return <Image alt = {''} className = {s.img} height = {img.height} src = {img.url} width = {img.width}/>
+        if (img.url) {
+            return <Image alt = {''} className = {s.img} height = {img.height} src = {img.url} width = {img.width}/>
+        } else {
+            return <ImageNotFound height = {194} width = {199}/>
+        }
     }
     return (
         <div className = {s.card} id = {`${id}`}>
@@ -59,10 +64,11 @@ export const Post = ({post}: Props) => {
             </div>
             <Collapsible.Root onOpenChange = {setOpen} open = {open}>
                 <div className = {classNames}>
-                    <div className = {s.avatarsWrapper}>
-                        <UserAvatarName className = {s.owner} url = {postOwner.avatars[0].url}
+                    <div className = {s.avatarsWrapper}>{}
+                        <UserAvatarName className = {s.owner}
+                                        url = {postOwner?.avatars[0]?.url ? postOwner.avatars[0].url : imageNotFound}
                                         username = {postOwner.userName}/>
-                        <Button variant = {"transparent"} className={s.avatarsBlocked}>
+                        <Button variant = {"transparent"} className = {s.avatarsBlocked}>
                             {!userBan?.reason && <Block/>}
                         </Button>
                     </div>

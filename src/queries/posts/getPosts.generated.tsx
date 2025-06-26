@@ -12,7 +12,7 @@ export type GetPostsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'PostsPaginationModel', items: Array<{ __typename?: 'Post', id: number, ownerId: number, description: string, createdAt: any, updatedAt: any, images?: Array<{ __typename?: 'ImagePost', url?: string | null, height?: number | null, width?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', userName: string, firstName?: string | null, lastName?: string | null, avatars?: Array<{ __typename?: 'Avatar', url?: string | null }> | null }, userBan?: { __typename?: 'UserBan', createdAt: any, reason: string } | null }> } };
+export type GetPostsQuery = { __typename?: 'Query', getPosts: { __typename?: 'PostsPaginationModel', totalCount: number, pagesCount: number, items: Array<{ __typename?: 'Post', id: number, ownerId: number, description: string, createdAt: any, updatedAt: any, images?: Array<{ __typename?: 'ImagePost', url?: string | null, height?: number | null, width?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', userName: string, firstName?: string | null, lastName?: string | null, avatars?: Array<{ __typename?: 'Avatar', url?: string | null }> | null }, userBan?: { __typename?: 'UserBan', createdAt: any, reason: string } | null }> } };
 
 
 export const GetPostsDocument = gql`
@@ -24,6 +24,8 @@ export const GetPostsDocument = gql`
     sortBy: $sortBy
     sortDirection: $sortDirection
   ) {
+    totalCount
+    pagesCount
     items {
       id
       images {
