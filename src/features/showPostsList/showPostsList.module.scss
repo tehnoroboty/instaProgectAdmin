@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchInput {
+  width: 100%;
+  color: var(--light-900);
+}
+
+
+.loading {
+  height: calc(100vh - 230px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 0 60px
+}
+
+
