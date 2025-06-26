@@ -50,6 +50,19 @@
   transition: all 0.3s ease-in-out;
 }
 
+.avatarsWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.avatarsBlocked {
+  padding: 6px;
+  svg {
+    color: var(--light-100);
+  }
+}
+
 .open {
   .img {
     height: 50%;
