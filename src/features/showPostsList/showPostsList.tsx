@@ -11,17 +11,24 @@ import {useAppDispatch} from "@/src/shared/model/store/store";
 import {PostType} from "@/src/widgets/post/post";
 import {useInView} from "react-intersection-observer";
 import clsx from "clsx";
+import {usePostAddedSubscription} from "@/src/queries/postAddSubscription/postAdded.generated";
 
 const POSTS_PER_PAGE = 8
 
 export const ShowPostsList = () => {
     const {inView, ref} = useInView({threshold: 0.1})
-    const [posts, setPosts] = useState<PostType[]>([]);
+    const [posts, setPosts] = useState<any>([]);
     const [endCursorPostId, setEndCursorPostId] = useState<number>(0);
     const variables: QueryGetPostsArgs = {endCursorPostId: endCursorPostId, pageSize: POSTS_PER_PAGE}
     const dispatch = useAppDispatch()
 
     const {data, error, loading, refetch} = useGetPostsQuery({variables})
+    const {data: newPost, error: errorNewPost} = usePostAddedSubscription();
+    useEffect(() => {
+        if (newPost?.postAdded) {
+            setPosts((prevPosts: any) => [newPost.postAdded, ...prevPosts]);
+        }
+    }, [newPost]);
 
     const hasMorePosts = (data?.getPosts.totalCount as number) > (data?.getPosts.pagesCount as number)
 
