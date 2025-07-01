@@ -1,42 +1,65 @@
-import * as Types from '../types';
+import { gql } from '@apollo/client'
+import * as Apollo from '@apollo/client'
 
-import { gql } from '@apollo/client';
-import * as Apollo from '@apollo/client';
-const defaultOptions = {} as const;
-export type PostAddedSubscriptionVariables = Types.Exact<{ [key: string]: never; }>;
+import * as Types from '../types'
+const defaultOptions = {} as const
 
+export type PostAddedSubscriptionVariables = Types.Exact<{ [key: string]: never }>
 
-export type PostAddedSubscription = { __typename?: 'Subscription', postAdded: { __typename?: 'Post', id: number, ownerId: number, description: string, createdAt: any, updatedAt: any, images?: Array<{ __typename?: 'ImagePost', url?: string | null, height?: number | null, width?: number | null }> | null, postOwner: { __typename?: 'PostOwnerModel', userName: string, firstName?: string | null, lastName?: string | null, avatars?: Array<{ __typename?: 'Avatar', url?: string | null }> | null }, userBan?: { __typename?: 'UserBan', createdAt: any, reason: string } | null } };
-
-
-export const PostAddedDocument = gql`
-    subscription postAdded {
-  postAdded {
-    id
-    images {
-      url
-      height
-      width
+export type PostAddedSubscription = {
+  __typename?: 'Subscription'
+  postAdded: {
+    __typename?: 'Post'
+    createdAt: any
+    description: string
+    id: number
+    images?: Array<{
+      __typename?: 'ImagePost'
+      height?: null | number
+      url?: null | string
+      width?: null | number
+    }> | null
+    ownerId: number
+    postOwner: {
+      __typename?: 'PostOwnerModel'
+      avatars?: Array<{ __typename?: 'Avatar'; url?: null | string }> | null
+      firstName?: null | string
+      lastName?: null | string
+      userName: string
     }
-    ownerId
-    description
-    createdAt
-    updatedAt
-    postOwner {
-      userName
-      firstName
-      lastName
-      avatars {
-        url
-      }
-    }
-    userBan {
-      createdAt
-      reason
-    }
+    updatedAt: any
+    userBan?: { __typename?: 'UserBan'; createdAt: any; reason: string } | null
   }
 }
-    `;
+
+export const PostAddedDocument = gql`
+  subscription postAdded {
+    postAdded {
+      id
+      images {
+        url
+        height
+        width
+      }
+      ownerId
+      description
+      createdAt
+      updatedAt
+      postOwner {
+        userName
+        firstName
+        lastName
+        avatars {
+          url
+        }
+      }
+      userBan {
+        createdAt
+        reason
+      }
+    }
+  }
+`
 
 /**
  * __usePostAddedSubscription__
@@ -53,9 +76,18 @@ export const PostAddedDocument = gql`
  *   },
  * });
  */
-export function usePostAddedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<PostAddedSubscription, PostAddedSubscriptionVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useSubscription<PostAddedSubscription, PostAddedSubscriptionVariables>(PostAddedDocument, options);
-      }
-export type PostAddedSubscriptionHookResult = ReturnType<typeof usePostAddedSubscription>;
-export type PostAddedSubscriptionResult = Apollo.SubscriptionResult<PostAddedSubscription>;
+export function usePostAddedSubscription(
+  baseOptions?: Apollo.SubscriptionHookOptions<
+    PostAddedSubscription,
+    PostAddedSubscriptionVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+
+  return Apollo.useSubscription<PostAddedSubscription, PostAddedSubscriptionVariables>(
+    PostAddedDocument,
+    options
+  )
+}
+export type PostAddedSubscriptionHookResult = ReturnType<typeof usePostAddedSubscription>
+export type PostAddedSubscriptionResult = Apollo.SubscriptionResult<PostAddedSubscription>
