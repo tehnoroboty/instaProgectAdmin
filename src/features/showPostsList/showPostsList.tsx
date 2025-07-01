@@ -55,6 +55,7 @@ export const ShowPostsList = () => {
     () =>
       debounce((value: string) => {
         setSearchTerm(value)
+        setEndCursorPostId(0)
         setPosts([])
       }, 500),
     []
