@@ -2,7 +2,7 @@
 
 import type { QueryGetPostsArgs } from '@/src/queries/types'
 
-import { useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useMemo, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { usePostAddedSubscription } from '@/src/queries/postAddSubscription/postAdded.generated'
@@ -19,6 +19,7 @@ import { ConfirmationModal } from '@/src/widgets/сonfirmationModal/Confirmation
 import { ApolloError } from '@apollo/client'
 import { Input, Loader, SelectBox, Typography } from '@tehnoroboty/ui-kit'
 import clsx from 'clsx'
+import debounce from 'lodash/debounce'
 
 import s from './showPostsList.module.scss'
 
@@ -31,10 +32,12 @@ export const ShowPostsList = () => {
   const [activeModal, setActiveModal] = useState<UserModalType>(null)
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null)
   const [banReason, setBanReason] = useState<BanReason>(DEFAULT_BAN_REASON)
+  const [searchTerm, setSearchTerm] = useState<string>('')
 
   const variables: QueryGetPostsArgs = {
     endCursorPostId: endCursorPostId,
     pageSize: POSTS_PER_PAGE,
+    searchTerm: searchTerm,
   }
   const dispatch = useAppDispatch()
 
@@ -46,6 +49,21 @@ export const ShowPostsList = () => {
   const openModal = (type: UserModalType, post: PostType) => {
     setSelectedPost(post)
     setActiveModal(type)
+  }
+
+  const handleSearch = useMemo(
+    () =>
+      debounce((value: string) => {
+        setSearchTerm(value)
+        setPosts([])
+      }, 500),
+    []
+  )
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+
+    handleSearch(value)
   }
 
   const handleCloseModal = () => {
@@ -135,13 +153,13 @@ export const ShowPostsList = () => {
     }
   }, [error, dispatch])
 
-    useEffect(() => {
-        if (errorNewPost) {
-            const errorMessage = errorNewPost.message
+  useEffect(() => {
+    if (errorNewPost) {
+      const errorMessage = errorNewPost.message
 
-            dispatch(setAppError({ error: errorMessage }))
-        }
-    }, [error, dispatch])
+      dispatch(setAppError({ error: errorMessage }))
+    }
+  }, [errorNewPost, dispatch])
 
   useEffect(() => {
     if (data) {
@@ -160,7 +178,7 @@ export const ShowPostsList = () => {
     <div className={s.container}>
       <Input
         className={s.searchInput}
-        // onInput = {handleInputChange}
+        onInput={handleInputChange}
         placeholder={'Search'}
         type={'search'}
       />
@@ -168,11 +186,7 @@ export const ShowPostsList = () => {
       {posts && (
         <>
           <PostsGrid openModal={openModal} posts={posts} />
-          {hasMorePosts && (
-            <div className={s.loadMore} ref={ref}>
-              <Typography option={'bold_text16'}>Loading...</Typography>
-            </div>
-          )}
+          {hasMorePosts && <div className={s.loadMore} ref={ref}></div>}
         </>
       )}
       {loading && (
