@@ -11,6 +11,7 @@ import clsx from 'clsx'
 import Image from 'next/image'
 
 import s from './post.module.scss'
+import {useRouter} from "next/navigation";
 
 type Props = {
   openModal: (type: UserModalType, post: PostType) => void
@@ -39,9 +40,10 @@ export type PostType = {
 }
 
 export const Post = ({ openModal, post }: Props) => {
-  const { createdAt, description, id, images, postOwner, userBan } = post
-  const [open, setOpen] = useState<boolean>(false)
+  const { createdAt, description, id, images, postOwner,ownerId, userBan } = post
+  const router = useRouter()
 
+  const [open, setOpen] = useState<boolean>(false)
   const isDescriptionLong = description.length > 60
   const truncatedDescription = description.slice(0, 61) + '...'
 
@@ -66,20 +68,25 @@ export const Post = ({ openModal, post }: Props) => {
     }
   }
 
+  const postClickHandler=()=>{
+    console.log('click')
+    router.push(`/users-list/${ownerId}`)
+  }
+
   return (
-    <div className={s.card} id={`${id}`}>
+    <div className={s.card} id={`${id}`} >
       <div className={containerClasses}>
         <Carousel disableSwipe={open} list={images} renderItem={renderImgCarousel} size={'small'} />
       </div>
       <Collapsible.Root onOpenChange={setOpen} open={open}>
         <div className={classNames}>
-          <div className={s.avatarsWrapper}>
-            {}
+          <div className={s.avatarsWrapper} >
+            <div  onClick={postClickHandler}>
             <UserAvatarName
               className={s.owner}
               url={postOwner?.avatars[0]?.url ? postOwner.avatars[0].url : imageNotFound}
               username={postOwner.userName}
-            />
+            /></div>
             <Button
               className={s.avatarsBlocked}
               onClick={bunUnbanUserHandler}
