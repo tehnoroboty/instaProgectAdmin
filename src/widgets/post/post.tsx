@@ -69,7 +69,6 @@ export const Post = ({ openModal, post }: Props) => {
   }
 
   const postClickHandler=()=>{
-    console.log('click')
     router.push(`/users-list/${ownerId}`)
   }
 
