@@ -1,3 +1,5 @@
+import {PostImage} from "@tehnoroboty/ui-kit/dist/lib/types/types";
+
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] }
@@ -335,4 +337,25 @@ export type UsersPaginationModel = {
   __typename?: 'UsersPaginationModel'
   pagination: PaginationModel
   users: Array<User>
+}
+
+export type PostType = {
+  createdAt: Date
+  description: string
+  id: number
+  images: PostImage[]
+  ownerId: number
+  postOwner: {
+    avatars: {
+      url: string
+    }[]
+    firstName: string
+    lastName: string
+    userName: string
+  }
+  updatedAt: Date
+  userBan: {
+    createdAt: Date
+    reason: string
+  } | null
 }

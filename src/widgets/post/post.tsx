@@ -12,32 +12,14 @@ import Image from 'next/image'
 
 import s from './post.module.scss'
 import {useRouter} from "next/navigation";
+import {PostType} from "@/src/queries/types";
 
 type Props = {
   openModal: (type: UserModalType, post: PostType) => void
   post: PostType
 }
 
-export type PostType = {
-  createdAt: Date
-  description: string
-  id: number
-  images: PostImage[]
-  ownerId: number
-  postOwner: {
-    avatars: {
-      url: string
-    }[]
-    firstName: string
-    lastName: string
-    userName: string
-  }
-  updatedAt: Date
-  userBan: {
-    createdAt: Date
-    reason: string
-  } | null
-}
+
 
 export const Post = ({ openModal, post }: Props) => {
   const { createdAt, description, id, images, postOwner,ownerId, userBan } = post
