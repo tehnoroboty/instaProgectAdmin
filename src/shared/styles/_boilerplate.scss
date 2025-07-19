@@ -87,19 +87,19 @@ body {
   .main-layout {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 
     & main {
       overflow-y: auto;
       width: 100%;
-      height: calc(100% - 59px);
+      height: 100% !important;
       padding: 36px 24px;
     }
 
     & .accountWrapper {
+      overflow: hidden;
       display: flex;
       flex-grow: 1;
-      height: 100%;
     }
   }
 
