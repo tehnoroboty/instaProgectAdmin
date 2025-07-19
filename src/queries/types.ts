@@ -1,4 +1,4 @@
-import {PostImage} from "@tehnoroboty/ui-kit/dist/lib/types/types";
+import { PostImage } from '@tehnoroboty/ui-kit/dist/lib/types/types'
 
 export type Maybe<T> = T | null
 export type InputMaybe<T> = Maybe<T>

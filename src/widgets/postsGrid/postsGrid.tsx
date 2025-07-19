@@ -1,5 +1,6 @@
+import { PostType } from '@/src/queries/types'
 import { UserModalType } from '@/src/shared/types/types'
-import { Post, PostType } from '@/src/widgets/post/post'
+import { Post } from '@/src/widgets/post/post'
 
 import s from './postsGrid.module.scss'
 

@@ -40,6 +40,8 @@
 
   &.shifted {
     transform: translateY(-50%);
+    overflow-y: auto;
+    max-height: 300px;
   }
 }
 
@@ -52,8 +54,8 @@
 
 .avatarsWrapper {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 }
 
 .avatarsBlocked {
@@ -71,19 +73,17 @@
 }
 
 .owner {
-  margin: 12px 0;
   cursor: pointer;
+  margin: 12px 0;
 }
 
 .descriptionText {
   overflow: hidden;
-  display: inline;
 
   margin: 0;
 
   font-size: 14px;
   font-weight: 400;
-  line-height: 24px;
   color: var(--light-100);
   word-wrap: break-word;
 }
@@ -93,8 +93,7 @@
 
   display: inline;
 
-  margin: 0;
-  margin-left: 2px;
+  margin: 0 0 0 2px;
   padding: 0;
   border: none;
 

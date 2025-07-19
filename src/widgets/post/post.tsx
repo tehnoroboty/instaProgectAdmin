@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 
+import { PostType } from '@/src/queries/types'
 import { Block, Unblock } from '@/src/shared/assets/componentsIcons'
 import ImageNotFound from '@/src/shared/assets/componentsIcons/ImageNotFound'
 import imageNotFound from '@/src/shared/assets/icons/image-not-found.svg'
@@ -9,20 +10,17 @@ import { Button, Carousel, CreationTime, UserAvatarName } from '@tehnoroboty/ui-
 import { PostImage } from '@tehnoroboty/ui-kit/dist/lib/types/types'
 import clsx from 'clsx'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 import s from './post.module.scss'
-import {useRouter} from "next/navigation";
-import {PostType} from "@/src/queries/types";
 
 type Props = {
   openModal: (type: UserModalType, post: PostType) => void
   post: PostType
 }
 
-
-
 export const Post = ({ openModal, post }: Props) => {
-  const { createdAt, description, id, images, postOwner,ownerId, userBan } = post
+  const { createdAt, description, id, images, ownerId, postOwner, userBan } = post
   const router = useRouter()
 
   const [open, setOpen] = useState<boolean>(false)
@@ -50,24 +48,25 @@ export const Post = ({ openModal, post }: Props) => {
     }
   }
 
-  const postClickHandler=()=>{
+  const postClickHandler = () => {
     router.push(`/users-list/${ownerId}`)
   }
 
   return (
-    <div className={s.card} id={`${id}`} >
+    <div className={s.card} id={`${id}`}>
       <div className={containerClasses}>
         <Carousel disableSwipe={open} list={images} renderItem={renderImgCarousel} size={'small'} />
       </div>
       <Collapsible.Root onOpenChange={setOpen} open={open}>
         <div className={classNames}>
-          <div className={s.avatarsWrapper} >
-            <div  onClick={postClickHandler}>
-            <UserAvatarName
-              className={s.owner}
-              url={postOwner?.avatars[0]?.url ? postOwner.avatars[0].url : imageNotFound}
-              username={postOwner.userName}
-            /></div>
+          <div className={s.avatarsWrapper}>
+            <div onClick={postClickHandler}>
+              <UserAvatarName
+                className={s.owner}
+                url={postOwner?.avatars[0]?.url ? postOwner.avatars[0].url : imageNotFound}
+                username={postOwner.userName}
+              />
+            </div>
             <Button
               className={s.avatarsBlocked}
               onClick={bunUnbanUserHandler}
