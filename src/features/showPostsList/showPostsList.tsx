@@ -22,12 +22,12 @@ import debounce from 'lodash/debounce'
 
 import s from './showPostsList.module.scss'
 
-const POSTS_PER_PAGE = 8
 
 export const ShowPostsList = () => {
   const { inView, ref } = useInView({ threshold: 0.1 })
   const [posts, setPosts] = useState<PostType[]>([])
   const [endCursorPostId, setEndCursorPostId] = useState<number>(0)
+  const [postPerPage, setPostPerPage] = useState<number>(4)
   const [activeModal, setActiveModal] = useState<UserModalType>(null)
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null)
   const [banReason, setBanReason] = useState<BanReason>(DEFAULT_BAN_REASON)
@@ -35,7 +35,7 @@ export const ShowPostsList = () => {
 
   const variables: QueryGetPostsArgs = {
     endCursorPostId: endCursorPostId,
-    pageSize: POSTS_PER_PAGE,
+    pageSize: postPerPage,
     searchTerm: searchTerm,
   }
   const dispatch = useAppDispatch()
@@ -147,6 +147,7 @@ export const ShowPostsList = () => {
   useEffect(() => {
     if (hasMorePosts && inView) {
       setEndCursorPostId(posts[posts.length - 1].id)
+      setPostPerPage(5)
     }
   }, [inView, hasMorePosts, dispatch, posts])
 
