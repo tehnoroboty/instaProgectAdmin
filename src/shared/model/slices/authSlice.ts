@@ -16,6 +16,7 @@ export const authSlice = createSlice({
   reducers: {
     clearAuth: state => {
       state.isAuth = false
+      state.authChecked = false
     },
     setAuth: (state, action: PayloadAction<{ isAuth: boolean }>) => {
       state.authChecked = true
