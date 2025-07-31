@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { SortDirection } from '@/src/queries/types'
+import SvgPersonOutline from '@/src/shared/assets/componentsIcons/PersonOutline'
 import { SortColumn, TablePayment } from '@/src/shared/types/types'
 import { TableHeaderCell } from '@/src/widgets/paymentsTable/tableHeaderCell/tableHeaderCell'
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@tehnoroboty/ui-kit'
@@ -79,13 +80,19 @@ export const PaymentsTable = ({ data, onSortChange }: Props) => {
             <TableRow key={index}>
               <TableCell className={s.tableCell}>
                 <div className={s.avaNameCell}>
-                  <Image
-                    alt={'User avatar'}
-                    className={s.avatarImg}
-                    height={36}
-                    src={item.avatarUrl}
-                    width={36}
-                  />
+                  {item.avatarUrl ? (
+                    <Image
+                      alt={'User avatar'}
+                      className={s.avatarImg}
+                      height={36}
+                      src={item.avatarUrl}
+                      width={36}
+                    />
+                  ) : (
+                    <div className={s.avatarFallback}>
+                      <SvgPersonOutline height={24} width={24} />
+                    </div> // можно вставить Image с дефолтным аватаром
+                  )}
                   <span>{item.userName}</span>
                 </div>
               </TableCell>
