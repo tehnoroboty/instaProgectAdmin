@@ -2,7 +2,7 @@
 
 import type { PostType, QueryGetPostsArgs } from '@/src/queries/types'
 
-import { type ChangeEvent, useCallback, useEffect, useState } from 'react'
+import { type ChangeEvent, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { usePostAddedSubscription } from '@/src/queries/postAddSubscription/postAdded.generated'
@@ -21,7 +21,6 @@ import clsx from 'clsx'
 import debounce from 'lodash/debounce'
 
 import s from './showPostsList.module.scss'
-
 
 export const ShowPostsList = () => {
   const { inView, ref } = useInView({ threshold: 0.1 })
@@ -50,14 +49,11 @@ export const ShowPostsList = () => {
     setActiveModal(type)
   }
 
-  const handleSearch = useCallback(
-    debounce((value: string) => {
-      setSearchTerm(value)
-      setEndCursorPostId(0)
-      setPosts([])
-    }, 500),
-    []
-  )
+  const handleSearch = debounce((value: string) => {
+    setSearchTerm(value)
+    setEndCursorPostId(0)
+    setPosts([])
+  }, 500)
 
   useEffect(() => {
     return () => {
