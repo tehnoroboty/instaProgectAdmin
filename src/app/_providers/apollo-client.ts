@@ -14,7 +14,7 @@ const wsLink = new GraphQLWsLink(
         Authorization: token ? `Basic ${token}` : '',
       }
     },
-    url: 'ws://inctagram.work/api/v1/graphql',
+    url: 'wss://inctagram.work/api/v1/graphql',
   })
 )
 const authLink = setContext((_, { headers, token }) => {
