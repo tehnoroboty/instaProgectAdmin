@@ -1,13 +1,15 @@
 #Устанавливаем зависимости
 FROM node:20.11-alpine as dependencies
+RUN npm install -g pnpm
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
+COPY package*.json ./ pnpm-lock.yaml ./
+RUN npm install --frozen-lockfile
 
 #Билдим приложение
 #Кэширование зависимостей — если файлы в проекте изменились,
 #но package.json остался неизменным, то стейдж с установкой зависимостей повторно не выполняется, что экономит время.
 FROM node:20.11-alpine as builder
+RUN npm install -g pnpm
 WORKDIR /app
 COPY . .
 COPY --from=dependencies /app/node_modules ./node_modules
@@ -15,6 +17,7 @@ RUN npm run build:production
 
 #Стейдж запуска
 FROM node:20.11-alpine as runner
+RUN npm install -g pnpm
 USER node
 WORKDIR /app
 ENV NODE_ENV production
