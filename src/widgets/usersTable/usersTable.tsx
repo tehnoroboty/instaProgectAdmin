@@ -135,14 +135,14 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
           <TableRow>
             <TableCell>User ID</TableCell>
             <TableCell className={s.tableHeaderCell}>
-              Username{' '}
+              Profile link{' '}
               <SortButton
                 column={'userName'}
                 currentSort={sortConfig['userName'] || 'none'}
                 onSortChange={handleSortChange}
               />
             </TableCell>
-            <TableCell>Profile link</TableCell>
+            <TableCell>Username</TableCell>
             <TableCell className={s.tableHeaderCell}>
               Date added{' '}
               <SortButton
@@ -164,8 +164,8 @@ export const UsersTable = ({ data, onSortChange, refetch }: Props) => {
                     <span className={user.isBlocked ? '' : s.idWithoutIcon}>{user.id}</span>
                   </div>
                 </TableCell>
-                <TableCell>{user.userName}</TableCell>
                 <TableCell>{user.profileLink}</TableCell>
+                <TableCell>{user.userName}</TableCell>
                 <TableCell>{user.createdAt}</TableCell>
                 <TableCell>
                   <DropdownTable
