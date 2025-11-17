@@ -17,7 +17,7 @@ const config: CodegenConfig = {
     'src/queries/types.ts': { plugins: ['typescript'] },
   },
   ignoreNoDocuments: true, // for better experience with the watcher
-  schema: 'https://inctagram.work/api/v1/graphql',
+  schema: `${process.env.NEXT_PUBLIC_API_BASE_URL || 'https://inctagram.work/api/v1/'}graphql`,
 }
 
 export default config

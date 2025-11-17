@@ -4,7 +4,11 @@ import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { createClient } from 'graphql-ws'
 
-const httpLink = createHttpLink({ uri: 'https://inctagram.work/api/v1/graphql' })
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://inctagram.work/api/v1/'
+const graphqlUrl = `${apiBaseUrl}graphql`
+const wsUrl = graphqlUrl.replace('https://', 'wss://').replace('http://', 'ws://')
+
+const httpLink = createHttpLink({ uri: graphqlUrl })
 const wsLink = new GraphQLWsLink(
   createClient({
     connectionParams: () => {
@@ -14,7 +18,7 @@ const wsLink = new GraphQLWsLink(
         Authorization: token ? `Basic ${token}` : '',
       }
     },
-    url: 'wss://inctagram.work/api/v1/graphql',
+    url: wsUrl,
   })
 )
 const authLink = setContext((_, { headers, token }) => {

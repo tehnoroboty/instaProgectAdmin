@@ -1,10 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    NEXT_PUBLIC_BASE_URL: process.env.NODE_ENV === 'production'
-      ? 'https://momenttify.ru'
-      : 'http://localhost:3000',
-  },
   images: {
     domains: ['encrypted-tbn0.gstatic.com'],
     remotePatterns: [
