@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 644px;
+  color: var(--light-900);
+}
+
+.selector {
+  max-width: 234px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.pagination {
+  margin-top: 36px;
+}

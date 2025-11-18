@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '@/src/shared/lib/constants/error-messages'
-import { EMAIL_REGEX, PASSWORD_REGEX } from '@/src/shared/lib/constants/regex'
+import { EMAIL_REGEX } from '@/src/shared/lib/constants/regex'
 import { z } from 'zod'
 
 export const schema = z.object({
@@ -14,10 +14,9 @@ export const schema = z.object({
   password: z
     .string()
     .nonempty(ERROR_MESSAGES.PASSWORD.REQUIRED)
-    .min(6, ERROR_MESSAGES.PASSWORD.MIN)
+    .min(3, ERROR_MESSAGES.PASSWORD.MIN)
     .max(20, ERROR_MESSAGES.PASSWORD.MAX)
-    .trim()
-    .regex(new RegExp(PASSWORD_REGEX), ERROR_MESSAGES.PASSWORD.FORMAT),
+    .trim(),
 })
 
 export type FormType = z.infer<typeof schema>

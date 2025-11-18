@@ -2,8 +2,8 @@
 'use client'
 import * as React from 'react'
 
-import { Button } from '@/src/shared/ui/button/Button'
-import { MenuItemType } from '@/src/widgets/navigationPanel/NavigationPanel'
+import { MenuItemType } from '@/src/widgets/navigationPanel/types'
+import { Button } from '@tehnoroboty/ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'

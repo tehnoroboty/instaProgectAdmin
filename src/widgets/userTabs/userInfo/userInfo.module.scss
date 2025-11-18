@@ -1,0 +1,26 @@
+.top {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.info {
+  & .link {
+    color: var(--light-100);
+  }
+}
+
+.extraData {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.box {
+  min-width: 170px;
+
+  & .title {
+    color: var(--light-900);
+  }
+}

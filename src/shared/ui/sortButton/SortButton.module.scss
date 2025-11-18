@@ -1,0 +1,32 @@
+.sortBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+
+  width: 20px;
+  height: 20px;
+  border: none;
+
+  background-color: unset;
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark-100);
+
+  &.active {
+    color: var(--light-100);
+  }
+
+  &.disabled {
+    display: none;
+  }
+
+  &.neutral {
+    display: flex;
+  }
+}

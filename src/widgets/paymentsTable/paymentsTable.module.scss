@@ -1,0 +1,33 @@
+.tableHeaderCell {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 24px;
+}
+
+.tableCell {
+  font-size: 14px;
+  line-height: 14px;
+}
+
+.avaNameCell {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.avatarImg {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.avatarFallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  border: solid 1px var(--light-100);
+  border-radius: 50%;
+}

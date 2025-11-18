@@ -1,35 +1,41 @@
 // @flow
 'use client'
 import * as React from 'react'
-import { useDispatch } from 'react-redux'
 
 import {
   CreditCard,
   CreditCardOutline,
   Image,
   ImageOutline,
+  LogOutOutline,
   Person,
   PersonOutline,
   TrendingUp,
   TrendingUpOutline,
 } from '@/src/shared/assets/componentsIcons'
-import { useMeQuery } from '@/src/shared/model/api/authApi'
+import { useAuth } from '@/src/shared/hooks/useAuth'
+import { clearAuth } from '@/src/shared/model/slices/authSlice'
+import { useAppDispatch } from '@/src/shared/model/store/store'
 import { MenuMobile } from '@/src/widgets/navigationPanel/menuMobile/MenuMobile'
 import Sidebar from '@/src/widgets/navigationPanel/sidebar/Sidebar'
 import { MenuItemType } from '@/src/widgets/navigationPanel/types'
 
 export const NavigationPanel = () => {
-  const { data, isSuccess } = useMeQuery()
-  const dispatch = useDispatch()
+  const { authChecked, isAuth } = useAuth()
+  const dispatch = useAppDispatch()
 
-  if (!isSuccess || !data) {
+  const handleLogout = () => {
+    localStorage.removeItem('authorization')
+    dispatch(clearAuth())
+  }
+
+  if (!authChecked || !isAuth) {
     return null
   }
-  const userId = data.userId
 
   const menuItems: MenuItemType[] = [
     {
-      href: '/user-list',
+      href: '/users-list',
       icon: PersonOutline,
       iconActive: Person,
       title: 'Users List',
@@ -51,6 +57,11 @@ export const NavigationPanel = () => {
       icon: ImageOutline,
       iconActive: Image,
       title: 'Posts list',
+    },
+    {
+      icon: LogOutOutline,
+      onClick: handleLogout,
+      title: 'Log Out',
     },
   ]
 

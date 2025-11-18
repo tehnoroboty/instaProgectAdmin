@@ -1,9 +1,8 @@
 // @flow
 import * as React from 'react'
 
-import { AuthRoutes } from '@/src/shared/lib/constants/routing'
-import { SelectLanguage } from '@/src/shared/ui/select/SelectLanguage/SelectLanguage'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
+import { SelectLanguage, Typography } from '@tehnoroboty/ui-kit'
 import Link from 'next/link'
 
 import s from './headerWeb.module.scss'
@@ -17,7 +16,7 @@ export const HeaderWeb = (props: Props) => {
 
   return (
     <div className={s.container}>
-      <Link href={AuthRoutes.HOME} style={{ alignItems: 'flex-end', display: 'flex' }}>
+      <Link href={AppRoutes.HOME} style={{ alignItems: 'flex-end', display: 'flex' }}>
         <Typography as={'h1'} option={'Large'}>
           {title}
         </Typography>

@@ -1,7 +1,10 @@
 .sidebar {
   overflow-y: auto;
+
   width: max(220px, 20%);
+  height: 100lvh;
   border-right: 1px solid var(--dark-300);
+
   background-color: var(--dark-700);
 }
 
@@ -9,16 +12,22 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 
   width: 100%;
   height: 100%;
   padding: 72px 0;
 }
 
-.menuItems{
+.menuItems {
   display: flex;
   flex-direction: column;
-  gap:10px;
+  gap: 10px;
+}
+
+.bottomItem {
+  margin-top: auto;
+  padding-top: 20px;
 }
 
 @media (width <= 768px) {

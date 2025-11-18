@@ -1,26 +1,25 @@
 'use client'
 
+import type { LoginError } from '@/src/shared/types/types'
+
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { FormType, schema } from '@/src/features/login/validators'
-import { AuthRoutes } from '@/src/shared/lib/constants/routing'
-import { useLoginMutation } from '@/src/shared/model/api/authApi'
-import { LoginError } from '@/src/shared/model/api/types'
-import { Button } from '@/src/shared/ui/button/Button'
-import { Card } from '@/src/shared/ui/card/Card'
-import { Input } from '@/src/shared/ui/input'
-import { Typography } from '@/src/shared/ui/typography/Typography'
+import { useLoginAdminMutation } from '@/src/queries/login/loginAdmin.generated'
+import { AppRoutes } from '@/src/shared/lib/constants/routing'
+import { clearAuth, setAuth } from '@/src/shared/model/slices/authSlice'
+import { useAppDispatch } from '@/src/shared/model/store/store'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, Card, Input, Typography } from '@tehnoroboty/ui-kit'
 import { useRouter } from 'next/navigation'
 
 import s from './login.module.scss'
 
 export default function Login() {
-  const [login, { isLoading }] = useLoginMutation()
-
+  const [adminLogin, { loading }] = useLoginAdminMutation()
   const router = useRouter()
-
+  const dispatch = useAppDispatch()
   const {
     formState: { errors, isValid },
     handleSubmit,
@@ -28,20 +27,33 @@ export default function Login() {
     setError,
   } = useForm<FormType>({
     defaultValues: {
-      email: 'tehnoroboty@gmail.com',
-      password: 'qwQW12!',
+      email: 'admin@gmail.com',
+      password: 'admin',
     },
     mode: 'onBlur',
     resolver: zodResolver(schema),
   })
-  const disabledButton = isLoading || !isValid || Object.keys(errors).length > 0
+  const disabledButton = loading || !isValid || Object.keys(errors).length > 0
 
   const onSubmit: SubmitHandler<FormType> = async formData => {
     try {
-      await login(formData).unwrap()
+      const { data } = await adminLogin({
+        variables: {
+          email: formData.email,
+          password: formData.password,
+        },
+      })
 
-      router.push(AuthRoutes.HOME)
+      if (data?.loginAdmin.logged) {
+        const credentials = btoa(`${formData.email}:${formData.password}`)
+
+        localStorage.setItem('authorization', credentials)
+
+        dispatch(setAuth({ isAuth: true }))
+        router.push(AppRoutes.USERS_LIST)
+      }
     } catch (err) {
+      dispatch(clearAuth())
       const { data } = err as LoginError
 
       setError('password', { message: data.messages, type: 'manual' })
@@ -53,10 +65,6 @@ export default function Login() {
       <Card className={s.card}>
         <Typography className={s.title} option={'h1'}>
           {'Sign In'}
-          <br />
-          e-mail: tehnoroboty@gmail.com
-          <br />
-          pass: qwQW12!
         </Typography>
         <form className={s.boxInputs} onSubmit={handleSubmit(onSubmit)}>
           <Input

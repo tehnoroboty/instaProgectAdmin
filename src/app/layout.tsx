@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { StoreWrapper } from '@/src/shared/model/store/StoreWrapper'
-import { CommonAlert } from '@/src/shared/ui/alerts/CommonAlert'
+import { Providers } from '@/src/app/_providers/Providers'
+import { CommonAlert } from '@/src/shared/ui/commonAlert/CommonAlert'
 import { ProgressBar } from '@/src/shared/ui/progressBar/ProgressBar'
-import { Typography } from '@/src/shared/ui/typography/Typography'
 import { Header } from '@/src/widgets/header/Header'
 import { Metadata } from 'next'
 
@@ -11,6 +10,7 @@ import '@/src/shared/styles/index.scss'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource-variable/inter'
+import '@tehnoroboty/ui-kit/dist/index.css'
 
 import { NavigationPanel } from '../widgets/navigationPanel/NavigationPanel'
 
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang={'en'}>
       <body>
-        <StoreWrapper>
+        <Providers>
           <div className={'main-layout'}>
             <Header title={'Momenttify'} />
             <ProgressBar />
@@ -42,7 +42,7 @@ export default function RootLayout({
             </div>
           </div>
           <CommonAlert />
-        </StoreWrapper>
+        </Providers>
       </body>
     </html>
   )

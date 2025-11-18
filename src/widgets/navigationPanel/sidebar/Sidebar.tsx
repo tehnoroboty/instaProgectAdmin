@@ -11,10 +11,17 @@ type Props = {
 }
 
 const Sidebar = ({ items }: Props) => {
+  const topItems = items.slice(0, -1)
+  const bottomItem = items[items.length - 1]
+
   return (
     <aside className={s.sidebar}>
       <nav className={s.container}>
-        {items && <MenuSection className={s.menuItems} items={items} />}
+        {topItems.length > 0 && <MenuSection className={s.menuItems} items={topItems} />}
+
+        <div className={s.bottomItem}>
+          <MenuSection items={[bottomItem]} />
+        </div>
       </nav>
     </aside>
   )

@@ -6,8 +6,7 @@ export const ERROR_MESSAGES = {
   },
   PASSWORD: {
     CONFIRM: 'Confirm your password',
-    FORMAT:
-      'Password must contain at least one digit, one uppercase letter, one lowercase letter, and one special character.',
+    FORMAT: 'The password must contain at least 3 character.',
     MAX: 'Max 20 characters long',
     MIN: 'Min 6 characters long',
     MISMATCH: 'Passwords do not match',

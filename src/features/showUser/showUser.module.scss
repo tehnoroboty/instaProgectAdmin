@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: left;
+
+  margin-bottom: 24px;
+
+  color: var(--light-100);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+
+  height: fit-content;
+  min-height: 100vh;
+  padding-right: 3%;
+  padding-bottom: 7vh;
+}
+
+.button {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 644px;
+  color: var(--light-900);
+}
+
+.selector {
+  max-width: 234px;
+}
+
+.pagination {
+  margin-top: 36px;
+}
